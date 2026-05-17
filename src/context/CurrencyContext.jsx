@@ -5,7 +5,12 @@ import {
   getCurrencyByCode,
   isSupportedCurrencyCode,
 } from '../config/currencies'
-import { createCurrencyFormatters, getCurrencySymbol } from '../utils/format'
+import {
+  createCurrencyFormatters,
+  getAmountPlaceholder,
+  getCurrencySymbol,
+  parseAmountInput,
+} from '../utils/format'
 
 export const CurrencyContext = createContext(null)
 
@@ -33,6 +38,13 @@ export function CurrencyProvider({ children }) {
 
   const currencySymbol = useMemo(() => getCurrencySymbol(currency), [currency])
 
+  const amountPlaceholder = useMemo(() => getAmountPlaceholder(currency), [currency])
+
+  const parseAmount = useCallback(
+    (raw) => parseAmountInput(raw, currency.locale),
+    [currency.locale],
+  )
+
   useEffect(() => {
     try {
       localStorage.setItem(CURRENCY_STORAGE_KEY, currencyCode)
@@ -52,11 +64,22 @@ export function CurrencyProvider({ children }) {
       currency,
       currencyCode,
       currencySymbol,
+      amountPlaceholder,
       formatCurrency,
       formatCompact,
+      parseAmount,
       selectCurrency,
     }),
-    [currency, currencyCode, currencySymbol, formatCurrency, formatCompact, selectCurrency],
+    [
+      currency,
+      currencyCode,
+      currencySymbol,
+      amountPlaceholder,
+      formatCurrency,
+      formatCompact,
+      parseAmount,
+      selectCurrency,
+    ],
   )
 
   return <CurrencyContext.Provider value={value}>{children}</CurrencyContext.Provider>

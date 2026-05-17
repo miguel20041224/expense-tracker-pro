@@ -20,10 +20,12 @@ function createExpenseId() {
 }
 
 export function ExpenseForm({ onSubmit }) {
-  const { currencySymbol } = useCurrency()
+  const { currency, currencyCode, amountPlaceholder, formatCurrency, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyExpenseForm)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
+
+  const amountExample = formatCurrency(79000)
 
   function updateField(field) {
     return (event) => {
@@ -41,14 +43,14 @@ export function ExpenseForm({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const validationErrors = validateExpenseForm(values)
+    const validationErrors = validateExpenseForm(values, currency.locale)
     setErrors(validationErrors)
 
     if (hasValidationErrors(validationErrors)) {
       return
     }
 
-    const amount = parseFloat(String(values.amount).replace(',', '.'))
+    const amount = parseAmount(values.amount)
 
     onSubmit?.({
       id: createExpenseId(),
@@ -97,22 +99,24 @@ export function ExpenseForm({ onSubmit }) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField
-            label={`Cantidad (${currencySymbol})`}
+            label={`Cantidad (${currencyCode})`}
             htmlFor="expense-amount"
             error={errors.amount}
+            hint={`Ej. ${amountExample}`}
           >
             <Input
               id="expense-amount"
               name="amount"
-              type="number"
+              type="text"
               inputMode="decimal"
-              min="0"
-              step="0.01"
-              placeholder="0,00"
+              autoComplete="off"
+              placeholder={amountPlaceholder}
               value={values.amount}
               onChange={updateField('amount')}
               error={errors.amount}
-              aria-describedby={errors.amount ? 'expense-amount-error' : undefined}
+              aria-describedby={
+                errors.amount ? 'expense-amount-error' : 'expense-amount-hint'
+              }
             />
           </FormField>
 

@@ -1,21 +1,46 @@
-import { useState } from 'react'
+import { useMemo, useRef } from 'react'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { MetricCard } from '../components/dashboard/MetricCard'
 import { SavingsProgress } from '../components/dashboard/SavingsProgress'
 import { TransactionList } from '../components/dashboard/TransactionList'
 import { CategoryBreakdown } from '../components/dashboard/CategoryBreakdown'
+import { OnboardingBanner } from '../components/dashboard/OnboardingBanner'
 import { CurrencySelector } from '../components/currency/CurrencySelector'
 import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { IconTrendUp, IconTrendDown, IconPiggyBank } from '../components/icons'
-import { categories, summary, transactions as initialTransactions } from '../data/mockFinance'
+import { useTransactions } from '../hooks/useTransactions'
+import { useOnboarding } from '../hooks/useOnboarding'
+import {
+  computeSummary,
+  computeCategories,
+  hasExpenseData,
+  hasSavingsData,
+} from '../utils/finance'
 
 export default function Dashboard() {
-  const [transactions, setTransactions] = useState(initialTransactions)
-  const savingsRate = ((summary.savings / summary.income) * 100).toFixed(0)
+  const { transactions, addTransaction, isEmpty } = useTransactions()
+  const { showOnboarding, dismissOnboarding } = useOnboarding(isEmpty)
+  const expenseFormRef = useRef(null)
+
+  const summary = useMemo(() => computeSummary(transactions), [transactions])
+  const categories = useMemo(() => computeCategories(transactions), [transactions])
+  const showCategories = hasExpenseData(transactions)
+  const showSavings = hasSavingsData(summary) && summary.savingsGoal > 0
+
+  const expenseShare =
+    summary.income > 0 ? `${Math.round((summary.expenses / summary.income) * 100)}% del total de ingresos` : null
+  const savingsRate =
+    summary.income > 0 ? `${Math.round((summary.savings / summary.income) * 100)}% de tus ingresos` : null
+
+  function scrollToExpenseForm() {
+    expenseFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    const firstInput = expenseFormRef.current?.querySelector('input, select')
+    firstInput?.focus()
+  }
 
   function handleAddExpense(expense) {
-    setTransactions((prev) => [expense, ...prev])
+    addTransaction(expense)
   }
 
   return (
@@ -25,7 +50,14 @@ export default function Dashboard() {
           <CurrencySelector className="w-full sm:w-auto" />
         </div>
 
-        <BalanceHero balance={summary.balance} change={summary.balanceChange} />
+        {showOnboarding ? (
+          <OnboardingBanner
+            onGetStarted={scrollToExpenseForm}
+            onDismiss={dismissOnboarding}
+          />
+        ) : null}
+
+        <BalanceHero balance={summary.balance} isEmpty={isEmpty} />
 
         <section
           className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
@@ -36,39 +68,51 @@ export default function Dashboard() {
             value={summary.income}
             variant="income"
             icon={<IconTrendUp />}
-            subtitle="Incluye nómina y extras"
+            isEmpty={isEmpty || summary.income === 0}
+            emptyHint="Sin ingresos registrados este mes"
+            subtitle={summary.income > 0 ? 'Total del mes actual' : undefined}
           />
           <MetricCard
             label="Gastos"
             value={summary.expenses}
             variant="expense"
             icon={<IconTrendDown />}
-            subtitle="61% del total de ingresos"
+            isEmpty={isEmpty || summary.expenses === 0}
+            emptyHint="Tus gastos aparecerán aquí"
+            subtitle={expenseShare ?? (summary.expenses > 0 ? 'Total del mes actual' : undefined)}
           />
           <MetricCard
             label="Ahorro"
             value={summary.savings}
             variant="savings"
             icon={<IconPiggyBank />}
-            subtitle={`${savingsRate}% de tus ingresos`}
+            isEmpty={isEmpty || (summary.income === 0 && summary.savings === 0)}
+            emptyHint="Registra ingresos para calcular ahorro"
+            subtitle={savingsRate ?? (summary.savings > 0 ? 'Disponible este mes' : undefined)}
           />
         </section>
 
-        <section className="grid gap-4 lg:grid-cols-5">
-          <div className="lg:col-span-2">
-            <SavingsProgress current={summary.savings} goal={summary.savingsGoal} />
-          </div>
-          <div className="lg:col-span-3">
-            <CategoryBreakdown categories={categories} />
-          </div>
-        </section>
+        {(showSavings || showCategories) && (
+          <section className="grid gap-4 lg:grid-cols-5">
+            {showSavings ? (
+              <div className="lg:col-span-2">
+                <SavingsProgress current={summary.savings} goal={summary.savingsGoal} />
+              </div>
+            ) : null}
+            {showCategories ? (
+              <div className={showSavings ? 'lg:col-span-3' : 'lg:col-span-5'}>
+                <CategoryBreakdown categories={categories} />
+              </div>
+            ) : null}
+          </section>
+        )}
 
         <section className="grid gap-4 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+          <div ref={expenseFormRef} id="add-expense" className="scroll-mt-6 lg:col-span-2">
             <ExpenseForm onSubmit={handleAddExpense} />
           </div>
           <div className="lg:col-span-3">
-            <TransactionList transactions={transactions} />
+            <TransactionList transactions={transactions} isEmpty={isEmpty} />
           </div>
         </section>
       </div>

@@ -60,3 +60,12 @@ export function IconArrowRight({ className = iconClass }) {
     </svg>
   )
 }
+
+export function IconReceipt({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9 3h6l1 2h3v16l-3-2-3 2-3-2-3 2-3-2V5h3l1-2z" />
+      <path strokeLinecap="round" d="M9 9h6M9 13h4" />
+    </svg>
+  )
+}

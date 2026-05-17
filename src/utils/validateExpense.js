@@ -1,3 +1,5 @@
+import { parseAmountInput } from './format'
+
 export function getEmptyExpenseForm() {
   return {
     name: '',
@@ -9,7 +11,7 @@ export function getEmptyExpenseForm() {
 
 export const initialExpenseForm = getEmptyExpenseForm()
 
-export function validateExpenseForm(values) {
+export function validateExpenseForm(values, locale) {
   const errors = {}
 
   const name = values.name.trim()
@@ -19,7 +21,7 @@ export function validateExpenseForm(values) {
     errors.name = 'Mínimo 2 caracteres'
   }
 
-  const amount = parseFloat(String(values.amount).replace(',', '.'))
+  const amount = parseAmountInput(values.amount, locale)
   if (values.amount === '' || values.amount == null) {
     errors.amount = 'La cantidad es obligatoria'
   } else if (Number.isNaN(amount) || amount <= 0) {

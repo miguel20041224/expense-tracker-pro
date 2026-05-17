@@ -2,7 +2,7 @@ import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { Money } from '../currency/Money'
 
 export function SavingsProgress({ current, goal }) {
-  const progress = Math.min((current / goal) * 100, 100)
+  const progress = goal > 0 ? Math.min((current / goal) * 100, 100) : 0
 
   return (
     <Card>
@@ -32,7 +32,7 @@ export function SavingsProgress({ current, goal }) {
       </div>
 
       <p className="mt-3 text-xs text-slate-500">
-        Te faltan <Money value={Math.max(goal - current, 0)} /> para alcanzar tu meta mensual.
+        Te faltan <Money value={Math.max(goal - current, 0)} /> para alcanzar tu meta estimada del mes.
       </p>
     </Card>
   )
