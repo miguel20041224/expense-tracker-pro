@@ -94,3 +94,23 @@ export function IconReceipt({ className = iconClass }) {
     </svg>
   )
 }
+
+export function IconPencil({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M16.5 4.5l3 3L8 19H5v-3L16.5 4.5z"
+      />
+    </svg>
+  )
+}
+
+export function IconTrash({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 7h16M9 7V5h6v2M10 11v6M14 11v6M6 7l1 12h10l1-12" />
+    </svg>
+  )
+}

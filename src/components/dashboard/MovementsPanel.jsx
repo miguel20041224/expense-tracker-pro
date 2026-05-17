@@ -6,7 +6,7 @@ import { MovementToolbar } from '../movements/MovementToolbar'
 import { MovementsTimeline } from '../movements/MovementsTimeline'
 import { useMovementFilters } from '../../hooks/useMovementFilters'
 
-export function MovementsPanel({ transactions, isEmpty }) {
+export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
   const {
     filters,
     filteredMovements,
@@ -64,7 +64,12 @@ export function MovementsPanel({ transactions, isEmpty }) {
               </Button>
             </EmptyState>
           ) : (
-            <MovementsTimeline movements={filteredMovements} className="mt-1" />
+            <MovementsTimeline
+              movements={filteredMovements}
+              className="mt-1"
+              onEdit={onEdit}
+              onDelete={onDelete}
+            />
           )}
         </>
       )}

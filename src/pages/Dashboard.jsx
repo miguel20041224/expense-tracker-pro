@@ -14,12 +14,24 @@ import { BudgetSummary } from '../components/budgets/BudgetSummary'
 import { ComingSoon } from '../components/ui/ComingSoon'
 import { IconTrendUp, IconTrendDown, IconPiggyBank, IconWallet } from '../components/icons'
 import { useTransactions } from '../hooks/useTransactions'
+import { useMovementActions } from '../hooks/useMovementActions'
+import { MovementActionsLayer } from '../components/movements/MovementActionsLayer'
 import { useOnboarding } from '../hooks/useOnboarding'
 import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('resumen')
-  const { transactions, addExpense, addBudget, isEmpty } = useTransactions()
+  const { transactions, addExpense, addBudget, updateTransaction, deleteTransaction, isEmpty } =
+    useTransactions()
+  const {
+    editingTransaction,
+    deletingTransaction,
+    closeEdit,
+    closeDelete,
+    handleSaveEdit,
+    handleConfirmDelete,
+    movementHandlers,
+  } = useMovementActions({ updateTransaction, deleteTransaction })
   const { showOnboarding, dismissOnboarding } = useOnboarding(isEmpty)
   const expenseFormRef = useRef(null)
 
@@ -149,14 +161,25 @@ export default function Dashboard() {
                 <ExpenseForm onSubmit={handleAddExpense} />
               </div>
               <section className="lg:col-span-3">
-                <TransactionList transactions={transactions} isEmpty={isEmpty} limit={5} />
+                <TransactionList
+                  transactions={transactions}
+                  isEmpty={isEmpty}
+                  limit={5}
+                  onEdit={movementHandlers.onEdit}
+                  onDelete={movementHandlers.onDelete}
+                />
               </section>
             </section>
           </>
         ) : null}
 
         {activeTab === 'movimientos' ? (
-          <MovementsPanel transactions={transactions} isEmpty={isEmpty} />
+          <MovementsPanel
+            transactions={transactions}
+            isEmpty={isEmpty}
+            onEdit={movementHandlers.onEdit}
+            onDelete={movementHandlers.onDelete}
+          />
         ) : null}
 
         {activeTab === 'presupuesto' ? (
@@ -177,6 +200,14 @@ export default function Dashboard() {
           />
         ) : null}
       </div>
+      <MovementActionsLayer
+        editingTransaction={editingTransaction}
+        deletingTransaction={deletingTransaction}
+        onCloseEdit={closeEdit}
+        onCloseDelete={closeDelete}
+        onSaveEdit={handleSaveEdit}
+        onConfirmDelete={handleConfirmDelete}
+      />
     </AppShell>
   )
 }

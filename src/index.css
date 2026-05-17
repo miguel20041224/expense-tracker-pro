@@ -17,6 +17,32 @@
   body {
     @apply bg-surface font-sans text-slate-100 antialiased;
   }
+
+  /* Controles nativos legibles en tema oscuro */
+  select,
+  input[type='date'] {
+    color-scheme: dark;
+  }
+
+  select option {
+    background-color: var(--color-surface-card);
+    color: #e2e8f0;
+  }
+
+  select option:checked {
+    background-color: var(--color-accent-muted);
+    color: #f8fafc;
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.7;
+    filter: invert(0.85);
+  }
+
+  input[type='date']::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+  }
 }
 
 @keyframes fade-in-up {
@@ -32,4 +58,47 @@
 
 @utility animate-fade-in-up {
   animation: fade-in-up 0.35s ease-out both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes sheet-up {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-in {
+  animation: fade-in 0.2s ease-out both;
+}
+
+@utility animate-scale-in {
+  animation: scale-in 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-sheet-up {
+  animation: sheet-up 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }

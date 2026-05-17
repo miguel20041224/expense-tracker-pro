@@ -1,7 +1,7 @@
 import { MovementItem } from '../dashboard/MovementItem'
 import { cn } from '../../utils/cn'
 
-export function MovementsTimeline({ movements, className }) {
+export function MovementsTimeline({ movements, className, onEdit, onDelete }) {
   if (movements.length === 0) return null
 
   return (
@@ -17,6 +17,8 @@ export function MovementsTimeline({ movements, className }) {
           transaction={transaction}
           showTimeline
           className="last:pb-0"
+          onEdit={onEdit}
+          onDelete={onDelete}
         />
       ))}
     </ul>

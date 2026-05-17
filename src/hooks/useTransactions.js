@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
-import { createBudgetTransaction } from '../utils/budget'
-import { createExpenseTransaction } from '../utils/expense'
+import { createBudgetTransaction, isBudgetTransaction } from '../utils/budget'
+import { createExpenseTransaction, isExpenseTransaction } from '../utils/expense'
 import { normalizeStoredTransactions } from '../utils/movements'
+import {
+  applyTransactionUpdate,
+  updateBudgetTransaction,
+  updateExpenseTransaction,
+} from '../utils/transactionMutations'
 
 const STORAGE_KEY = 'finance-transactions'
 
@@ -41,10 +46,35 @@ export function useTransactions() {
     return transaction
   }
 
+  function updateTransaction(id, payload) {
+    setTransactions((prev) => {
+      const current = prev.find((t) => t.id === id)
+      if (!current) return prev
+
+      const updated = applyTransactionUpdate(prev, id, (transaction) => {
+        if (isExpenseTransaction(transaction)) {
+          return updateExpenseTransaction(transaction, payload)
+        }
+        if (isBudgetTransaction(transaction)) {
+          return updateBudgetTransaction(transaction, payload)
+        }
+        return null
+      })
+
+      return normalizeStoredTransactions(updated)
+    })
+  }
+
+  function deleteTransaction(id) {
+    setTransactions((prev) => normalizeStoredTransactions(prev.filter((t) => t.id !== id)))
+  }
+
   return {
     transactions,
     addExpense,
     addBudget,
+    updateTransaction,
+    deleteTransaction,
     isEmpty: transactions.length === 0,
   }
 }
