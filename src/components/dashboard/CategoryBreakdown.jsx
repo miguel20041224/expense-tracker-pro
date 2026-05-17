@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle } from '../ui/Card'
-import { formatCurrency } from '../../utils/format'
+import { Money } from '../currency/Money'
 
 const barColors = [
   'bg-accent',
@@ -22,7 +22,7 @@ export function CategoryBreakdown({ categories }) {
           <li key={cat.name}>
             <div className="mb-1.5 flex items-center justify-between gap-2 text-sm">
               <span className="font-medium text-slate-200">{cat.name}</span>
-              <span className="tabular-nums text-slate-400">{formatCurrency(cat.amount)}</span>
+              <Money value={cat.amount} className="text-slate-400" />
             </div>
             <div className="h-1.5 overflow-hidden rounded-full bg-white/5">
               <div

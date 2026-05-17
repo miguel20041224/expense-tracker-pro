@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle } from '../ui/Card'
-import { formatCurrency } from '../../utils/format'
+import { Money } from '../currency/Money'
 
 export function SavingsProgress({ current, goal }) {
   const progress = Math.min((current / goal) * 100, 100)
@@ -12,8 +12,11 @@ export function SavingsProgress({ current, goal }) {
       </CardHeader>
 
       <p className="text-2xl font-semibold tracking-tight text-white">
-        {formatCurrency(current)}
-        <span className="text-base font-normal text-slate-500"> / {formatCurrency(goal)}</span>
+        <Money value={current} />
+        <span className="text-base font-normal text-slate-500">
+          {' '}
+          / <Money value={goal} />
+        </span>
       </p>
 
       <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/5">
@@ -29,7 +32,7 @@ export function SavingsProgress({ current, goal }) {
       </div>
 
       <p className="mt-3 text-xs text-slate-500">
-        Te faltan {formatCurrency(Math.max(goal - current, 0))} para alcanzar tu meta mensual.
+        Te faltan <Money value={Math.max(goal - current, 0)} /> para alcanzar tu meta mensual.
       </p>
     </Card>
   )

@@ -1,6 +1,6 @@
 import { Card } from '../ui/Card'
 import { IconBadge } from '../ui/IconBadge'
-import { formatCurrency } from '../../utils/format'
+import { Money } from '../currency/Money'
 import { cn } from '../../utils/cn'
 
 const accentMap = {
@@ -16,7 +16,7 @@ export function MetricCard({ label, value, icon, variant, subtitle }) {
         <div>
           <p className="text-sm text-slate-400">{label}</p>
           <p className={cn('mt-2 text-2xl font-semibold tracking-tight', accentMap[variant])}>
-            {formatCurrency(value)}
+            <Money value={value} />
           </p>
         </div>
         <IconBadge variant={variant}>{icon}</IconBadge>

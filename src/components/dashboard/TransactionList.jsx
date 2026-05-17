@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { IconArrowRight } from '../icons'
-import { formatCurrency } from '../../utils/format'
+import { Money } from '../currency/Money'
 import { cn } from '../../utils/cn'
 
 const typeStyles = {
@@ -41,7 +41,7 @@ export function TransactionList({ transactions }) {
             </div>
             <span className={cn('shrink-0 text-sm font-semibold tabular-nums', typeStyles[tx.type])}>
               {tx.amount > 0 ? '+' : ''}
-              {formatCurrency(Math.abs(tx.amount))}
+              <Money value={Math.abs(tx.amount)} />
             </span>
           </li>
         ))}

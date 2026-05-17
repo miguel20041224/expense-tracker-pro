@@ -1,5 +1,5 @@
+import { Money } from '../currency/Money'
 import { Badge } from '../ui/Badge'
-import { formatCurrency } from '../../utils/format'
 
 export function BalanceHero({ balance, change }) {
   const isPositive = change >= 0
@@ -11,7 +11,7 @@ export function BalanceHero({ balance, change }) {
       <div className="relative">
         <p className="text-sm font-medium text-slate-400">Balance total</p>
         <p className="mt-2 text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-          {formatCurrency(balance)}
+          <Money value={balance} />
         </p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           <Badge variant={isPositive ? 'positive' : 'negative'}>

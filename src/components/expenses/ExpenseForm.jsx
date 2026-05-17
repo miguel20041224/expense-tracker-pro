@@ -5,6 +5,7 @@ import { Input } from '../ui/Input'
 import { Select } from '../ui/Select'
 import { Button } from '../ui/Button'
 import { expenseCategories } from '../../data/expenseCategories'
+import { useCurrency } from '../../hooks/useCurrency'
 import {
   getEmptyExpenseForm,
   validateExpenseForm,
@@ -19,6 +20,7 @@ function createExpenseId() {
 }
 
 export function ExpenseForm({ onSubmit }) {
+  const { currencySymbol } = useCurrency()
   const [values, setValues] = useState(getEmptyExpenseForm)
   const [errors, setErrors] = useState({})
   const [submitted, setSubmitted] = useState(false)
@@ -94,7 +96,11 @@ export function ExpenseForm({ onSubmit }) {
         </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField label="Cantidad (€)" htmlFor="expense-amount" error={errors.amount}>
+          <FormField
+            label={`Cantidad (${currencySymbol})`}
+            htmlFor="expense-amount"
+            error={errors.amount}
+          >
             <Input
               id="expense-amount"
               name="amount"

@@ -1,23 +1,41 @@
-const currencyFormatter = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-})
+/**
+ * @param {{ locale: string, code: string }} currency
+ */
+export function createCurrencyFormatters(currency) {
+  const { locale, code } = currency
 
-const compactFormatter = new Intl.NumberFormat('es-ES', {
-  style: 'currency',
-  currency: 'EUR',
-  notation: 'compact',
-  maximumFractionDigits: 1,
-})
+  const currencyFormatter = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: code,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
 
-export function formatCurrency(value) {
-  return currencyFormatter.format(value)
+  const compactFormatter = new Intl.NumberFormat(locale, {
+    style: 'currency',
+    currency: code,
+    notation: 'compact',
+    maximumFractionDigits: 1,
+  })
+
+  return {
+    formatCurrency: (value) => currencyFormatter.format(value),
+    formatCompact: (value) => compactFormatter.format(value),
+  }
 }
 
-export function formatCompact(value) {
-  return compactFormatter.format(value)
+/**
+ * @param {{ locale: string, code: string }} currency
+ */
+export function getCurrencySymbol(currency) {
+  const part = new Intl.NumberFormat(currency.locale, {
+    style: 'currency',
+    currency: currency.code,
+  })
+    .formatToParts(0)
+    .find((p) => p.type === 'currency')
+
+  return part?.value ?? currency.code
 }
 
 export function formatPercent(value) {

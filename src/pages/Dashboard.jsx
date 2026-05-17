@@ -5,6 +5,7 @@ import { MetricCard } from '../components/dashboard/MetricCard'
 import { SavingsProgress } from '../components/dashboard/SavingsProgress'
 import { TransactionList } from '../components/dashboard/TransactionList'
 import { CategoryBreakdown } from '../components/dashboard/CategoryBreakdown'
+import { CurrencySelector } from '../components/currency/CurrencySelector'
 import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { IconTrendUp, IconTrendDown, IconPiggyBank } from '../components/icons'
 import { categories, summary, transactions as initialTransactions } from '../data/mockFinance'
@@ -20,6 +21,10 @@ export default function Dashboard() {
   return (
     <AppShell>
       <div className="space-y-6">
+        <div className="flex justify-end">
+          <CurrencySelector className="w-full sm:w-auto" />
+        </div>
+
         <BalanceHero balance={summary.balance} change={summary.balanceChange} />
 
         <section
