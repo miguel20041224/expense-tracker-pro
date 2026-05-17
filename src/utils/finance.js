@@ -1,3 +1,5 @@
+import { periodToMonthlyAmount } from './incomeBudget'
+
 /** Filtra transacciones del mes calendario actual (YYYY-MM). */
 export function filterCurrentMonth(transactions) {
   const prefix = new Date().toISOString().slice(0, 7)
@@ -13,7 +15,7 @@ function sumByType(transactions, type, absolute = false) {
     }, 0)
 }
 
-/** Total de presupuestos asignados en el mes. */
+/** Total de presupuestos asignados en el mes (legacy). */
 export function sumBudgets(transactions) {
   return sumByType(filterCurrentMonth(transactions), 'budget', true)
 }
@@ -29,15 +31,26 @@ export function sumExpenses(transactions) {
 }
 
 /**
- * Resumen financiero derivado únicamente de movimientos del usuario.
- * Balance y ahorro = presupuestos/ingresos − gastos.
+ * Resumen financiero derivado de movimientos + ingreso configurado opcional.
+ * @param {Array} transactions
+ * @param {{ type?: string, amount?: number } | null} [incomeConfig]
  */
-export function computeSummary(transactions) {
+export function computeSummary(transactions, incomeConfig = null) {
   const monthTx = filterCurrentMonth(transactions)
 
-  const budgets = sumByType(monthTx, 'budget', true)
+  const legacyBudgets = sumByType(monthTx, 'budget', true)
   const otherIncome = sumByType(monthTx, 'income', true)
-  const income = budgets + otherIncome
+
+  let configuredIncome = 0
+  if (incomeConfig?.amount > 0) {
+    configuredIncome = periodToMonthlyAmount(
+      incomeConfig.type ?? 'monthly',
+      incomeConfig.amount,
+    )
+  }
+
+  const budgets = legacyBudgets
+  const income = configuredIncome + legacyBudgets + otherIncome
 
   const expenses = sumByType(monthTx, 'expense', true)
 
@@ -48,14 +61,17 @@ export function computeSummary(transactions) {
 
   return {
     income,
+    configuredIncome,
     budgets,
+    legacyBudgets,
     otherIncome,
     expenses,
     savings,
     balance,
     savingsTransfers,
     hasActivity: monthTx.length > 0,
-    hasBudgets: budgets > 0 || otherIncome > 0,
+    hasBudgets: income > 0,
+    hasConfiguredIncome: configuredIncome > 0,
     hasExpenses: expenses > 0,
     isOverBudget: balance < 0,
   }
@@ -104,6 +120,10 @@ export function hasExpenseData(transactions) {
   return sumExpenses(transactions) > 0
 }
 
-export function hasBudgetData(transactions) {
-  return sumBudgets(transactions) > 0 || sumOtherIncome(transactions) > 0
+export function hasBudgetData(transactions, incomeConfig = null) {
+  return (
+    sumBudgets(transactions) > 0 ||
+    sumOtherIncome(transactions) > 0 ||
+    (incomeConfig?.amount ?? 0) > 0
+  )
 }

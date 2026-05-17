@@ -1,6 +1,8 @@
 import { doc, getDoc, onSnapshot, setDoc } from 'firebase/firestore'
 import { db, isFirebaseReady } from '../../firebase'
 import { COLLECTIONS, EMPTY_FINANCIAL_DATA } from './collections'
+import { normalizeIncomeConfig, buildBudgetSnapshot } from '../../utils/incomeBudget'
+import { normalizeStoredTransactions } from '../../utils/movements'
 
 function financialRef(uid) {
   if (!isFirebaseReady() || !db) {
@@ -10,12 +12,21 @@ function financialRef(uid) {
 }
 
 export function normalizeFinancialDoc(data) {
+  const transactions = normalizeStoredTransactions(data?.transactions ?? [])
+  const income = normalizeIncomeConfig(data?.income)
+  const budgetSnapshot = buildBudgetSnapshot(transactions, income)
+
   return {
     uid: data?.uid,
-    transactions: data?.transactions ?? [],
+    transactions,
     creditCards: data?.creditCards ?? [],
     goals: data?.goals ?? [],
     debts: data?.debts ?? [],
+    income,
+    budget: {
+      limit: data?.budget?.limit ?? budgetSnapshot.limit,
+      remaining: budgetSnapshot.remaining,
+    },
   }
 }
 

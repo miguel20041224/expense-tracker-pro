@@ -8,6 +8,7 @@ import {
   getFinancialData,
   patchFinancialData,
 } from './firestore/financialDataRepository'
+import { buildBudgetSnapshot, normalizeIncomeConfig } from '../utils/incomeBudget'
 
 async function advisorClientIds(actor) {
   if (actor?.role !== 'advisor') return []
@@ -21,11 +22,21 @@ export async function loadClientFinancialSnapshot(actor, clientId) {
 
   const data = await getFinancialData(clientId)
   return {
-    transactions: normalizeStoredTransactions(data.transactions),
+    transactions: data.transactions,
     creditCards: normalizeCreditCards(data.creditCards),
     goals: normalizeGoals(data.goals),
     debts: normalizeDebts(data.debts),
+    income: data.income,
+    budget: data.budget,
   }
+}
+
+export async function saveClientIncome(actor, clientId, income) {
+  assertCanWrite(actor, clientId)
+  const normalized = normalizeIncomeConfig(income)
+  const data = await getFinancialData(clientId)
+  const budget = buildBudgetSnapshot(data.transactions, normalized)
+  await patchFinancialData(clientId, { income: normalized, budget })
 }
 
 export async function saveClientTransactions(actor, clientId, transactions) {

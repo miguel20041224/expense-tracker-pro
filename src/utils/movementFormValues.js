@@ -18,6 +18,7 @@ export function getExpenseEditFormValues(transaction, locale) {
     category: transaction.category ?? '',
     description: transaction.description ?? '',
     creditCardId: transaction.creditCardId ?? '',
+    paymentMethod: transaction.paymentMethod ?? 'cash',
   }
 }
 

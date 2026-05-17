@@ -16,8 +16,8 @@ function matchesLeisure(category) {
   return LEISURE_CATEGORIES.some((k) => name.includes(k))
 }
 
-export function computeAdvisorMetrics({ transactions, creditCards, goals, debts }) {
-  const summary = computeSummary(transactions)
+export function computeAdvisorMetrics({ transactions, creditCards, goals, debts, income = null }) {
+  const summary = computeSummary(transactions, income)
   const categories = computeCategories(transactions)
   const monthTx = filterCurrentMonth(transactions)
   const expenseCount = monthTx.filter((t) => t.type === 'expense').length

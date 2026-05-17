@@ -13,11 +13,13 @@ import { CurrencySelector } from '../components/currency/CurrencySelector'
 import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { BudgetForm } from '../components/budgets/BudgetForm'
 import { BudgetSummary } from '../components/budgets/BudgetSummary'
+import { IncomeBudgetSettings } from '../components/budgets/IncomeBudgetSettings'
 import { CreditCardsPanel } from '../components/creditCards/CreditCardsPanel'
 import { GoalsPanel } from '../components/goals/GoalsPanel'
 import { SnowballPanel } from '../components/debts/SnowballPanel'
 import { IconTrendUp, IconTrendDown, IconPiggyBank, IconWallet } from '../components/icons'
 import { useTransactions } from '../hooks/useTransactions'
+import { useIncomeBudget } from '../hooks/useIncomeBudget'
 import { useCreditCards } from '../hooks/useCreditCards'
 import { useFinancialGoals } from '../hooks/useFinancialGoals'
 import { useDebts } from '../hooks/useDebts'
@@ -38,6 +40,8 @@ export default function Dashboard() {
     toggleFavorite,
     isEmpty,
   } = useTransactions(user)
+  const { income, overview: budgetOverview, saveIncome, loading: incomeLoading } =
+    useIncomeBudget(user)
   const { cards, addCard, deleteCard } = useCreditCards(user)
   const { goals, addGoal, deleteGoal, contributeToGoal, applyIncomeContributions } =
     useFinancialGoals(user)
@@ -54,7 +58,7 @@ export default function Dashboard() {
   const { showOnboarding, dismissOnboarding } = useOnboarding(isEmpty)
   const expenseFormRef = useRef(null)
 
-  const summary = useMemo(() => computeSummary(transactions), [transactions])
+  const summary = useMemo(() => computeSummary(transactions, income), [transactions, income])
   const categories = useMemo(() => computeCategories(transactions), [transactions])
 
   const expenseShare =
@@ -169,7 +173,7 @@ export default function Dashboard() {
             </section>
 
             <section className="grid gap-4 lg:grid-cols-5">
-              {hasBudgetData(transactions) ? (
+              {hasBudgetData(transactions, income) ? (
                 <div className="lg:col-span-2">
                   <SavingsProgress
                     income={summary.income}
@@ -218,11 +222,21 @@ export default function Dashboard() {
 
         {activeTab === 'presupuesto' ? (
           <section className="grid gap-4 lg:grid-cols-5">
-            <div className="lg:col-span-2">
+            <div className="space-y-4 lg:col-span-2">
+              <IncomeBudgetSettings
+                income={income}
+                overview={budgetOverview}
+                onSave={saveIncome}
+                loading={incomeLoading}
+              />
               <BudgetForm onSubmit={handleAddBudget} />
             </div>
             <section className="space-y-4 lg:col-span-3">
-              <BudgetSummary transactions={transactions} />
+              <BudgetSummary
+                transactions={transactions}
+                income={income}
+                overview={budgetOverview}
+              />
             </section>
           </section>
         ) : null}

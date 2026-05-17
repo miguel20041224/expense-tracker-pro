@@ -5,6 +5,13 @@ import {
   generateFinancialInsights,
   buildMonthlyExpenseTrend,
 } from '../../utils/advisorAnalytics'
+import {
+  EMPTY_TRANSACTION_FILTERS,
+  filterExpenseTransactions,
+  hasActiveTransactionFilters,
+} from '../../utils/transactionFilters'
+import { isExpenseTransaction } from '../../utils/expense'
+import { computeBudgetOverview } from '../../utils/incomeBudget'
 import { BalanceHero } from '../dashboard/BalanceHero'
 import { CategoryBreakdown } from '../dashboard/CategoryBreakdown'
 import { TransactionList } from '../dashboard/TransactionList'
@@ -13,6 +20,7 @@ import { ProgressBar } from '../ui/ProgressBar'
 import { Money } from '../currency/Money'
 import { AdvisorMetricsRow } from './AdvisorMetricsRow'
 import { AdvisorInsights } from './AdvisorInsights'
+import { AdvisorTransactionFilters } from './AdvisorTransactionFilters'
 import {
   CategoryPieChart,
   IncomeExpenseLineChart,
@@ -25,6 +33,8 @@ const EMPTY_SNAPSHOT = {
   creditCards: [],
   goals: [],
   debts: [],
+  income: { type: 'monthly', amount: 0 },
+  budget: { limit: 0, remaining: 0 },
 }
 
 export function AdvisorClientDetail({ advisor, client }) {
@@ -32,6 +42,7 @@ export function AdvisorClientDetail({ advisor, client }) {
   const [snapshot, setSnapshot] = useState(EMPTY_SNAPSHOT)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [filters, setFilters] = useState(EMPTY_TRANSACTION_FILTERS)
 
   useEffect(() => {
     let cancelled = false
@@ -57,15 +68,39 @@ export function AdvisorClientDetail({ advisor, client }) {
     }
   }, [advisor, clientId])
 
+  const allExpenses = useMemo(
+    () => snapshot.transactions.filter(isExpenseTransaction),
+    [snapshot.transactions],
+  )
+
+  const filteredExpenses = useMemo(
+    () => filterExpenseTransactions(snapshot.transactions, filters),
+    [snapshot.transactions, filters],
+  )
+
+  const filteredTransactions = useMemo(() => {
+    if (!hasActiveTransactionFilters(filters)) return snapshot.transactions
+    const expenseIds = new Set(filteredExpenses.map((t) => t.id))
+    return snapshot.transactions.filter(
+      (t) => !isExpenseTransaction(t) || expenseIds.has(t.id),
+    )
+  }, [snapshot.transactions, filters, filteredExpenses])
+
   const metrics = useMemo(
     () =>
       computeAdvisorMetrics({
-        transactions: snapshot.transactions,
+        transactions: filteredTransactions,
         creditCards: snapshot.creditCards,
         goals: snapshot.goals,
         debts: snapshot.debts,
+        income: snapshot.income,
       }),
-    [snapshot],
+    [filteredTransactions, snapshot],
+  )
+
+  const clientBudgetOverview = useMemo(
+    () => computeBudgetOverview(snapshot.transactions, snapshot.income),
+    [snapshot.transactions, snapshot.income],
   )
 
   const insights = useMemo(
@@ -74,8 +109,8 @@ export function AdvisorClientDetail({ advisor, client }) {
   )
 
   const trend = useMemo(
-    () => buildMonthlyExpenseTrend(snapshot.transactions),
-    [snapshot.transactions],
+    () => buildMonthlyExpenseTrend(filteredExpenses),
+    [filteredExpenses],
   )
 
   const cardNameById = useMemo(() => {
@@ -85,6 +120,10 @@ export function AdvisorClientDetail({ advisor, client }) {
   }, [snapshot.creditCards])
 
   const riskLabels = { bajo: 'Bajo', medio: 'Medio', alto: 'Alto' }
+
+  function handleResetFilters() {
+    setFilters(EMPTY_TRANSACTION_FILTERS)
+  }
 
   if (loading) {
     return (
@@ -116,6 +155,46 @@ export function AdvisorClientDetail({ advisor, client }) {
           Solo lectura
         </span>
       </div>
+
+      {clientBudgetOverview.hasConfiguredIncome ? (
+        <Card className="border-accent/20 bg-accent/5">
+          <CardHeader>
+            <CardTitle>Presupuesto del cliente</CardTitle>
+            <span className="text-xs text-slate-500">Solo lectura</span>
+          </CardHeader>
+          <div className="grid gap-3 text-sm sm:grid-cols-3">
+            <div>
+              <p className="text-slate-500">Límite mensual</p>
+              <Money value={clientBudgetOverview.limit} className="font-semibold text-white" />
+            </div>
+            <div>
+              <p className="text-slate-500">Gastado</p>
+              <Money value={clientBudgetOverview.spent} className="font-semibold text-expense" />
+            </div>
+            <div>
+              <p className="text-slate-500">Disponible</p>
+              <Money
+                value={clientBudgetOverview.remaining}
+                className={`font-semibold ${clientBudgetOverview.isOverBudget ? 'text-expense' : 'text-income'}`}
+              />
+            </div>
+          </div>
+          <ProgressBar
+            className="mt-3"
+            value={Math.min(clientBudgetOverview.usagePercent, 100)}
+            variant={clientBudgetOverview.isOverBudget ? 'expense' : 'default'}
+          />
+        </Card>
+      ) : null}
+
+      <AdvisorTransactionFilters
+        filters={filters}
+        onChange={setFilters}
+        onReset={handleResetFilters}
+        transactions={snapshot.transactions}
+        filteredCount={filteredExpenses.length}
+        totalExpenseCount={allExpenses.length}
+      />
 
       <BalanceHero summary={metrics.summary} />
       <AdvisorMetricsRow metrics={metrics} />
@@ -187,9 +266,9 @@ export function AdvisorClientDetail({ advisor, client }) {
         </Card>
 
         <TransactionList
-          transactions={snapshot.transactions}
-          isEmpty={snapshot.transactions.length === 0}
-          limit={8}
+          transactions={filteredExpenses}
+          isEmpty={filteredExpenses.length === 0}
+          limit={hasActiveTransactionFilters(filters) ? undefined : 8}
           creditCardNames={cardNameById}
         />
       </section>

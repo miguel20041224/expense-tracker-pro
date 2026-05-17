@@ -8,6 +8,7 @@ export function getEmptyExpenseForm() {
     date: new Date().toISOString().slice(0, 10),
     description: '',
     creditCardId: '',
+    paymentMethod: 'cash',
   }
 }
 

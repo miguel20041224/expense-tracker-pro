@@ -9,4 +9,6 @@ export const EMPTY_FINANCIAL_DATA = {
   creditCards: [],
   goals: [],
   debts: [],
+  income: { type: 'monthly', amount: 0 },
+  budget: { limit: 0, remaining: 0 },
 }

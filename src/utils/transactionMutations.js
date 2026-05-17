@@ -16,6 +16,7 @@ export function updateExpenseTransaction(existing, {
   amount,
   description,
   creditCardId,
+  paymentMethod,
 }) {
   const next = {
     ...existing,
@@ -26,8 +27,15 @@ export function updateExpenseTransaction(existing, {
   }
 
   if (creditCardId !== undefined) {
-    if (creditCardId) next.creditCardId = creditCardId
-    else delete next.creditCardId
+    if (creditCardId) {
+      next.creditCardId = creditCardId
+      next.paymentMethod = 'credit_card'
+    } else {
+      delete next.creditCardId
+      if (paymentMethod) next.paymentMethod = paymentMethod
+    }
+  } else if (paymentMethod) {
+    next.paymentMethod = paymentMethod
   }
 
   return finalizeEditedTransaction(

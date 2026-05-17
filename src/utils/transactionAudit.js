@@ -9,7 +9,7 @@ export function createCreationAuditMetadata(createdAt = new Date().toISOString()
   return { createdAt }
 }
 
-const EXPENSE_CONTENT_KEYS = ['label', 'category', 'amount', 'description', 'creditCardId']
+const EXPENSE_CONTENT_KEYS = ['label', 'category', 'amount', 'description', 'creditCardId', 'paymentMethod']
 const BUDGET_CONTENT_KEYS = ['budgetType', 'amount', 'description', 'label']
 
 function normalizeAuditValue(value) {

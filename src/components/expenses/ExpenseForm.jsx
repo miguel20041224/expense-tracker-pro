@@ -5,6 +5,7 @@ import { Input } from '../ui/Input'
 import { Select } from '../ui/Select'
 import { Button } from '../ui/Button'
 import { expenseCategories } from '../../data/expenseCategories'
+import { PAYMENT_METHODS } from '../../data/expenseTaxonomy'
 import { CreditCardSelect } from '../creditCards/CreditCardSelect'
 import { useCurrency } from '../../hooks/useCurrency'
 import {
@@ -52,6 +53,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
       amount,
       date: values.date,
       creditCardId: values.creditCardId || undefined,
+      paymentMethod: values.creditCardId ? 'credit_card' : values.paymentMethod,
     })
 
     setValues(getEmptyExpenseForm())
@@ -145,13 +147,36 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
           </Select>
         </FormField>
 
+        <FormField label="Método de pago" htmlFor="expense-payment-method">
+          <Select
+            id="expense-payment-method"
+            name="paymentMethod"
+            value={values.creditCardId ? 'credit_card' : values.paymentMethod}
+            onChange={updateField('paymentMethod')}
+            disabled={Boolean(values.creditCardId)}
+          >
+            {PAYMENT_METHODS.map((method) => (
+              <option key={method.id} value={method.id}>
+                {method.label}
+              </option>
+            ))}
+          </Select>
+        </FormField>
+
         {creditCards.length > 0 ? (
           <FormField label="Tarjeta de crédito (opcional)" htmlFor="expense-card">
             <CreditCardSelect
               id="expense-card"
               cards={creditCards}
               value={values.creditCardId}
-              onChange={updateField('creditCardId')}
+              onChange={(e) => {
+                const cardId = e.target.value
+                setValues((prev) => ({
+                  ...prev,
+                  creditCardId: cardId,
+                  paymentMethod: cardId ? 'credit_card' : prev.paymentMethod,
+                }))
+              }}
             />
           </FormField>
         ) : null}

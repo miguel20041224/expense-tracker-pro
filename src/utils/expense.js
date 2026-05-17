@@ -12,6 +12,7 @@ export function createExpenseTransaction({
   date,
   description,
   creditCardId,
+  paymentMethod,
 }) {
   const now = new Date()
   const calendarDate = date || now.toISOString().slice(0, 10)
@@ -28,7 +29,12 @@ export function createExpenseTransaction({
 
   const trimmedDescription = description?.trim()
   if (trimmedDescription) transaction.description = trimmedDescription
-  if (creditCardId) transaction.creditCardId = creditCardId
+  if (creditCardId) {
+    transaction.creditCardId = creditCardId
+    transaction.paymentMethod = 'credit_card'
+  } else if (paymentMethod) {
+    transaction.paymentMethod = paymentMethod
+  }
 
   return transaction
 }
