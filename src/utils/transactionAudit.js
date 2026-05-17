@@ -1,4 +1,5 @@
 import { formatMovementDateTime } from './movements'
+import { preserveMovementFlags } from './movementFlags'
 
 /** Campos de trazabilidad en cada movimiento (extensible para auditLog). */
 export const TRANSACTION_AUDIT_FIELDS = Object.freeze(['createdAt', 'updatedAt'])
@@ -93,6 +94,7 @@ export function applyEditStamp(next, existing, editedAt = new Date().toISOString
     createdAt: existing.createdAt,
     date: existing.date,
     updatedAt: editedAt,
+    ...preserveMovementFlags(existing),
   }
 }
 

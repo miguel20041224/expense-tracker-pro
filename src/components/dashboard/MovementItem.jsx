@@ -2,6 +2,8 @@ import { Money } from '../currency/Money'
 import { useCurrency } from '../../hooks/useCurrency'
 import { formatMovementDateTime } from '../../utils/movements'
 import { MovementEditIndicator } from '../movements/MovementEditIndicator'
+import { MovementFavoriteToggle } from '../movements/MovementFavoriteToggle'
+import { isMovementFavorite } from '../../utils/movementFlags'
 import { isBudgetTransaction } from '../../utils/budget'
 import { isExpenseTransaction } from '../../utils/expense'
 import { getBudgetTypeLabel } from '../../data/budgetTypes'
@@ -27,8 +29,10 @@ export function MovementItem({
   transaction,
   className,
   showTimeline = false,
+  highlighted = false,
   onEdit,
   onDelete,
+  onToggleFavorite,
 }) {
   const { currency } = useCurrency()
   const isBudget = isBudgetTransaction(transaction)
@@ -36,13 +40,17 @@ export function MovementItem({
   const amountClass = amountStyles[transaction.type] ?? 'text-slate-300'
   const typeLabel = MOVEMENT_TYPE_LABELS[transaction.type] ?? 'Movimiento'
   const timestamp = transaction.createdAt ?? transaction.date
+  const isFavorite = isMovementFavorite(transaction)
   const showActions = canMutateTransaction(transaction) && (onEdit || onDelete)
+  const showFavoriteToggle = Boolean(onToggleFavorite)
 
   return (
     <li
       className={cn(
         'group relative motion-safe:animate-fade-in-up',
         showTimeline && 'pl-7',
+        highlighted && 'rounded-xl bg-amber-500/5 px-2 -mx-2',
+        isFavorite && !highlighted && 'rounded-xl ring-1 ring-inset ring-amber-500/10',
         className,
       )}
     >
@@ -50,7 +58,7 @@ export function MovementItem({
         <span
           className={cn(
             'absolute top-5 left-0 z-10 size-2.5 -translate-x-1/2 rounded-full ring-4 ring-surface-card',
-            isBudget ? 'bg-income' : isExpense ? 'bg-expense' : 'bg-slate-500',
+            isFavorite ? 'bg-amber-400' : isBudget ? 'bg-income' : isExpense ? 'bg-expense' : 'bg-slate-500',
           )}
           aria-hidden
         />
@@ -64,6 +72,7 @@ export function MovementItem({
               isBudget && 'text-income',
               isExpense && 'text-expense',
               !isBudget && !isExpense && 'text-slate-100',
+              isFavorite && 'text-slate-50',
             )}
           >
             {transaction.label}
@@ -106,10 +115,23 @@ export function MovementItem({
         </div>
 
         <div className="flex shrink-0 flex-col items-end gap-1.5">
-          <span className={cn('text-sm font-semibold tabular-nums', amountClass)}>
-            {transaction.amount > 0 ? '+' : '-'}
-            <Money value={Math.abs(transaction.amount)} />
-          </span>
+          <div className="flex items-center gap-0.5">
+            {showFavoriteToggle ? (
+              <MovementFavoriteToggle
+                transaction={transaction}
+                onToggle={onToggleFavorite}
+                className={cn(
+                  'opacity-100 sm:opacity-70 sm:group-focus-within:opacity-100 sm:group-hover:opacity-100',
+                  isFavorite && 'opacity-100',
+                )}
+              />
+            ) : null}
+
+            <span className={cn('text-sm font-semibold tabular-nums', amountClass)}>
+              {transaction.amount > 0 ? '+' : '-'}
+              <Money value={Math.abs(transaction.amount)} />
+            </span>
+          </div>
 
           {showActions ? (
             <MovementActionButtons

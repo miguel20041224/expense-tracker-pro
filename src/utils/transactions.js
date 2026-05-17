@@ -10,3 +10,9 @@ export {
   wasTransactionEdited,
   TRANSACTION_AUDIT_FIELDS,
 } from './transactionAudit'
+
+export {
+  countFavoriteMovements,
+  getFavoriteMovements,
+  isMovementFavorite,
+} from './movementFlags'

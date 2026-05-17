@@ -1,15 +1,27 @@
+import { useCallback } from 'react'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { Button } from '../ui/Button'
 import { IconReceipt, IconSearch } from '../icons'
 import { MovementToolbar } from '../movements/MovementToolbar'
 import { MovementsTimeline } from '../movements/MovementsTimeline'
+import { FeaturedMovementsSection } from '../movements/FeaturedMovementsSection'
 import { useMovementFilters } from '../../hooks/useMovementFilters'
 
-export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
+export function MovementsPanel({
+  transactions,
+  isEmpty,
+  onEdit,
+  onDelete,
+  onToggleFavorite,
+}) {
   const {
     filters,
     filteredMovements,
+    timelineMovements,
+    featuredMovements,
+    showFeaturedSection,
+    favoriteCount,
     categories,
     updateFilter,
     resetFilters,
@@ -20,6 +32,18 @@ export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
 
   const showNoData = isEmpty
   const showNoResults = !isEmpty && resultCount === 0
+  const showTimeline = !showNoResults && timelineMovements.length > 0
+
+  const handleShowAllFavorites = useCallback(() => {
+    updateFilter('favoriteFilter', 'favorites')
+  }, [updateFilter])
+
+  const handleToggleFavorite = useCallback(
+    (transaction) => {
+      onToggleFavorite?.(transaction.id)
+    },
+    [onToggleFavorite],
+  )
 
   return (
     <Card className="flex flex-col motion-safe:animate-fade-in-up">
@@ -31,6 +55,7 @@ export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
               {hasActiveFilters || filters.query.trim()
                 ? `${resultCount} de ${totalCount} resultados`
                 : `${totalCount} en total`}
+              {favoriteCount > 0 ? ` · ${favoriteCount} favoritos` : ''}
             </p>
           ) : null}
         </div>
@@ -48,6 +73,7 @@ export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
             filters={filters}
             categories={categories}
             hasActiveFilters={hasActiveFilters}
+            favoriteCount={favoriteCount}
             onFilterChange={updateFilter}
             onReset={resetFilters}
           />
@@ -64,12 +90,33 @@ export function MovementsPanel({ transactions, isEmpty, onEdit, onDelete }) {
               </Button>
             </EmptyState>
           ) : (
-            <MovementsTimeline
-              movements={filteredMovements}
-              className="mt-1"
-              onEdit={onEdit}
-              onDelete={onDelete}
-            />
+            <>
+              {showFeaturedSection ? (
+                <FeaturedMovementsSection
+                  className="mt-1"
+                  movements={featuredMovements}
+                  favoriteCount={favoriteCount}
+                  onToggleFavorite={handleToggleFavorite}
+                  onShowAllFavorites={handleShowAllFavorites}
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                />
+              ) : null}
+
+              {showTimeline ? (
+                <MovementsTimeline
+                  movements={timelineMovements}
+                  className="mt-1"
+                  onEdit={onEdit}
+                  onDelete={onDelete}
+                  onToggleFavorite={handleToggleFavorite}
+                />
+              ) : showFeaturedSection ? (
+                <p className="mt-2 text-center text-xs text-slate-500">
+                  Todos tus movimientos visibles están en destacados.
+                </p>
+              ) : null}
+            </>
           )}
         </>
       )}

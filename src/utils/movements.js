@@ -36,6 +36,7 @@ export function getMovementTimestamp(transaction) {
 }
 
 import { normalizeAuditMetadata } from './transactionAudit'
+import { normalizeFavoriteMetadata } from './movementFlags'
 
 /** Asegura createdAt en movimientos guardados antes de esta versión. */
 export function normalizeTransaction(transaction) {
@@ -50,7 +51,7 @@ export function normalizeTransaction(transaction) {
     }
   }
 
-  return normalizeAuditMetadata(normalized)
+  return normalizeFavoriteMetadata(normalizeAuditMetadata(normalized))
 }
 
 export function dedupeTransactionsById(transactions) {

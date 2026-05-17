@@ -3,11 +3,15 @@ import {
   DEFAULT_MOVEMENT_FILTERS,
   MOVEMENT_FILTERS_STORAGE_KEY,
 } from '../config/movementFilters'
+import { getFavoriteMovements, countFavoriteMovements } from '../utils/movementFlags'
 import {
+  excludeFavoritesFromList,
   filterAndSortMovements,
   getAvailableCategories,
   hasActiveMovementFilters,
 } from '../utils/movementFilters'
+
+const FEATURED_FAVORITES_LIMIT = 5
 
 function readStoredFilters() {
   try {
@@ -43,6 +47,26 @@ export function useMovementFilters(transactions) {
     [transactions, filtersForQuery],
   )
 
+  const favoriteCount = useMemo(
+    () => countFavoriteMovements(transactions),
+    [transactions],
+  )
+
+  const featuredMovements = useMemo(
+    () => getFavoriteMovements(filteredMovements, FEATURED_FAVORITES_LIMIT),
+    [filteredMovements],
+  )
+
+  const showFeaturedSection =
+    filters.favoriteFilter === 'all' &&
+    !filters.query.trim() &&
+    featuredMovements.length > 0
+
+  const timelineMovements = useMemo(() => {
+    if (!showFeaturedSection) return filteredMovements
+    return excludeFavoritesFromList(filteredMovements)
+  }, [filteredMovements, showFeaturedSection])
+
   const updateFilter = useCallback((key, value) => {
     setFilters((prev) => {
       const next = { ...prev, [key]: value }
@@ -68,6 +92,10 @@ export function useMovementFilters(transactions) {
   return {
     filters,
     filteredMovements,
+    timelineMovements,
+    featuredMovements,
+    showFeaturedSection,
+    favoriteCount,
     categories,
     updateFilter,
     resetFilters,

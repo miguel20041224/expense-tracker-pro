@@ -107,6 +107,25 @@ export function IconPencil({ className = iconClass }) {
   )
 }
 
+export function IconStar({ className = iconClass, filled = false }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke="currentColor"
+      strokeWidth="1.75"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M12 2.5l2.89 5.85 6.46.94-4.68 4.56 1.1 6.43L12 17.77l-5.77 3.03 1.1-6.43-4.68-4.56 6.46-.94L12 2.5z"
+      />
+    </svg>
+  )
+}
+
 export function IconTrash({ className = iconClass }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>

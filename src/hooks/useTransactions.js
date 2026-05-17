@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { createBudgetTransaction, isBudgetTransaction } from '../utils/budget'
 import { createExpenseTransaction, isExpenseTransaction } from '../utils/expense'
+import { countFavoriteMovements, toggleFavoriteFlag } from '../utils/movementFlags'
 import { normalizeStoredTransactions } from '../utils/movements'
 import {
   applyTransactionUpdate,
@@ -74,12 +75,25 @@ export function useTransactions() {
     setTransactions((prev) => normalizeStoredTransactions(prev.filter((t) => t.id !== id)))
   }
 
+  function toggleFavorite(id) {
+    setTransactions((prev) => {
+      const index = prev.findIndex((t) => t.id === id)
+      if (index === -1) return prev
+
+      const next = [...prev]
+      next[index] = toggleFavoriteFlag(prev[index])
+      return normalizeStoredTransactions(next)
+    })
+  }
+
   return {
     transactions,
     addExpense,
     addBudget,
     updateTransaction,
     deleteTransaction,
+    toggleFavorite,
+    favoriteCount: useMemo(() => countFavoriteMovements(transactions), [transactions]),
     isEmpty: transactions.length === 0,
   }
 }

@@ -21,8 +21,15 @@ import { computeSummary, computeCategories, hasBudgetData } from '../utils/finan
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('resumen')
-  const { transactions, addExpense, addBudget, updateTransaction, deleteTransaction, isEmpty } =
-    useTransactions()
+  const {
+    transactions,
+    addExpense,
+    addBudget,
+    updateTransaction,
+    deleteTransaction,
+    toggleFavorite,
+    isEmpty,
+  } = useTransactions()
   const {
     editingTransaction,
     deletingTransaction,
@@ -167,6 +174,7 @@ export default function Dashboard() {
                   limit={5}
                   onEdit={movementHandlers.onEdit}
                   onDelete={movementHandlers.onDelete}
+                  onToggleFavorite={toggleFavorite}
                 />
               </section>
             </section>
@@ -179,6 +187,7 @@ export default function Dashboard() {
             isEmpty={isEmpty}
             onEdit={movementHandlers.onEdit}
             onDelete={movementHandlers.onDelete}
+            onToggleFavorite={toggleFavorite}
           />
         ) : null}
 

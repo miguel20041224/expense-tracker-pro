@@ -1,5 +1,6 @@
 import { DEFAULT_MOVEMENT_FILTERS } from '../config/movementFilters'
 import { getMovementTimestamp } from './movements'
+import { isMovementFavorite } from './movementFlags'
 
 function startOfDay(date) {
   const d = new Date(date)
@@ -77,6 +78,11 @@ export function matchesDateFilter(transaction, date) {
   return movementDate === date
 }
 
+export function matchesFavoriteFilter(transaction, favoriteFilter) {
+  if (favoriteFilter === 'favorites') return isMovementFavorite(transaction)
+  return true
+}
+
 export function matchesQuickRange(transaction, quickRange) {
   if (quickRange === 'all') return true
 
@@ -146,7 +152,8 @@ export function filterMovements(transactions, filters) {
       matchesKindFilter(transaction, filters.kind) &&
       matchesCategoryFilter(transaction, filters.category) &&
       matchesDateFilter(transaction, filters.date) &&
-      matchesQuickRange(transaction, filters.quickRange),
+      matchesQuickRange(transaction, filters.quickRange) &&
+      matchesFavoriteFilter(transaction, filters.favoriteFilter),
   )
 }
 
@@ -175,6 +182,12 @@ export function hasActiveMovementFilters(filters) {
     filters.category !== 'all' ||
     filters.date !== '' ||
     filters.quickRange !== 'all' ||
+    filters.favoriteFilter !== 'all' ||
     filters.sort !== DEFAULT_MOVEMENT_FILTERS.sort
   )
+}
+
+/** Excluye favoritos del listado principal cuando hay sección destacada visible. */
+export function excludeFavoritesFromList(transactions) {
+  return transactions.filter((transaction) => !isMovementFavorite(transaction))
 }

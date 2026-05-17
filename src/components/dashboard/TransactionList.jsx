@@ -4,7 +4,14 @@ import { IconReceipt } from '../icons'
 import { MovementItem } from './MovementItem'
 import { sortTransactionsByDate } from '../../utils/transactions'
 
-export function TransactionList({ transactions, isEmpty, limit, onEdit, onDelete }) {
+export function TransactionList({
+  transactions,
+  isEmpty,
+  limit,
+  onEdit,
+  onDelete,
+  onToggleFavorite,
+}) {
   const sorted = sortTransactionsByDate(transactions)
   const visible = limit ? sorted.slice(0, limit) : sorted
 
@@ -33,6 +40,7 @@ export function TransactionList({ transactions, isEmpty, limit, onEdit, onDelete
               className="last:pb-0"
               onEdit={onEdit}
               onDelete={onDelete}
+              onToggleFavorite={onToggleFavorite}
             />
           ))}
         </ul>

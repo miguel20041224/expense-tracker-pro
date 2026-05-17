@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { MovementSearch } from './MovementSearch'
 import { MovementQuickFilters } from './MovementQuickFilters'
+import { MovementFavoriteFilters } from './MovementFavoriteFilters'
 import { MovementFilterFields } from './MovementFilterFields'
 import { Button } from '../ui/Button'
 import { IconFilter } from '../icons'
@@ -10,6 +11,7 @@ export function MovementToolbar({
   filters,
   categories,
   hasActiveFilters,
+  favoriteCount,
   onFilterChange,
   onReset,
 }) {
@@ -25,6 +27,12 @@ export function MovementToolbar({
       <MovementQuickFilters
         value={filters.quickRange}
         onChange={(value) => onFilterChange('quickRange', value)}
+      />
+
+      <MovementFavoriteFilters
+        value={filters.favoriteFilter}
+        favoriteCount={favoriteCount}
+        onChange={(value) => onFilterChange('favoriteFilter', value)}
       />
 
       <div className="flex flex-wrap items-center justify-between gap-3">

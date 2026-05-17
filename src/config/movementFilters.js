@@ -27,6 +27,11 @@ export const SORT_OPTIONS = [
   { id: 'income-high', label: 'Mayor ingreso' },
 ]
 
+export const FAVORITE_FILTER_OPTIONS = [
+  { id: 'all', label: 'Todos' },
+  { id: 'favorites', label: 'Favoritos' },
+]
+
 export const DEFAULT_MOVEMENT_FILTERS = {
   query: '',
   flow: 'all',
@@ -34,5 +39,6 @@ export const DEFAULT_MOVEMENT_FILTERS = {
   category: 'all',
   date: '',
   quickRange: 'all',
+  favoriteFilter: 'all',
   sort: 'newest',
 }
