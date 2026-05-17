@@ -1,4 +1,5 @@
 import { createTransactionId } from './movements'
+import { createCreationAuditMetadata } from './transactionAudit'
 
 export function isExpenseTransaction(transaction) {
   return transaction?.type === 'expense'
@@ -15,6 +16,6 @@ export function createExpenseTransaction({ name, category, amount, date }) {
     category,
     amount: -Math.abs(amount),
     date: calendarDate,
-    createdAt: now.toISOString(),
+    ...createCreationAuditMetadata(now.toISOString()),
   }
 }

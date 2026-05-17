@@ -1,6 +1,7 @@
 import { Money } from '../currency/Money'
 import { useCurrency } from '../../hooks/useCurrency'
 import { formatMovementDateTime } from '../../utils/movements'
+import { MovementEditIndicator } from '../movements/MovementEditIndicator'
 import { isBudgetTransaction } from '../../utils/budget'
 import { isExpenseTransaction } from '../../utils/expense'
 import { getBudgetTypeLabel } from '../../data/budgetTypes'
@@ -75,6 +76,8 @@ export function MovementItem({
           <p className="mt-0.5 text-xs text-slate-500">
             {formatMovementDateTime(timestamp, currency.locale)}
           </p>
+
+          <MovementEditIndicator transaction={transaction} locale={currency.locale} />
 
           {isBudget ? (
             <>

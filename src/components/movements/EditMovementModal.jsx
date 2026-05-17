@@ -10,6 +10,7 @@ import { useCurrency } from '../../hooks/useCurrency'
 import { isBudgetTransaction } from '../../utils/budget'
 import { isExpenseTransaction } from '../../utils/expense'
 import { formatMovementDateTime } from '../../utils/movements'
+import { MovementEditIndicator } from './MovementEditIndicator'
 import { getEditFormValues } from '../../utils/movementFormValues'
 import { validateExpenseEditForm, hasValidationErrors } from '../../utils/validateExpense'
 import { validateBudgetForm, hasValidationErrors as hasBudgetErrors } from '../../utils/validateBudget'
@@ -97,6 +98,11 @@ export function EditMovementModal({ transaction, open, onClose, onSave }) {
           <p className="mt-0.5 text-sm text-slate-200">
             {formatMovementDateTime(timestamp, currency.locale)}
           </p>
+          <MovementEditIndicator
+            transaction={transaction}
+            locale={currency.locale}
+            className="mt-2 border-t border-border-subtle/80 pt-2"
+          />
         </div>
 
         {isExpense ? (

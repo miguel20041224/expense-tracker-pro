@@ -1,5 +1,6 @@
 import { getBudgetTypeLabel } from '../data/budgetTypes'
 import { createTransactionId, formatMovementDateTime } from './movements'
+import { createCreationAuditMetadata } from './transactionAudit'
 
 export { formatMovementDateTime }
 
@@ -19,7 +20,7 @@ export function createBudgetTransaction({ amount, budgetType, description }) {
     description: description?.trim() || undefined,
     amount: Math.abs(amount),
     date: now.toISOString().slice(0, 10),
-    createdAt: now.toISOString(),
+    ...createCreationAuditMetadata(now.toISOString()),
   }
 }
 

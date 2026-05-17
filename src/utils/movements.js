@@ -35,22 +35,22 @@ export function getMovementTimestamp(transaction) {
   return 0
 }
 
+import { normalizeAuditMetadata } from './transactionAudit'
+
 /** Asegura createdAt en movimientos guardados antes de esta versión. */
 export function normalizeTransaction(transaction) {
   if (!transaction || typeof transaction !== 'object') return transaction
 
-  if (transaction.createdAt) {
-    return transaction
-  }
+  let normalized = transaction
 
-  if (transaction.date) {
-    return {
+  if (!transaction.createdAt && transaction.date) {
+    normalized = {
       ...transaction,
       createdAt: new Date(`${transaction.date}T12:00:00`).toISOString(),
     }
   }
 
-  return transaction
+  return normalizeAuditMetadata(normalized)
 }
 
 export function dedupeTransactionsById(transactions) {

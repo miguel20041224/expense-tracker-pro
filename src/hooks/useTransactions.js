@@ -51,15 +51,20 @@ export function useTransactions() {
       const current = prev.find((t) => t.id === id)
       if (!current) return prev
 
+      let didChange = false
+
       const updated = applyTransactionUpdate(prev, id, (transaction) => {
+        let next = null
         if (isExpenseTransaction(transaction)) {
-          return updateExpenseTransaction(transaction, payload)
+          next = updateExpenseTransaction(transaction, payload)
+        } else if (isBudgetTransaction(transaction)) {
+          next = updateBudgetTransaction(transaction, payload)
         }
-        if (isBudgetTransaction(transaction)) {
-          return updateBudgetTransaction(transaction, payload)
-        }
-        return null
+        if (next && next !== transaction) didChange = true
+        return next
       })
+
+      if (!didChange) return prev
 
       return normalizeStoredTransactions(updated)
     })
