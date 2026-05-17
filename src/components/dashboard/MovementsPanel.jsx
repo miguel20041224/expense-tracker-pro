@@ -3,6 +3,7 @@ import { EmptyState } from '../ui/EmptyState'
 import { IconReceipt } from '../icons'
 import { MovementItem } from './MovementItem'
 import { sortTransactionsByDate } from '../../utils/transactions'
+import { cn } from '../../utils/cn'
 
 export function MovementsPanel({ transactions, isEmpty }) {
   const sorted = sortTransactionsByDate(transactions)
@@ -23,9 +24,19 @@ export function MovementsPanel({ transactions, isEmpty }) {
           description="Agrega un presupuesto en la pestaña Presupuesto o un gasto en Resumen para ver tu historial aquí."
         />
       ) : (
-        <ul className="divide-y divide-border-subtle">
+        <ul
+          className={cn(
+            'relative ml-1 border-l border-border-subtle',
+            sorted.length > 0 && 'pb-1',
+          )}
+        >
           {sorted.map((tx) => (
-            <MovementItem key={tx.id} transaction={tx} className="first:pt-0 last:pb-0" />
+            <MovementItem
+              key={tx.id}
+              transaction={tx}
+              showTimeline
+              className="last:pb-0"
+            />
           ))}
         </ul>
       )}

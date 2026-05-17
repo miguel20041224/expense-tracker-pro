@@ -24,9 +24,14 @@ export function TransactionList({ transactions, isEmpty, limit }) {
           description="Agrega un presupuesto en la pestaña Presupuesto o un gasto con el formulario de la izquierda."
         />
       ) : (
-        <ul className="divide-y divide-border-subtle">
+        <ul className="relative ml-1 border-l border-border-subtle">
           {visible.map((tx) => (
-            <MovementItem key={tx.id} transaction={tx} className="first:pt-0 last:pb-0" />
+            <MovementItem
+              key={tx.id}
+              transaction={tx}
+              showTimeline
+              className="last:pb-0"
+            />
           ))}
         </ul>
       )}

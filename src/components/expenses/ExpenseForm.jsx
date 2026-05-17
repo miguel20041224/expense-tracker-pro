@@ -12,13 +12,6 @@ import {
   hasValidationErrors,
 } from '../../utils/validateExpense'
 
-function createExpenseId() {
-  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-    return crypto.randomUUID()
-  }
-  return String(Date.now())
-}
-
 export function ExpenseForm({ onSubmit }) {
   const { currency, currencyCode, amountPlaceholder, formatCurrency, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyExpenseForm)
@@ -53,11 +46,9 @@ export function ExpenseForm({ onSubmit }) {
     const amount = parseAmount(values.amount)
 
     onSubmit?.({
-      id: createExpenseId(),
-      label: values.name.trim(),
+      name: values.name.trim(),
       category: values.category,
-      amount: -Math.abs(amount),
-      type: 'expense',
+      amount,
       date: values.date,
     })
 
@@ -78,7 +69,7 @@ export function ExpenseForm({ onSubmit }) {
       <CardHeader>
         <CardTitle>Agregar gasto</CardTitle>
         {submitted ? (
-          <span className="text-xs font-medium text-income">Gasto registrado</span>
+          <span className="text-xs font-medium text-expense">Gasto registrado</span>
         ) : null}
       </CardHeader>
 
@@ -88,7 +79,7 @@ export function ExpenseForm({ onSubmit }) {
             id="expense-name"
             name="name"
             type="text"
-            placeholder="Ej. Supermercado"
+            placeholder="Ej. Netflix"
             value={values.name}
             onChange={updateField('name')}
             error={errors.name}
@@ -152,14 +143,14 @@ export function ExpenseForm({ onSubmit }) {
           </Select>
         </FormField>
 
-        <div className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
+        <section className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={handleReset}>
             Limpiar
           </Button>
           <Button type="submit" size="lg">
             Guardar gasto
           </Button>
-        </div>
+        </section>
       </form>
     </Card>
   )

@@ -24,7 +24,7 @@ import {
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('resumen')
-  const { transactions, addTransaction, addBudget, isEmpty } = useTransactions()
+  const { transactions, addExpense, addBudget, isEmpty } = useTransactions()
   const { showOnboarding, dismissOnboarding } = useOnboarding(isEmpty)
   const expenseFormRef = useRef(null)
 
@@ -48,7 +48,7 @@ export default function Dashboard() {
   }
 
   function handleAddExpense(expense) {
-    addTransaction(expense)
+    addExpense(expense)
   }
 
   function handleAddBudget(budget) {
