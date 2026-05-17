@@ -1,14 +1,21 @@
+import { useState } from 'react'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { MetricCard } from '../components/dashboard/MetricCard'
 import { SavingsProgress } from '../components/dashboard/SavingsProgress'
 import { TransactionList } from '../components/dashboard/TransactionList'
 import { CategoryBreakdown } from '../components/dashboard/CategoryBreakdown'
+import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { IconTrendUp, IconTrendDown, IconPiggyBank } from '../components/icons'
-import { categories, summary, transactions } from '../data/mockFinance'
+import { categories, summary, transactions as initialTransactions } from '../data/mockFinance'
 
 export default function Dashboard() {
+  const [transactions, setTransactions] = useState(initialTransactions)
   const savingsRate = ((summary.savings / summary.income) * 100).toFixed(0)
+
+  function handleAddExpense(expense) {
+    setTransactions((prev) => [expense, ...prev])
+  }
 
   return (
     <AppShell>
@@ -51,8 +58,13 @@ export default function Dashboard() {
           </div>
         </section>
 
-        <section>
-          <TransactionList transactions={transactions} />
+        <section className="grid gap-4 lg:grid-cols-5">
+          <div className="lg:col-span-2">
+            <ExpenseForm onSubmit={handleAddExpense} />
+          </div>
+          <div className="lg:col-span-3">
+            <TransactionList transactions={transactions} />
+          </div>
         </section>
       </div>
     </AppShell>
