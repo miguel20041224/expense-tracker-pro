@@ -126,6 +126,33 @@ export function IconStar({ className = iconClass, filled = false }) {
   )
 }
 
+export function IconCreditCard({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path strokeLinecap="round" d="M2 10h20M6 15h4" />
+    </svg>
+  )
+}
+
+export function IconTarget({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  )
+}
+
+export function IconSnowball({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v18M8 7l4-4 4 4M8 17l4 4 4-4M5 12h14" />
+    </svg>
+  )
+}
+
 export function IconTrash({ className = iconClass }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>

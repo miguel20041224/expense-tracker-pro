@@ -17,6 +17,7 @@ export function getExpenseEditFormValues(transaction, locale) {
     amount: formatAmountForInput(transaction.amount, locale),
     category: transaction.category ?? '',
     description: transaction.description ?? '',
+    creditCardId: transaction.creditCardId ?? '',
   }
 }
 

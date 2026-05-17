@@ -10,13 +10,24 @@ export function canMutateTransaction(transaction) {
   return isExpenseTransaction(transaction) || isBudgetTransaction(transaction)
 }
 
-export function updateExpenseTransaction(existing, { name, category, amount, description }) {
+export function updateExpenseTransaction(existing, {
+  name,
+  category,
+  amount,
+  description,
+  creditCardId,
+}) {
   const next = {
     ...existing,
     label: name.trim(),
     category,
     amount: -Math.abs(amount),
     description: description?.trim() || undefined,
+  }
+
+  if (creditCardId !== undefined) {
+    if (creditCardId) next.creditCardId = creditCardId
+    else delete next.creditCardId
   }
 
   return finalizeEditedTransaction(

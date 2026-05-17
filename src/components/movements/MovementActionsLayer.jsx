@@ -8,6 +8,7 @@ export function MovementActionsLayer({
   onCloseDelete,
   onSaveEdit,
   onConfirmDelete,
+  creditCards = [],
 }) {
   return (
     <>
@@ -16,6 +17,7 @@ export function MovementActionsLayer({
         open={Boolean(editingTransaction)}
         onClose={onCloseEdit}
         onSave={onSaveEdit}
+        creditCards={creditCards}
       />
       <DeleteMovementDialog
         transaction={deletingTransaction}

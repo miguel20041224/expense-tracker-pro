@@ -11,6 +11,7 @@ export function TransactionList({
   onEdit,
   onDelete,
   onToggleFavorite,
+  creditCardNames,
 }) {
   const sorted = sortTransactionsByDate(transactions)
   const visible = limit ? sorted.slice(0, limit) : sorted
@@ -41,6 +42,9 @@ export function TransactionList({
               onEdit={onEdit}
               onDelete={onDelete}
               onToggleFavorite={onToggleFavorite}
+              creditCardName={
+                tx.creditCardId ? creditCardNames?.get(tx.creditCardId) : undefined
+              }
             />
           ))}
         </ul>

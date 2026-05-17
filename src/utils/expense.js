@@ -5,11 +5,18 @@ export function isExpenseTransaction(transaction) {
   return transaction?.type === 'expense'
 }
 
-export function createExpenseTransaction({ name, category, amount, date }) {
+export function createExpenseTransaction({
+  name,
+  category,
+  amount,
+  date,
+  description,
+  creditCardId,
+}) {
   const now = new Date()
   const calendarDate = date || now.toISOString().slice(0, 10)
 
-  return {
+  const transaction = {
     id: createTransactionId(),
     type: 'expense',
     label: name.trim(),
@@ -18,4 +25,10 @@ export function createExpenseTransaction({ name, category, amount, date }) {
     date: calendarDate,
     ...createCreationAuditMetadata(now.toISOString()),
   }
+
+  const trimmedDescription = description?.trim()
+  if (trimmedDescription) transaction.description = trimmedDescription
+  if (creditCardId) transaction.creditCardId = creditCardId
+
+  return transaction
 }

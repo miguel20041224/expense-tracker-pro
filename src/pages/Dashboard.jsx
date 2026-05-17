@@ -11,9 +11,14 @@ import { CurrencySelector } from '../components/currency/CurrencySelector'
 import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { BudgetForm } from '../components/budgets/BudgetForm'
 import { BudgetSummary } from '../components/budgets/BudgetSummary'
-import { ComingSoon } from '../components/ui/ComingSoon'
+import { CreditCardsPanel } from '../components/creditCards/CreditCardsPanel'
+import { GoalsPanel } from '../components/goals/GoalsPanel'
+import { SnowballPanel } from '../components/debts/SnowballPanel'
 import { IconTrendUp, IconTrendDown, IconPiggyBank, IconWallet } from '../components/icons'
 import { useTransactions } from '../hooks/useTransactions'
+import { useCreditCards } from '../hooks/useCreditCards'
+import { useFinancialGoals } from '../hooks/useFinancialGoals'
+import { useDebts } from '../hooks/useDebts'
 import { useMovementActions } from '../hooks/useMovementActions'
 import { MovementActionsLayer } from '../components/movements/MovementActionsLayer'
 import { useOnboarding } from '../hooks/useOnboarding'
@@ -30,6 +35,10 @@ export default function Dashboard() {
     toggleFavorite,
     isEmpty,
   } = useTransactions()
+  const { cards, addCard, deleteCard } = useCreditCards()
+  const { goals, addGoal, deleteGoal, contributeToGoal, applyIncomeContributions } =
+    useFinancialGoals()
+  const { debts, addDebt, deleteDebt } = useDebts()
   const {
     editingTransaction,
     deletingTransaction,
@@ -69,9 +78,20 @@ export default function Dashboard() {
   }
 
   function handleAddBudget(budget) {
-    addBudget(budget)
+    const transaction = addBudget(budget)
+    applyIncomeContributions(Math.abs(transaction?.amount ?? budget.amount))
     setActiveTab('movimientos')
   }
+
+  function handleAddCardExpense(expense) {
+    addExpense(expense)
+  }
+
+  const cardNameById = useMemo(() => {
+    const map = new Map()
+    for (const card of cards) map.set(card.id, card.name)
+    return map
+  }, [cards])
 
   return (
     <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
@@ -165,7 +185,7 @@ export default function Dashboard() {
 
             <section className="grid gap-4 lg:grid-cols-5">
               <div ref={expenseFormRef} id="add-expense" className="scroll-mt-6 lg:col-span-2">
-                <ExpenseForm onSubmit={handleAddExpense} />
+                <ExpenseForm onSubmit={handleAddExpense} creditCards={cards} />
               </div>
               <section className="lg:col-span-3">
                 <TransactionList
@@ -175,6 +195,7 @@ export default function Dashboard() {
                   onEdit={movementHandlers.onEdit}
                   onDelete={movementHandlers.onDelete}
                   onToggleFavorite={toggleFavorite}
+                  creditCardNames={cardNameById}
                 />
               </section>
             </section>
@@ -188,6 +209,7 @@ export default function Dashboard() {
             onEdit={movementHandlers.onEdit}
             onDelete={movementHandlers.onDelete}
             onToggleFavorite={toggleFavorite}
+            creditCardNames={cardNameById}
           />
         ) : null}
 
@@ -202,11 +224,27 @@ export default function Dashboard() {
           </section>
         ) : null}
 
-        {activeTab === 'metas' ? (
-          <ComingSoon
-            title="Metas de ahorro"
-            description="Próximamente podrás definir metas y seguir tu progreso desde aquí."
+        {activeTab === 'tarjetas' ? (
+          <CreditCardsPanel
+            cards={cards}
+            transactions={transactions}
+            onAddCard={addCard}
+            onDeleteCard={deleteCard}
+            onAddCardExpense={handleAddCardExpense}
           />
+        ) : null}
+
+        {activeTab === 'metas' ? (
+          <GoalsPanel
+            goals={goals}
+            onAddGoal={addGoal}
+            onContribute={contributeToGoal}
+            onDeleteGoal={deleteGoal}
+          />
+        ) : null}
+
+        {activeTab === 'deudas' ? (
+          <SnowballPanel debts={debts} onAddDebt={addDebt} onDeleteDebt={deleteDebt} />
         ) : null}
       </div>
       <MovementActionsLayer
@@ -216,6 +254,7 @@ export default function Dashboard() {
         onCloseDelete={closeDelete}
         onSaveEdit={handleSaveEdit}
         onConfirmDelete={handleConfirmDelete}
+        creditCards={cards}
       />
     </AppShell>
   )

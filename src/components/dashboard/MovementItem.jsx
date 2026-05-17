@@ -33,6 +33,7 @@ export function MovementItem({
   onEdit,
   onDelete,
   onToggleFavorite,
+  creditCardName,
 }) {
   const { currency } = useCurrency()
   const isBudget = isBudgetTransaction(transaction)
@@ -79,7 +80,10 @@ export function MovementItem({
           </p>
 
           {isExpense && transaction.category ? (
-            <p className="mt-0.5 truncate text-xs text-slate-400">{transaction.category}</p>
+            <p className="mt-0.5 truncate text-xs text-slate-400">
+              {transaction.category}
+              {creditCardName ? ` · ${creditCardName}` : null}
+            </p>
           ) : null}
 
           <p className="mt-0.5 text-xs text-slate-500">

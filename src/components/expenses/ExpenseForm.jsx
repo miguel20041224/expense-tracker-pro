@@ -5,6 +5,7 @@ import { Input } from '../ui/Input'
 import { Select } from '../ui/Select'
 import { Button } from '../ui/Button'
 import { expenseCategories } from '../../data/expenseCategories'
+import { CreditCardSelect } from '../creditCards/CreditCardSelect'
 import { useCurrency } from '../../hooks/useCurrency'
 import {
   getEmptyExpenseForm,
@@ -12,7 +13,7 @@ import {
   hasValidationErrors,
 } from '../../utils/validateExpense'
 
-export function ExpenseForm({ onSubmit }) {
+export function ExpenseForm({ onSubmit, creditCards = [] }) {
   const { currency, currencyCode, amountPlaceholder, formatCurrency, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyExpenseForm)
   const [errors, setErrors] = useState({})
@@ -50,6 +51,7 @@ export function ExpenseForm({ onSubmit }) {
       category: values.category,
       amount,
       date: values.date,
+      creditCardId: values.creditCardId || undefined,
     })
 
     setValues(getEmptyExpenseForm())
@@ -142,6 +144,17 @@ export function ExpenseForm({ onSubmit }) {
             ))}
           </Select>
         </FormField>
+
+        {creditCards.length > 0 ? (
+          <FormField label="Tarjeta de crédito (opcional)" htmlFor="expense-card">
+            <CreditCardSelect
+              id="expense-card"
+              cards={creditCards}
+              value={values.creditCardId}
+              onChange={updateField('creditCardId')}
+            />
+          </FormField>
+        ) : null}
 
         <section className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={handleReset}>

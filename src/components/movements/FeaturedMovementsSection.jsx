@@ -10,6 +10,7 @@ export function FeaturedMovementsSection({
   onEdit,
   onDelete,
   className,
+  creditCardNames,
 }) {
   if (movements.length === 0) return null
 
@@ -58,6 +59,11 @@ export function FeaturedMovementsSection({
             onToggleFavorite={onToggleFavorite}
             onEdit={onEdit}
             onDelete={onDelete}
+            creditCardName={
+              transaction.creditCardId
+                ? creditCardNames?.get(transaction.creditCardId)
+                : undefined
+            }
           />
         ))}
       </ul>

@@ -5,6 +5,7 @@ import { Input } from '../ui/Input'
 import { Select } from '../ui/Select'
 import { Button } from '../ui/Button'
 import { expenseCategories } from '../../data/expenseCategories'
+import { CreditCardSelect } from '../creditCards/CreditCardSelect'
 import { budgetTypes } from '../../data/budgetTypes'
 import { useCurrency } from '../../hooks/useCurrency'
 import { isBudgetTransaction } from '../../utils/budget'
@@ -15,7 +16,7 @@ import { getEditFormValues } from '../../utils/movementFormValues'
 import { validateExpenseEditForm, hasValidationErrors } from '../../utils/validateExpense'
 import { validateBudgetForm, hasValidationErrors as hasBudgetErrors } from '../../utils/validateBudget'
 
-export function EditMovementModal({ transaction, open, onClose, onSave }) {
+export function EditMovementModal({ transaction, open, onClose, onSave, creditCards = [] }) {
   const { currency, currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(null)
   const [errors, setErrors] = useState({})
@@ -65,6 +66,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave }) {
         category: values.category,
         amount: parseAmount(values.amount),
         description: values.description.trim() || undefined,
+        creditCardId: values.creditCardId || undefined,
       })
       return
     }
@@ -171,6 +173,17 @@ export function EditMovementModal({ transaction, open, onClose, onSave }) {
                 autoComplete="off"
               />
             </FormField>
+
+            {creditCards.length > 0 ? (
+              <FormField label="Tarjeta de crédito (opcional)" htmlFor="edit-card">
+                <CreditCardSelect
+                  id="edit-card"
+                  cards={creditCards}
+                  value={values.creditCardId}
+                  onChange={updateField('creditCardId')}
+                />
+              </FormField>
+            ) : null}
           </>
         ) : null}
 

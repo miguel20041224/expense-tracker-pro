@@ -1,7 +1,14 @@
 import { MovementItem } from '../dashboard/MovementItem'
 import { cn } from '../../utils/cn'
 
-export function MovementsTimeline({ movements, className, onEdit, onDelete, onToggleFavorite }) {
+export function MovementsTimeline({
+  movements,
+  className,
+  onEdit,
+  onDelete,
+  onToggleFavorite,
+  creditCardNames,
+}) {
   if (movements.length === 0) return null
 
   return (
@@ -20,6 +27,11 @@ export function MovementsTimeline({ movements, className, onEdit, onDelete, onTo
           onEdit={onEdit}
           onDelete={onDelete}
           onToggleFavorite={onToggleFavorite}
+          creditCardName={
+            transaction.creditCardId
+              ? creditCardNames?.get(transaction.creditCardId)
+              : undefined
+          }
         />
       ))}
     </ul>

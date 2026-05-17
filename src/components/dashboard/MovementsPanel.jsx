@@ -14,6 +14,7 @@ export function MovementsPanel({
   onEdit,
   onDelete,
   onToggleFavorite,
+  creditCardNames,
 }) {
   const {
     filters,
@@ -100,6 +101,7 @@ export function MovementsPanel({
                   onShowAllFavorites={handleShowAllFavorites}
                   onEdit={onEdit}
                   onDelete={onDelete}
+                  creditCardNames={creditCardNames}
                 />
               ) : null}
 
@@ -110,6 +112,7 @@ export function MovementsPanel({
                   onEdit={onEdit}
                   onDelete={onDelete}
                   onToggleFavorite={handleToggleFavorite}
+                  creditCardNames={creditCardNames}
                 />
               ) : showFeaturedSection ? (
                 <p className="mt-2 text-center text-xs text-slate-500">

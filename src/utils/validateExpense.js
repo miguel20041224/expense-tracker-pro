@@ -6,6 +6,8 @@ export function getEmptyExpenseForm() {
     amount: '',
     category: '',
     date: new Date().toISOString().slice(0, 10),
+    description: '',
+    creditCardId: '',
   }
 }
 
