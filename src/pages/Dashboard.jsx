@@ -12,15 +12,10 @@ import { ExpenseForm } from '../components/expenses/ExpenseForm'
 import { BudgetForm } from '../components/budgets/BudgetForm'
 import { BudgetSummary } from '../components/budgets/BudgetSummary'
 import { ComingSoon } from '../components/ui/ComingSoon'
-import { IconTrendUp, IconTrendDown, IconPiggyBank } from '../components/icons'
+import { IconTrendUp, IconTrendDown, IconPiggyBank, IconWallet } from '../components/icons'
 import { useTransactions } from '../hooks/useTransactions'
 import { useOnboarding } from '../hooks/useOnboarding'
-import {
-  computeSummary,
-  computeCategories,
-  hasExpenseData,
-  hasSavingsData,
-} from '../utils/finance'
+import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('resumen')
@@ -30,13 +25,16 @@ export default function Dashboard() {
 
   const summary = useMemo(() => computeSummary(transactions), [transactions])
   const categories = useMemo(() => computeCategories(transactions), [transactions])
-  const showCategories = hasExpenseData(transactions)
-  const showSavings = hasSavingsData(summary) && summary.savingsGoal > 0
 
   const expenseShare =
-    summary.income > 0 ? `${Math.round((summary.expenses / summary.income) * 100)}% del total de ingresos` : null
+    summary.income > 0
+      ? `${Math.round((summary.expenses / summary.income) * 100)}% de tus ingresos`
+      : null
+
   const savingsRate =
-    summary.income > 0 ? `${Math.round((summary.savings / summary.income) * 100)}% de tus ingresos` : null
+    summary.income > 0
+      ? `${Math.round((Math.max(summary.savings, 0) / summary.income) * 100)}% disponible`
+      : null
 
   function scrollToExpenseForm() {
     setActiveTab('resumen')
@@ -72,10 +70,10 @@ export default function Dashboard() {
               />
             ) : null}
 
-            <BalanceHero balance={summary.balance} isEmpty={isEmpty} />
+            <BalanceHero summary={summary} />
 
             <section
-              className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+              className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
               aria-label="Resumen financiero"
             >
               <MetricCard
@@ -83,17 +81,21 @@ export default function Dashboard() {
                 value={summary.income}
                 variant="income"
                 icon={<IconTrendUp />}
-                isEmpty={isEmpty || summary.income === 0}
-                emptyHint="Sin ingresos registrados este mes"
-                subtitle={summary.income > 0 ? 'Total del mes actual' : undefined}
+                isEmpty={!summary.hasBudgets}
+                emptyHint="Agrega presupuesto en la pestaña Presupuesto"
+                subtitle={
+                  summary.income > 0
+                    ? `${summary.budgets > 0 ? 'Presupuestos del mes' : 'Ingresos del mes'}`
+                    : undefined
+                }
               />
               <MetricCard
                 label="Gastos"
                 value={summary.expenses}
                 variant="expense"
                 icon={<IconTrendDown />}
-                isEmpty={isEmpty || summary.expenses === 0}
-                emptyHint="Tus gastos aparecerán aquí"
+                isEmpty={!summary.hasExpenses}
+                emptyHint="Tus gastos aparecerán aquí al registrarlos"
                 subtitle={expenseShare ?? (summary.expenses > 0 ? 'Total del mes actual' : undefined)}
               />
               <MetricCard
@@ -101,26 +103,46 @@ export default function Dashboard() {
                 value={summary.savings}
                 variant="savings"
                 icon={<IconPiggyBank />}
-                isEmpty={isEmpty || (summary.income === 0 && summary.savings === 0)}
-                emptyHint="Registra ingresos para calcular ahorro"
-                subtitle={savingsRate ?? (summary.savings > 0 ? 'Disponible este mes' : undefined)}
+                isEmpty={!summary.hasActivity}
+                emptyHint="Disponible = presupuestos − gastos"
+                subtitle={
+                  summary.isOverBudget
+                    ? 'Presupuesto superado este mes'
+                    : savingsRate ?? (summary.savings > 0 ? 'Saldo disponible del mes' : undefined)
+                }
+              />
+              <MetricCard
+                label="Balance total"
+                value={summary.balance}
+                variant="balance"
+                icon={<IconWallet />}
+                isEmpty={!summary.hasActivity}
+                emptyHint="Se calcula con tus movimientos del mes"
+                subtitle={
+                  summary.hasActivity
+                    ? 'Presupuestos − gastos'
+                    : undefined
+                }
               />
             </section>
 
-            {(showSavings || showCategories) && (
-              <section className="grid gap-4 lg:grid-cols-5">
-                {showSavings ? (
-                  <div className="lg:col-span-2">
-                    <SavingsProgress current={summary.savings} goal={summary.savingsGoal} />
-                  </div>
-                ) : null}
-                {showCategories ? (
-                  <section className={showSavings ? 'lg:col-span-3' : 'lg:col-span-5'}>
-                    <CategoryBreakdown categories={categories} />
-                  </section>
-                ) : null}
+            <section className="grid gap-4 lg:grid-cols-5">
+              {hasBudgetData(transactions) ? (
+                <div className="lg:col-span-2">
+                  <SavingsProgress
+                    income={summary.income}
+                    expenses={summary.expenses}
+                    remaining={summary.savings}
+                    isOverBudget={summary.isOverBudget}
+                  />
+                </div>
+              ) : null}
+              <section
+                className={hasBudgetData(transactions) ? 'lg:col-span-3' : 'lg:col-span-5'}
+              >
+                <CategoryBreakdown categories={categories} />
               </section>
-            )}
+            </section>
 
             <section className="grid gap-4 lg:grid-cols-5">
               <div ref={expenseFormRef} id="add-expense" className="scroll-mt-6 lg:col-span-2">
