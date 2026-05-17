@@ -61,6 +61,31 @@ export function IconArrowRight({ className = iconClass }) {
   )
 }
 
+export function IconSearch({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <circle cx="11" cy="11" r="7" />
+      <path strokeLinecap="round" d="M20 20l-3.5-3.5" />
+    </svg>
+  )
+}
+
+export function IconFilter({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M7 12h10M10 18h4" />
+    </svg>
+  )
+}
+
+export function IconX({ className = iconClass }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
+      <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  )
+}
+
 export function IconReceipt({ className = iconClass }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" aria-hidden>
