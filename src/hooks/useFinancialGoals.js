@@ -1,28 +1,76 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
   createFinancialGoal,
   distributeIncomeToGoals,
   normalizeGoal,
   normalizeGoals,
 } from '../utils/goals'
-import { readStorage, writeStorage } from '../utils/storage'
+import { subscribeFinancialData } from '../services/firestore/financialDataRepository'
+import { saveClientGoals } from '../services/financialDataService'
+import { canWriteFinancialData } from '../utils/auth/permissions'
 
-const STORAGE_KEY = 'finance-goals'
+function resolveUserId(actor) {
+  return actor?.uid ?? actor?.id
+}
 
-export function useFinancialGoals() {
-  const [goals, setGoals] = useState(() => normalizeGoals(readStorage(STORAGE_KEY, [])))
+export function useFinancialGoals(actor, options = {}) {
+  const userId = resolveUserId(actor)
+  const readOnly = options.readOnly ?? !canWriteFinancialData(actor, userId)
+  const suppressWrite = useRef(true)
+
+  const [goals, setGoals] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    writeStorage(STORAGE_KEY, normalizeGoals(goals))
-  }, [goals])
+    if (!userId) {
+      setGoals([])
+      setLoading(false)
+      return undefined
+    }
 
-  function addGoal(payload) {
+    setLoading(true)
+    suppressWrite.current = true
+
+    const unsubscribe = subscribeFinancialData(userId, (data) => {
+      suppressWrite.current = true
+      setGoals(normalizeGoals(data.goals))
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [userId])
+
+  useEffect(() => {
+    if (!userId || readOnly || loading) return undefined
+
+    if (suppressWrite.current) {
+      suppressWrite.current = false
+      return undefined
+    }
+
+    const timer = setTimeout(() => {
+      saveClientGoals(actor, userId, goals).catch((err) => {
+        console.error('Error guardando metas:', err)
+      })
+    }, 450)
+
+    return () => clearTimeout(timer)
+  }, [goals, userId, readOnly, loading, actor])
+
+  function guardWrite(fn) {
+    return (...args) => {
+      if (readOnly) return undefined
+      return fn(...args)
+    }
+  }
+
+  const addGoal = guardWrite((payload) => {
     const goal = createFinancialGoal(payload)
     setGoals((prev) => [goal, ...prev])
     return goal
-  }
+  })
 
-  function updateGoal(id, payload) {
+  const updateGoal = guardWrite((id, payload) => {
     setGoals((prev) =>
       normalizeGoals(
         prev.map((goal) => {
@@ -39,13 +87,13 @@ export function useFinancialGoals() {
         }),
       ),
     )
-  }
+  })
 
-  function deleteGoal(id) {
+  const deleteGoal = guardWrite((id) => {
     setGoals((prev) => prev.filter((g) => g.id !== id))
-  }
+  })
 
-  function contributeToGoal(id, amount) {
+  const contributeToGoal = guardWrite((id, amount) => {
     const value = Math.abs(Number(amount) || 0)
     if (!value) return
 
@@ -62,12 +110,12 @@ export function useFinancialGoals() {
         }),
       ),
     )
-  }
+  })
 
-  function applyIncomeContributions(incomeAmount) {
+  const applyIncomeContributions = guardWrite((incomeAmount) => {
     if (!incomeAmount || incomeAmount <= 0) return
     setGoals((prev) => normalizeGoals(distributeIncomeToGoals(prev, incomeAmount)))
-  }
+  })
 
   return {
     goals,
@@ -76,6 +124,8 @@ export function useFinancialGoals() {
     deleteGoal,
     contributeToGoal,
     applyIncomeContributions,
-    isEmpty: goals.length === 0,
+    isEmpty: !loading && goals.length === 0,
+    loading,
+    readOnly,
   }
 }

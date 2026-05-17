@@ -1,5 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
+import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
+import { AdvisorLinkPanel } from '../components/client/AdvisorLinkPanel'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
 import { MetricCard } from '../components/dashboard/MetricCard'
 import { SavingsProgress } from '../components/dashboard/SavingsProgress'
@@ -25,6 +27,7 @@ import { useOnboarding } from '../hooks/useOnboarding'
 import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
 
 export default function Dashboard() {
+  const { user } = useAuth()
   const [activeTab, setActiveTab] = useState('resumen')
   const {
     transactions,
@@ -34,11 +37,11 @@ export default function Dashboard() {
     deleteTransaction,
     toggleFavorite,
     isEmpty,
-  } = useTransactions()
-  const { cards, addCard, deleteCard } = useCreditCards()
+  } = useTransactions(user)
+  const { cards, addCard, deleteCard } = useCreditCards(user)
   const { goals, addGoal, deleteGoal, contributeToGoal, applyIncomeContributions } =
-    useFinancialGoals()
-  const { debts, addDebt, deleteDebt } = useDebts()
+    useFinancialGoals(user)
+  const { debts, addDebt, deleteDebt } = useDebts(user)
   const {
     editingTransaction,
     deletingTransaction,
@@ -246,6 +249,8 @@ export default function Dashboard() {
         {activeTab === 'deudas' ? (
           <SnowballPanel debts={debts} onAddDebt={addDebt} onDeleteDebt={deleteDebt} />
         ) : null}
+
+        {activeTab === 'asesor' ? <AdvisorLinkPanel /> : null}
       </div>
       <MovementActionsLayer
         editingTransaction={editingTransaction}

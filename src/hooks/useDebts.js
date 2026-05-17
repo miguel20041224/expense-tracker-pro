@@ -1,23 +1,71 @@
-import { useEffect, useState } from 'react'
-import { createDebt, normalizeDebts } from '../utils/debts'
-import { readStorage, writeStorage } from '../utils/storage'
+import { useEffect, useRef, useState } from 'react'
+import { createDebt, normalizeDebt, normalizeDebts } from '../utils/debts'
+import { subscribeFinancialData } from '../services/firestore/financialDataRepository'
+import { saveClientDebts } from '../services/financialDataService'
+import { canWriteFinancialData } from '../utils/auth/permissions'
 
-const STORAGE_KEY = 'finance-debts'
+function resolveUserId(actor) {
+  return actor?.uid ?? actor?.id
+}
 
-export function useDebts() {
-  const [debts, setDebts] = useState(() => normalizeDebts(readStorage(STORAGE_KEY, [])))
+export function useDebts(actor, options = {}) {
+  const userId = resolveUserId(actor)
+  const readOnly = options.readOnly ?? !canWriteFinancialData(actor, userId)
+  const suppressWrite = useRef(true)
+
+  const [debts, setDebts] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    writeStorage(STORAGE_KEY, normalizeDebts(debts))
-  }, [debts])
+    if (!userId) {
+      setDebts([])
+      setLoading(false)
+      return undefined
+    }
 
-  function addDebt(payload) {
+    setLoading(true)
+    suppressWrite.current = true
+
+    const unsubscribe = subscribeFinancialData(userId, (data) => {
+      suppressWrite.current = true
+      setDebts(normalizeDebts(data.debts))
+      setLoading(false)
+    })
+
+    return unsubscribe
+  }, [userId])
+
+  useEffect(() => {
+    if (!userId || readOnly || loading) return undefined
+
+    if (suppressWrite.current) {
+      suppressWrite.current = false
+      return undefined
+    }
+
+    const timer = setTimeout(() => {
+      saveClientDebts(actor, userId, debts).catch((err) => {
+        console.error('Error guardando deudas:', err)
+      })
+    }, 450)
+
+    return () => clearTimeout(timer)
+  }, [debts, userId, readOnly, loading, actor])
+
+  function guardWrite(fn) {
+    return (...args) => {
+      if (readOnly) return undefined
+      return fn(...args)
+    }
+  }
+
+  const addDebt = guardWrite((payload) => {
     const debt = createDebt(payload)
     setDebts((prev) => [debt, ...prev])
     return debt
-  }
+  })
 
-  function updateDebt(id, payload) {
+  const updateDebt = guardWrite((id, payload) => {
     setDebts((prev) =>
       normalizeDebts(
         prev.map((debt) => {
@@ -33,17 +81,19 @@ export function useDebts() {
         }),
       ),
     )
-  }
+  })
 
-  function deleteDebt(id) {
+  const deleteDebt = guardWrite((id) => {
     setDebts((prev) => prev.filter((d) => d.id !== id))
-  }
+  })
 
   return {
     debts,
     addDebt,
     updateDebt,
     deleteDebt,
-    isEmpty: debts.length === 0,
+    isEmpty: !loading && debts.length === 0,
+    loading,
+    readOnly,
   }
 }

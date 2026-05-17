@@ -1,10 +1,16 @@
 import { CurrencyProvider } from './context/CurrencyContext'
-import Dashboard from './pages/Dashboard'
+import { AuthProvider } from './context/AuthContext'
+import { AppRoot } from './components/AppRoot'
+import { AppErrorBoundary } from './components/ui/AppErrorBoundary'
 
 export default function App() {
   return (
-    <CurrencyProvider>
-      <Dashboard />
-    </CurrencyProvider>
+    <AppErrorBoundary>
+      <AuthProvider>
+        <CurrencyProvider>
+          <AppRoot />
+        </CurrencyProvider>
+      </AuthProvider>
+    </AppErrorBoundary>
   )
 }

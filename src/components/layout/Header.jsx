@@ -1,20 +1,35 @@
+import { useAuth } from '../../context/AuthContext'
 import { IconWallet } from '../icons'
 import { IconBadge } from '../ui/IconBadge'
+import { Button } from '../ui/Button'
 import { NAV_TABS } from '../../config/navigation'
 import { cn } from '../../utils/cn'
 
 export function Header({ activeTab = 'resumen', onTabChange }) {
+  const { user, logout } = useAuth()
+
   return (
-    <header className="flex flex-col gap-4 border-b border-border-subtle py-5 sm:flex-row sm:items-center sm:justify-between">
-      <div className="flex items-center gap-3">
-        <IconBadge variant="accent">
-          <IconWallet />
-        </IconBadge>
-        <div>
-          <p className="text-xs font-medium tracking-widest text-slate-500 uppercase">
-            Finanzas personales
-          </p>
-          <h1 className="text-lg font-semibold tracking-tight text-white">Vault</h1>
+    <header className="flex flex-col gap-4 border-b border-border-subtle py-5">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3">
+          <IconBadge variant="accent">
+            <IconWallet />
+          </IconBadge>
+          <div>
+            <p className="text-xs font-medium tracking-widest text-slate-500 uppercase">
+              Finanzas personales
+            </p>
+            <h1 className="text-lg font-semibold tracking-tight text-white">Vault</h1>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {user ? (
+            <span className="hidden text-xs text-slate-500 sm:inline">{user.name}</span>
+          ) : null}
+          <Button type="button" variant="secondary" size="sm" onClick={logout}>
+            Salir
+          </Button>
         </div>
       </div>
 
