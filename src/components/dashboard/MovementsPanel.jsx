@@ -4,14 +4,13 @@ import { IconReceipt } from '../icons'
 import { MovementItem } from './MovementItem'
 import { sortTransactionsByDate } from '../../utils/transactions'
 
-export function TransactionList({ transactions, isEmpty, limit }) {
+export function MovementsPanel({ transactions, isEmpty }) {
   const sorted = sortTransactionsByDate(transactions)
-  const visible = limit ? sorted.slice(0, limit) : sorted
 
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col motion-safe:animate-fade-in-up">
       <CardHeader>
-        <CardTitle>Últimos movimientos</CardTitle>
+        <CardTitle>Historial de movimientos</CardTitle>
         {!isEmpty ? (
           <span className="text-xs text-slate-500">{transactions.length} en total</span>
         ) : null}
@@ -20,12 +19,12 @@ export function TransactionList({ transactions, isEmpty, limit }) {
       {isEmpty ? (
         <EmptyState
           icon={<IconReceipt className="size-6" />}
-          title="Aún no has agregado movimientos"
-          description="Agrega un presupuesto en la pestaña Presupuesto o un gasto con el formulario de la izquierda."
+          title="Sin movimientos registrados"
+          description="Agrega un presupuesto en la pestaña Presupuesto o un gasto en Resumen para ver tu historial aquí."
         />
       ) : (
         <ul className="divide-y divide-border-subtle">
-          {visible.map((tx) => (
+          {sorted.map((tx) => (
             <MovementItem key={tx.id} transaction={tx} className="first:pt-0 last:pb-0" />
           ))}
         </ul>

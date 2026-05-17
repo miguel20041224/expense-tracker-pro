@@ -1,6 +1,6 @@
 import { Header } from './Header'
 
-export function AppShell({ children }) {
+export function AppShell({ children, activeTab, onTabChange }) {
   return (
     <div className="min-h-screen bg-surface">
       <div className="pointer-events-none fixed inset-0 overflow-hidden" aria-hidden>
@@ -9,7 +9,7 @@ export function AppShell({ children }) {
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-4 pb-10 sm:px-6 lg:px-8">
-        <Header />
+        <Header activeTab={activeTab} onTabChange={onTabChange} />
         <main className="flex-1 pt-6 sm:pt-8">{children}</main>
       </div>
     </div>

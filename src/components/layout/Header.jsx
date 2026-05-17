@@ -1,9 +1,9 @@
 import { IconWallet } from '../icons'
 import { IconBadge } from '../ui/IconBadge'
+import { NAV_TABS } from '../../config/navigation'
+import { cn } from '../../utils/cn'
 
-const navItems = ['Resumen', 'Movimientos', 'Presupuesto', 'Metas']
-
-export function Header() {
+export function Header({ activeTab = 'resumen', onTabChange }) {
   return (
     <header className="flex flex-col gap-4 border-b border-border-subtle py-5 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex items-center gap-3">
@@ -19,19 +19,25 @@ export function Header() {
       </div>
 
       <nav className="flex gap-1 overflow-x-auto pb-1 sm:pb-0" aria-label="Navegación principal">
-        {navItems.map((item, index) => (
-          <button
-            key={item}
-            type="button"
-            className={
-              index === 0
-                ? 'shrink-0 rounded-lg bg-white/8 px-3.5 py-2 text-sm font-medium text-white'
-                : 'shrink-0 rounded-lg px-3.5 py-2 text-sm font-medium text-slate-500 transition hover:bg-white/5 hover:text-slate-300'
-            }
-          >
-            {item}
-          </button>
-        ))}
+        {NAV_TABS.map((item) => {
+          const isActive = activeTab === item.id
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onTabChange?.(item.id)}
+              aria-current={isActive ? 'page' : undefined}
+              className={cn(
+                'shrink-0 rounded-lg px-3.5 py-2 text-sm font-medium transition',
+                isActive
+                  ? 'bg-white/8 text-white'
+                  : 'text-slate-500 hover:bg-white/5 hover:text-slate-300',
+              )}
+            >
+              {item.label}
+            </button>
+          )
+        })}
       </nav>
     </header>
   )

@@ -9,7 +9,7 @@ export function computeSummary(transactions) {
   const monthTx = filterCurrentMonth(transactions)
 
   const income = monthTx
-    .filter((t) => t.type === 'income')
+    .filter((t) => t.type === 'income' || t.type === 'budget')
     .reduce((sum, t) => sum + t.amount, 0)
 
   const expenses = monthTx

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { createBudgetTransaction } from '../utils/budget'
 
 const STORAGE_KEY = 'finance-transactions'
 
@@ -24,9 +25,16 @@ export function useTransactions() {
     setTransactions((prev) => [transaction, ...prev])
   }
 
+  function addBudget({ amount, budgetType, description }) {
+    const transaction = createBudgetTransaction({ amount, budgetType, description })
+    setTransactions((prev) => [transaction, ...prev])
+    return transaction
+  }
+
   return {
     transactions,
     addTransaction,
+    addBudget,
     isEmpty: transactions.length === 0,
   }
 }
