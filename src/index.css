@@ -118,3 +118,31 @@
 @utility animate-star-pop {
   animation: star-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
+
+/* Reportes: impresión / exportar PDF */
+@media print {
+  body {
+    background: white !important;
+    color: #0f172a !important;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .report-print-root,
+  .report-print-root * {
+    visibility: visible;
+  }
+
+  .report-print-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

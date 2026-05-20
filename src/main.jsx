@@ -12,6 +12,13 @@ if (import.meta.env.DEV) {
 if (!rootEl) {
   console.error('[App] No se encontró #root en index.html')
 } else {
+  window.addEventListener('error', (event) => {
+    console.error('[App] window.error', event.error ?? event.message)
+  })
+  window.addEventListener('unhandledrejection', (event) => {
+    console.error('[App] unhandledrejection', event.reason)
+  })
+
   createRoot(rootEl).render(
     <StrictMode>
       <App />

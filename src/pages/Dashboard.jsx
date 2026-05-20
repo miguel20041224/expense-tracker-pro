@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
@@ -21,6 +21,11 @@ import { IncomeBudgetSettings } from '../components/budgets/IncomeBudgetSettings
 import { CreditCardsPanel } from '../components/creditCards/CreditCardsPanel'
 import { GoalsPanel } from '../components/goals/GoalsPanel'
 import { SnowballPanel } from '../components/debts/SnowballPanel'
+import { ReportErrorBoundary } from '../components/ui/ReportErrorBoundary'
+
+const ReportsPanel = lazy(() =>
+  import('../components/reports/ReportsPanel').then((m) => ({ default: m.ReportsPanel })),
+)
 import { IconTrendUp, IconTrendDown, IconPiggyBank, IconWallet } from '../components/icons'
 import { useTransactions } from '../hooks/useTransactions'
 import { useIncomeBudget } from '../hooks/useIncomeBudget'
@@ -307,6 +312,29 @@ export default function Dashboard() {
 
         {activeTab === 'deudas' ? (
           <SnowballPanel debts={debts} onAddDebt={addDebt} onDeleteDebt={deleteDebt} />
+        ) : null}
+
+        {activeTab === 'reportes' ? (
+          <ReportErrorBoundary>
+            <Suspense
+              fallback={
+                <div className="rounded-xl border border-border-subtle bg-surface-card/60 p-8 text-center text-sm text-slate-400">
+                  Cargando reportes…
+                </div>
+              }
+            >
+              <ReportsPanel
+                financialData={{
+                  transactions,
+                  creditCards: cards,
+                  goals,
+                  debts,
+                  income,
+                }}
+                userName={user?.name}
+              />
+            </Suspense>
+          </ReportErrorBoundary>
         ) : null}
 
       </div>

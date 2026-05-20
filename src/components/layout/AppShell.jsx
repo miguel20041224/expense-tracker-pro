@@ -9,7 +9,9 @@ export function AppShell({ children, activeTab, onTabChange, alertCount = 0 }) {
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-4 pb-10 sm:px-6 lg:px-8">
-        <Header activeTab={activeTab} onTabChange={onTabChange} alertCount={alertCount} />
+        <div className="no-print">
+          <Header activeTab={activeTab} onTabChange={onTabChange} alertCount={alertCount} />
+        </div>
         <main className="flex-1 pt-6 sm:pt-8">{children}</main>
       </div>
     </div>

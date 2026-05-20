@@ -11,6 +11,7 @@ export { computeFinancialHealthScore } from './healthScore'
 export { generateFinancialInsights } from './insights'
 export { buildMonthlyExpenseTrend } from './trends'
 export { INSIGHT_RULES } from './rules'
+export { buildAllReports, buildReport } from './reports'
 export { generateAlerts, filterActiveAlerts, buildAlertKey, getDismissedHistory } from './alerts'
 
 /** Análisis completo para el dashboard del copiloto financiero. */

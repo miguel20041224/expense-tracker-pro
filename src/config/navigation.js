@@ -6,4 +6,5 @@ export const NAV_TABS = [
   { id: 'tarjetas', label: 'Tarjetas' },
   { id: 'metas', label: 'Metas' },
   { id: 'deudas', label: 'Deudas' },
+  { id: 'reportes', label: 'Reportes' },
 ]
