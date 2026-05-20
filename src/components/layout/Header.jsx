@@ -1,11 +1,11 @@
 import { useAuth } from '../../context/AuthContext'
-import { IconWallet } from '../icons'
+import { IconBell, IconWallet } from '../icons'
 import { IconBadge } from '../ui/IconBadge'
 import { Button } from '../ui/Button'
 import { NAV_TABS } from '../../config/navigation'
 import { cn } from '../../utils/cn'
 
-export function Header({ activeTab = 'inicio', onTabChange }) {
+export function Header({ activeTab = 'inicio', onTabChange, alertCount = 0 }) {
   const { user, logout } = useAuth()
 
   return (
@@ -24,6 +24,19 @@ export function Header({ activeTab = 'inicio', onTabChange }) {
         </div>
 
         <div className="flex items-center gap-2">
+          {alertCount > 0 ? (
+            <button
+              type="button"
+              onClick={() => onTabChange?.('alertas')}
+              className="relative flex size-9 items-center justify-center rounded-lg bg-white/5 text-slate-300 transition hover:bg-white/10 hover:text-white"
+              aria-label={`${alertCount} alertas activas`}
+            >
+              <IconBell className="size-5" />
+              <span className="absolute -top-0.5 -right-0.5 flex min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">
+                {alertCount > 9 ? '9+' : alertCount}
+              </span>
+            </button>
+          ) : null}
           {user ? (
             <span className="hidden text-xs text-slate-500 sm:inline">{user.name}</span>
           ) : null}
@@ -36,6 +49,7 @@ export function Header({ activeTab = 'inicio', onTabChange }) {
       <nav className="flex gap-1 overflow-x-auto pb-1 sm:pb-0" aria-label="Navegación principal">
         {NAV_TABS.map((item) => {
           const isActive = activeTab === item.id
+          const showBadge = item.id === 'alertas' && alertCount > 0
           return (
             <button
               key={item.id}
@@ -43,13 +57,18 @@ export function Header({ activeTab = 'inicio', onTabChange }) {
               onClick={() => onTabChange?.(item.id)}
               aria-current={isActive ? 'page' : undefined}
               className={cn(
-                'shrink-0 rounded-lg px-3.5 py-2 text-sm font-medium transition',
+                'relative shrink-0 rounded-lg px-3.5 py-2 text-sm font-medium transition',
                 isActive
                   ? 'bg-white/8 text-white'
                   : 'text-slate-500 hover:bg-white/5 hover:text-slate-300',
               )}
             >
               {item.label}
+              {showBadge ? (
+                <span className="ml-1.5 inline-flex min-w-4 items-center justify-center rounded-full bg-rose-500/90 px-1 text-[10px] font-bold text-white">
+                  {alertCount > 9 ? '9+' : alertCount}
+                </span>
+              ) : null}
             </button>
           )
         })}

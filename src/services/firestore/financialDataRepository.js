@@ -27,6 +27,10 @@ export function normalizeFinancialDoc(data) {
       limit: data?.budget?.limit ?? budgetSnapshot.limit,
       remaining: budgetSnapshot.remaining,
     },
+    intelligenceCache: {
+      dismissedAlerts: data?.intelligenceCache?.dismissedAlerts ?? {},
+      lastSeenAt: data?.intelligenceCache?.lastSeenAt ?? null,
+    },
   }
 }
 

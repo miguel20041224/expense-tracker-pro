@@ -1,7 +1,8 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
+import { AlertCenter } from '../components/intelligence/AlertCenter'
 import { AlertStrip } from '../components/intelligence/AlertStrip'
 import { ExpenseTrendChart } from '../components/intelligence/ExpenseTrendChart'
 import { FinancialHealthScore } from '../components/intelligence/FinancialHealthScore'
@@ -29,8 +30,9 @@ import { useDebts } from '../hooks/useDebts'
 import { useMovementActions } from '../hooks/useMovementActions'
 import { MovementActionsLayer } from '../components/movements/MovementActionsLayer'
 import { useOnboarding } from '../hooks/useOnboarding'
+import { useIntelligenceCache } from '../hooks/useIntelligenceCache'
 import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
-import { runFinancialAnalysis } from '../intelligence'
+import { runFinancialAnalysis, filterActiveAlerts } from '../intelligence'
 
 export default function Dashboard() {
   const { user } = useAuth()
@@ -60,6 +62,8 @@ export default function Dashboard() {
     movementHandlers,
   } = useMovementActions({ updateTransaction, deleteTransaction })
   const { showOnboarding, dismissOnboarding } = useOnboarding(isEmpty)
+  const { cache, dismissAlert, restoreAlert, dismissAll, markAlertsSeen } =
+    useIntelligenceCache(user)
   const expenseFormRef = useRef(null)
 
   const summary = useMemo(() => computeSummary(transactions, income), [transactions, income])
@@ -76,6 +80,17 @@ export default function Dashboard() {
       }),
     [transactions, cards, goals, debts, income],
   )
+
+  const activeAlerts = useMemo(
+    () => filterActiveAlerts(analysis.alerts, cache.dismissedAlerts),
+    [analysis.alerts, cache.dismissedAlerts],
+  )
+
+  useEffect(() => {
+    if (activeTab === 'alertas') {
+      markAlertsSeen()
+    }
+  }, [activeTab, markAlertsSeen])
 
   const expenseShare =
     summary.income > 0
@@ -117,7 +132,7 @@ export default function Dashboard() {
   }, [cards])
 
   return (
-    <AppShell activeTab={activeTab} onTabChange={setActiveTab}>
+    <AppShell activeTab={activeTab} onTabChange={setActiveTab} alertCount={activeAlerts.length}>
       <div className="space-y-6">
         <div className="flex justify-end">
           <CurrencySelector className="w-full sm:w-auto" />
@@ -133,7 +148,10 @@ export default function Dashboard() {
             ) : null}
 
             <FinancialHealthScore health={analysis.health} />
-            <AlertStrip insights={analysis.insights} />
+            <AlertStrip
+              alerts={activeAlerts}
+              onViewAll={() => setActiveTab('alertas')}
+            />
             <InsightFeed insights={analysis.insights} />
 
             <section className="grid gap-4 lg:grid-cols-2">
@@ -223,6 +241,17 @@ export default function Dashboard() {
               </section>
             </section>
           </>
+        ) : null}
+
+        {activeTab === 'alertas' ? (
+          <AlertCenter
+            activeAlerts={activeAlerts}
+            allAlerts={analysis.alerts}
+            dismissedAlerts={cache.dismissedAlerts}
+            onDismiss={dismissAlert}
+            onRestore={restoreAlert}
+            onDismissAll={dismissAll}
+          />
         ) : null}
 
         {activeTab === 'movimientos' ? (
