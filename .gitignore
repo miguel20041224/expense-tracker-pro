@@ -1,5 +1,40 @@
+# Dependencies
 node_modules
+
+# Build
 dist
 dist-ssr
+
+# Environment & secrets (never commit real values)
+.env
+.env.*
+!.env.example
+
+# Firebase Admin / service accounts (server-side only)
+**/serviceAccount*.json
+**/service-account*.json
+firebase-adminsdk*.json
+*-firebase-adminsdk-*.json
+**/firebase-service-account*.json
+
+# Generic credentials
+credentials.json
+secrets.json
+*.pem
+*.key
+*.p12
+
+# Local / OS
 *.local
 .DS_Store
+Thumbs.db
+
+# Logs & debug
+*.log
+npm-debug.log*
+.firebase/
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+.idea

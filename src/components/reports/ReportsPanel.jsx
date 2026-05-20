@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { buildAllReports } from '../../intelligence/reports'
+import { buildReportPdfFilename, exportReportToPdf } from '../../services/exportReportPdf'
 import { ReportDocument } from './ReportDocument'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
@@ -13,14 +14,40 @@ const REPORT_TYPES = [
 
 export function ReportsPanel({ financialData, userName }) {
   const [activeType, setActiveType] = useState('monthly')
+  const [isExporting, setIsExporting] = useState(false)
+  const [feedback, setFeedback] = useState(null)
   const printRef = useRef(null)
 
   const reports = useMemo(() => buildAllReports(financialData), [financialData])
-
   const activeReport = reports[activeType]
 
   function handlePrint() {
     window.print()
+  }
+
+  async function handleDownloadPdf() {
+    const root = printRef.current
+    if (!root) {
+      setFeedback({ type: 'error', message: 'No se pudo localizar el reporte.' })
+      return
+    }
+
+    setFeedback(null)
+    setIsExporting(true)
+
+    try {
+      const filename = buildReportPdfFilename(activeReport?.generatedAt)
+      await exportReportToPdf(root, { filename })
+      setFeedback({ type: 'success', message: `PDF descargado: ${filename}` })
+    } catch (err) {
+      console.error('[Reports] PDF export failed:', err)
+      setFeedback({
+        type: 'error',
+        message: err?.message ?? 'No se pudo generar el PDF. Intenta de nuevo.',
+      })
+    } finally {
+      setIsExporting(false)
+    }
   }
 
   return (
@@ -30,8 +57,8 @@ export function ReportsPanel({ financialData, userName }) {
           Reportes profesionales
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Análisis automático con categorías, hábitos, proyecciones y consejos. Exporta con
-          imprimir o guardar como PDF desde el diálogo del navegador.
+          Análisis automático con categorías, hábitos, proyecciones y consejos. Imprime o descarga
+          el reporte en PDF con un clic.
         </p>
       </header>
 
@@ -54,10 +81,30 @@ export function ReportsPanel({ financialData, userName }) {
             </button>
           ))}
         </div>
-        <Button type="button" onClick={handlePrint}>
-          Imprimir / PDF
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="secondary" onClick={handlePrint} disabled={isExporting}>
+            Imprimir
+          </Button>
+          <Button type="button" onClick={handleDownloadPdf} disabled={isExporting}>
+            {isExporting ? 'Generando PDF…' : 'Descargar PDF'}
+          </Button>
+        </div>
       </div>
+
+      {feedback ? (
+        <p
+          role="status"
+          aria-live="polite"
+          className={cn(
+            'rounded-lg px-3 py-2 text-sm print:hidden',
+            feedback.type === 'success'
+              ? 'bg-emerald-500/10 text-emerald-300'
+              : 'bg-rose-500/10 text-rose-300',
+          )}
+        >
+          {feedback.message}
+        </p>
+      ) : null}
 
       <div ref={printRef} className="report-print-root">
         <ReportDocument report={activeReport} userName={userName} />
@@ -65,8 +112,8 @@ export function ReportsPanel({ financialData, userName }) {
 
       <Card className="print:hidden">
         <p className="text-xs text-slate-500">
-          Tip: en el diálogo de impresión elige &quot;Guardar como PDF&quot; para exportar el
-          reporte {REPORT_TYPES.find((t) => t.id === activeType)?.label.toLowerCase()}.
+          También puedes usar Imprimir y elegir &quot;Guardar como PDF&quot; en el diálogo del
+          navegador.
         </p>
       </Card>
     </section>

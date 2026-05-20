@@ -1,0 +1,124 @@
+/**
+ * Tema solo para captura PDF (html2canvas).
+ * Colores en hex/rgb — sin oklch. No afecta la UI fuera de .report-pdf-capture.
+ */
+.report-pdf-capture.report-print-root,
+.report-pdf-capture .report-document {
+  background-color: #0a0f1a !important;
+  color: #e2e8f0 !important;
+}
+
+.report-pdf-capture .text-white {
+  color: #f8fafc !important;
+}
+
+.report-pdf-capture .text-slate-200 {
+  color: #e2e8f0 !important;
+}
+
+.report-pdf-capture .text-slate-300 {
+  color: #cbd5e1 !important;
+}
+
+.report-pdf-capture .text-slate-400 {
+  color: #94a3b8 !important;
+}
+
+.report-pdf-capture .text-slate-500 {
+  color: #64748b !important;
+}
+
+.report-pdf-capture .text-accent {
+  color: #3b82f6 !important;
+}
+
+.report-pdf-capture .text-income {
+  color: #34d399 !important;
+}
+
+.report-pdf-capture .text-expense {
+  color: #fb7185 !important;
+}
+
+.report-pdf-capture .text-emerald-300,
+.report-pdf-capture .text-emerald-400 {
+  color: #34d399 !important;
+}
+
+.report-pdf-capture .text-rose-200 {
+  color: #fb7185 !important;
+}
+
+.report-pdf-capture .text-amber-200 {
+  color: #fbbf24 !important;
+}
+
+.report-pdf-capture .text-sky-200 {
+  color: #38bdf8 !important;
+}
+
+.report-pdf-capture .bg-surface-card\/80,
+.report-pdf-capture .bg-white\/3,
+.report-pdf-capture .bg-white\/5,
+.report-pdf-capture .bg-white\/2 {
+  background-color: #151d2e !important;
+}
+
+.report-pdf-capture .bg-accent\/10 {
+  background-color: #1e3a5f !important;
+}
+
+.report-pdf-capture .bg-emerald-500\/5 {
+  background-color: #064e3b !important;
+}
+
+.report-pdf-capture .bg-rose-500\/10 {
+  background-color: #4c0519 !important;
+}
+
+.report-pdf-capture .bg-amber-500\/10 {
+  background-color: #451a03 !important;
+}
+
+.report-pdf-capture .bg-sky-500\/10 {
+  background-color: #0c4a6e !important;
+}
+
+.report-pdf-capture .border-border-subtle,
+.report-pdf-capture .border-white\/10,
+.report-pdf-capture .border-white\/6 {
+  border-color: #334155 !important;
+}
+
+.report-pdf-capture .border-accent\/20,
+.report-pdf-capture .border-accent\/30 {
+  border-color: #3b82f6 !important;
+}
+
+.report-pdf-capture .border-emerald-500\/20 {
+  border-color: #34d399 !important;
+}
+
+.report-pdf-capture .bg-accent {
+  background-color: #3b82f6 !important;
+}
+
+.report-pdf-capture .bg-income {
+  background-color: #34d399 !important;
+}
+
+.report-pdf-capture .bg-expense {
+  background-color: #fb7185 !important;
+}
+
+.report-pdf-capture .bg-slate-600 {
+  background-color: #475569 !important;
+}
+
+.report-pdf-capture .bg-slate-200 {
+  background-color: #e2e8f0 !important;
+}
+
+.report-pdf-capture .divide-white\/5 > * + * {
+  border-color: #334155 !important;
+}

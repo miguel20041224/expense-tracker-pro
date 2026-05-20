@@ -1,17 +1,9 @@
 /**
- * Configuración web de Firebase (proyecto fintrack).
- * Lista para usar: no hace falta crear .env (las variables VITE_* lo sobrescriben si existen).
+ * Configuración Firebase solo desde variables VITE_* (.env local).
+ * Copia .env.example → .env y completa los valores.
  */
-export const FINTRACK_FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyB1D_TovhbuvgGgfkPtwBOwErS1npJPH4I',
-  authDomain: 'fintrack.firebaseapp.com',
-  projectId: 'fintrack-9b1a2',
-  storageBucket: 'fintrack.firebasestorage.app',
-  messagingSenderId: '714499441854',
-  appId: '1:714499441854:web:749565b33ef1f018de8aef',
-}
 
-const ENV_MAP = {
+const ENV_KEYS = {
   apiKey: 'VITE_FIREBASE_API_KEY',
   authDomain: 'VITE_FIREBASE_AUTH_DOMAIN',
   projectId: 'VITE_FIREBASE_PROJECT_ID',
@@ -20,30 +12,40 @@ const ENV_MAP = {
   appId: 'VITE_FIREBASE_APP_ID',
 }
 
-/** Env opcional → si falta, usa FINTRACK_FIREBASE_CONFIG. */
+function readEnv(envKey) {
+  const value = import.meta.env[envKey]
+  return value && String(value).trim() ? String(value).trim() : ''
+}
+
 export function resolveFirebaseConfig() {
-  const config = { ...FINTRACK_FIREBASE_CONFIG }
-  for (const [key, envKey] of Object.entries(ENV_MAP)) {
-    const value = import.meta.env[envKey]
-    if (value && String(value).trim()) {
-      config[key] = String(value).trim()
-    }
+  const projectId = readEnv(ENV_KEYS.projectId)
+
+  const config = {
+    apiKey: readEnv(ENV_KEYS.apiKey),
+    authDomain: readEnv(ENV_KEYS.authDomain),
+    projectId,
+    storageBucket: readEnv(ENV_KEYS.storageBucket),
+    messagingSenderId: readEnv(ENV_KEYS.messagingSenderId),
+    appId: readEnv(ENV_KEYS.appId),
   }
-  if (!config.authDomain && config.projectId) {
-    config.authDomain = `${config.projectId}.firebaseapp.com`
+
+  if (!config.authDomain && projectId) {
+    config.authDomain = `${projectId}.firebaseapp.com`
   }
-  if (!config.storageBucket && config.projectId) {
-    config.storageBucket = `${config.projectId}.firebasestorage.app`
+  if (!config.storageBucket && projectId) {
+    config.storageBucket = `${projectId}.firebasestorage.app`
   }
+
   return config
 }
 
+/** Lista de variables VITE_* faltantes (para mensajes de error). */
+export function getMissingConfigKeys(config) {
+  return Object.entries(ENV_KEYS)
+    .filter(([configKey]) => !config[configKey])
+    .map(([, envKey]) => envKey)
+}
+
 export function isConfigComplete(config) {
-  return Boolean(
-    config?.apiKey &&
-      config?.projectId &&
-      config?.appId &&
-      config?.messagingSenderId &&
-      config?.authDomain,
-  )
+  return getMissingConfigKeys(config).length === 0
 }

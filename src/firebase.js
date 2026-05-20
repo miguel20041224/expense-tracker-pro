@@ -1,12 +1,16 @@
 import { getApps, initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
-import { FINTRACK_FIREBASE_CONFIG, isConfigComplete, resolveFirebaseConfig } from './config/firebase.config'
+import {
+  getMissingConfigKeys,
+  isConfigComplete,
+  resolveFirebaseConfig,
+} from './config/firebase.config'
 import { logFirebaseConfig } from './utils/firebaseDebug'
 
 export const firebaseConfig = resolveFirebaseConfig()
 
-logFirebaseConfig(firebaseConfig, isConfigComplete(firebaseConfig) ? [] : ['incomplete'])
+logFirebaseConfig(firebaseConfig, getMissingConfigKeys(firebaseConfig))
 
 /** @type {import('firebase/app').FirebaseApp | null} */
 export let app = null
@@ -20,7 +24,8 @@ export let firebaseInitError = null
 export const isFirebaseReady = () => Boolean(auth && db)
 
 export function getFirebaseConsoleAuthUrl() {
-  const projectId = firebaseConfig.projectId ?? FINTRACK_FIREBASE_CONFIG.projectId
+  const projectId = firebaseConfig.projectId
+  if (!projectId) return 'https://console.firebase.google.com/'
   return `https://console.firebase.google.com/project/${projectId}/authentication/providers`
 }
 
