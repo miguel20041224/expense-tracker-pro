@@ -2,6 +2,8 @@ import { useMemo, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
+import { AlertStrip } from '../components/intelligence/AlertStrip'
+import { ExpenseTrendChart } from '../components/intelligence/ExpenseTrendChart'
 import { FinancialHealthScore } from '../components/intelligence/FinancialHealthScore'
 import { InsightFeed } from '../components/intelligence/InsightFeed'
 import { MetricCard } from '../components/dashboard/MetricCard'
@@ -131,7 +133,13 @@ export default function Dashboard() {
             ) : null}
 
             <FinancialHealthScore health={analysis.health} />
+            <AlertStrip insights={analysis.insights} />
             <InsightFeed insights={analysis.insights} />
+
+            <section className="grid gap-4 lg:grid-cols-2">
+              <ExpenseTrendChart trend={analysis.trend} />
+              <CategoryBreakdown categories={categories} />
+            </section>
 
             <BalanceHero summary={summary} />
 
@@ -189,23 +197,14 @@ export default function Dashboard() {
               />
             </section>
 
-            <section className="grid gap-4 lg:grid-cols-5">
-              {hasBudgetData(transactions, income) ? (
-                <div className="lg:col-span-2">
-                  <SavingsProgress
-                    income={summary.income}
-                    expenses={summary.expenses}
-                    remaining={summary.savings}
-                    isOverBudget={summary.isOverBudget}
-                  />
-                </div>
-              ) : null}
-              <section
-                className={hasBudgetData(transactions) ? 'lg:col-span-3' : 'lg:col-span-5'}
-              >
-                <CategoryBreakdown categories={categories} />
-              </section>
-            </section>
+            {hasBudgetData(transactions, income) ? (
+              <SavingsProgress
+                income={summary.income}
+                expenses={summary.expenses}
+                remaining={summary.savings}
+                isOverBudget={summary.isOverBudget}
+              />
+            ) : null}
 
             <section className="grid gap-4 lg:grid-cols-5">
               <div ref={expenseFormRef} id="add-expense" className="scroll-mt-6 lg:col-span-2">

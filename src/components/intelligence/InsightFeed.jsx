@@ -8,6 +8,14 @@ const typeStyles = {
   success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
 }
 
+const categoryLabels = {
+  daily: 'Hoy',
+  weekly: 'Semana',
+  monthly: 'Mes',
+  habits: 'Hábitos',
+  debt: 'Deudas',
+}
+
 export function InsightFeed({ insights }) {
   if (!insights?.length) return null
 
@@ -20,15 +28,22 @@ export function InsightFeed({ insights }) {
         </span>
       </CardHeader>
       <ul className="space-y-2">
-        {insights.map((item, index) => (
+        {insights.map((item) => (
           <li
-            key={`${item.type}-${index}`}
+            key={item.id}
             className={cn(
               'rounded-xl border px-3 py-2.5 text-sm leading-relaxed',
               typeStyles[item.type] ?? typeStyles.info,
             )}
           >
-            {item.text}
+            <div className="flex flex-wrap items-start gap-2">
+              {item.category ? (
+                <span className="shrink-0 rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-slate-400 uppercase">
+                  {categoryLabels[item.category] ?? item.category}
+                </span>
+              ) : null}
+              <span className="min-w-0 flex-1">{item.text}</span>
+            </div>
           </li>
         ))}
       </ul>

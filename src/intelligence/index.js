@@ -1,30 +1,28 @@
+import { buildFinancialContext } from './contextBuilder'
+import { runInsightRules } from './engine/runRulePipeline'
 import { computeFinancialMetrics } from './metrics'
-import { generateFinancialInsights } from './insights'
 import { computeFinancialHealthScore } from './healthScore'
+import { buildMonthlyExpenseTrend } from './trends'
 
-export { computeFinancialMetrics, generateFinancialInsights, computeFinancialHealthScore }
+export { buildFinancialContext, runInsightRules }
+export { computeFinancialMetrics } from './metrics'
+export { computeFinancialHealthScore } from './healthScore'
+export { generateFinancialInsights } from './insights'
 export { buildMonthlyExpenseTrend } from './trends'
+export { INSIGHT_RULES } from './rules'
 
 /** Análisis completo para el dashboard del copiloto financiero. */
 export function runFinancialAnalysis(financialData) {
-  const {
-    transactions = [],
-    creditCards = [],
-    goals = [],
-    debts = [],
-    income = null,
-  } = financialData ?? {}
+  const context = buildFinancialContext(financialData)
+  const insights = runInsightRules(context)
+  const health = computeFinancialHealthScore(context.metrics)
+  const trend = buildMonthlyExpenseTrend(context.transactions, 6)
 
-  const metrics = computeFinancialMetrics({
-    transactions,
-    creditCards,
-    goals,
-    debts,
-    income,
-  })
-
-  const insights = generateFinancialInsights(metrics)
-  const health = computeFinancialHealthScore(metrics)
-
-  return { metrics, insights, health }
+  return {
+    context,
+    metrics: context.metrics,
+    insights,
+    health,
+    trend,
+  }
 }
