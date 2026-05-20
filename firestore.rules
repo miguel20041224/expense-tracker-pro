@@ -11,62 +11,12 @@ service cloud.firestore {
       return isSignedIn() && request.auth.uid == uid;
     }
 
-    function advisorDoc() {
-      return get(/databases/$(database)/documents/advisors/$(request.auth.uid));
-    }
-
-    function isAdvisor() {
-      return isSignedIn()
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'advisor';
-    }
-
-    function advisorHasClient(clientId) {
-      return isAdvisor()
-        && advisorDoc().data.clients != null
-        && clientId in advisorDoc().data.clients;
-    }
-
     match /users/{userId} {
-      allow read: if isSignedIn() && (
-        isOwner(userId)
-        || advisorHasClient(userId)
-        || (resource.data.advisorId == request.auth.uid)
-      );
-      allow create: if isSignedIn()
-        && isOwner(userId)
-        && request.resource.data.uid == request.auth.uid;
-      allow update: if isSignedIn() && isOwner(userId);
-    }
-
-    match /advisors/{advisorId} {
-      allow read: if isSignedIn();
-      allow create: if isSignedIn()
-        && isOwner(advisorId)
-        && request.resource.data.uid == request.auth.uid;
-      allow update: if isSignedIn() && (
-        isOwner(advisorId)
-        || (
-          request.resource.data.clients.size() <= 5
-          && (
-            request.auth.uid == advisorId
-            || (
-              request.auth.uid in request.resource.data.clients
-              && resource.data.clients.size() <= request.resource.data.clients.size()
-            )
-            || (
-              request.auth.uid in resource.data.clients
-              && !(request.auth.uid in request.resource.data.clients)
-            )
-          )
-        )
-      );
+      allow read, create, update: if isOwner(userId);
     }
 
     match /financialData/{userId} {
-      allow read: if isSignedIn() && (isOwner(userId) || advisorHasClient(userId));
-      allow create: if isSignedIn() && isOwner(userId) && request.resource.data.uid == request.auth.uid;
-      allow update: if isSignedIn() && isOwner(userId);
+      allow read, create, update: if isOwner(userId);
     }
   }
 }

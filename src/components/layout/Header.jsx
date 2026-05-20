@@ -5,7 +5,7 @@ import { Button } from '../ui/Button'
 import { NAV_TABS } from '../../config/navigation'
 import { cn } from '../../utils/cn'
 
-export function Header({ activeTab = 'resumen', onTabChange }) {
+export function Header({ activeTab = 'inicio', onTabChange }) {
   const { user, logout } = useAuth()
 
   return (

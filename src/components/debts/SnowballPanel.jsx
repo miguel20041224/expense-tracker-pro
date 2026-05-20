@@ -26,9 +26,8 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
           Estrategia de deudas (bola de nieve)
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Herramienta de análisis y recomendación: ordena deudas de menor a mayor saldo y
-          simula el avance al destinar pagos extra a la deuda prioritaria. No sustituye asesoría
-          financiera profesional.
+          Ordena tus deudas de menor a mayor saldo y simula cuánto tardarías en liquidarlas al
+          destinar pagos extra a la deuda prioritaria. El copiloto te sugerirá por dónde empezar.
         </p>
       </header>
 

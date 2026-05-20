@@ -8,18 +8,25 @@ const typeStyles = {
   success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
 }
 
-export function AdvisorInsights({ insights }) {
+export function InsightFeed({ insights }) {
+  if (!insights?.length) return null
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Insights automáticos</CardTitle>
-        <span className="rounded-full bg-white/5 px-2 py-0.5 text-xs text-slate-500">Solo lectura</span>
+        <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
+          Copiloto
+        </span>
       </CardHeader>
       <ul className="space-y-2">
         {insights.map((item, index) => (
           <li
             key={`${item.type}-${index}`}
-            className={cn('rounded-xl border px-3 py-2.5 text-sm', typeStyles[item.type] ?? typeStyles.info)}
+            className={cn(
+              'rounded-xl border px-3 py-2.5 text-sm leading-relaxed',
+              typeStyles[item.type] ?? typeStyles.info,
+            )}
           >
             {item.text}
           </li>

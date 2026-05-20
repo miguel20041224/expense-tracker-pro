@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { ROLES } from '../utils/auth/constants'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { IconWallet } from '../components/icons'
@@ -11,7 +10,6 @@ import { FirebaseAuthNotice } from '../components/auth/FirebaseAuthNotice'
 export default function AuthPage() {
   const { login, register, firebaseConfigError, firebaseReady, firebaseConsoleAuthUrl } = useAuth()
   const [mode, setMode] = useState('login')
-  const [role, setRole] = useState(ROLES.CLIENT)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -26,7 +24,7 @@ export default function AuthPage() {
       if (mode === 'login') {
         await login({ email, password })
       } else {
-        await register({ name, email, password, role })
+        await register({ name, email, password })
       }
     } catch (err) {
       setError(err.message ?? 'Error de autenticación')
@@ -49,7 +47,7 @@ export default function AuthPage() {
           </IconBadge>
           <h1 className="text-2xl font-semibold text-white">FINTRACK</h1>
           <p className="text-sm text-slate-400">
-            Finanzas personales con Firebase · Panel profesional para asesores
+            Tu copiloto financiero personal · Análisis automático sin complicaciones
           </p>
         </div>
 
@@ -78,43 +76,16 @@ export default function AuthPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === 'register' ? (
-              <>
-                <label className="block space-y-1.5">
-                  <span className="text-xs font-medium text-slate-400">Nombre</span>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full rounded-xl border border-border-subtle bg-surface px-3 py-2.5 text-sm text-white outline-none focus:border-accent/50"
-                    placeholder="Tu nombre"
-                  />
-                </label>
-
-                <fieldset className="space-y-2">
-                  <legend className="text-xs font-medium text-slate-400">Tipo de cuenta</legend>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { id: ROLES.CLIENT, label: 'Cliente', hint: 'Gestiona tus finanzas' },
-                      { id: ROLES.ADVISOR, label: 'Asesor', hint: 'Analiza clientes' },
-                    ].map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        onClick={() => setRole(opt.id)}
-                        className={cn(
-                          'rounded-xl border px-3 py-3 text-left transition',
-                          role === opt.id
-                            ? 'border-accent/50 bg-accent/10'
-                            : 'border-border-subtle bg-white/5 hover:bg-white/8',
-                        )}
-                      >
-                        <span className="block text-sm font-medium text-white">{opt.label}</span>
-                        <span className="mt-0.5 block text-xs text-slate-500">{opt.hint}</span>
-                      </button>
-                    ))}
-                  </div>
-                </fieldset>
-              </>
+              <label className="block space-y-1.5">
+                <span className="text-xs font-medium text-slate-400">Nombre</span>
+                <input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full rounded-xl border border-border-subtle bg-surface px-3 py-2.5 text-sm text-white outline-none focus:border-accent/50"
+                  placeholder="Tu nombre"
+                />
+              </label>
             ) : null}
 
             <label className="block space-y-1.5">
@@ -159,13 +130,6 @@ export default function AuthPage() {
               {loading ? 'Procesando…' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}
             </Button>
           </form>
-
-          {mode === 'register' && role === ROLES.ADVISOR ? (
-            <p className="mt-4 text-xs text-slate-500">
-              Al registrarte como asesor recibirás un código único para que tus clientes se vinculen
-              (máximo 5 clientes activos).
-            </p>
-          ) : null}
         </Card>
       </div>
     </div>

@@ -5,11 +5,9 @@ import {
   signOut,
 } from 'firebase/auth'
 import { auth, firebaseInitError, isFirebaseReady } from '../../firebase'
-import { ROLES } from '../../utils/auth/constants'
 import { logFirebaseAuth } from '../../utils/firebaseDebug'
 import { mapFirebaseAuthError, mapFirestoreError } from '../../utils/auth/firebaseErrors'
 import { createUserProfile } from './userRepository'
-import { createAdvisorRecord } from './advisorRepository'
 import { ensureFinancialDataDoc } from './financialDataRepository'
 import { migrateLocalDataToFirestore } from './migrationService'
 
@@ -23,13 +21,11 @@ function requireAuth() {
   return auth
 }
 
-export async function registerWithEmail({ name, email, password, role = ROLES.CLIENT }) {
-  const resolvedRole = [ROLES.CLIENT, ROLES.ADVISOR].includes(role) ? role : ROLES.CLIENT
-
+export async function registerWithEmail({ name, email, password }) {
   const normalizedEmail = String(email).trim().toLowerCase()
   if (!normalizedEmail) throw new Error('El correo es obligatorio.')
 
-  logFirebaseAuth('register:start', { email: normalizedEmail, role: resolvedRole })
+  logFirebaseAuth('register:start', { email: normalizedEmail })
 
   let credential = null
   try {
@@ -44,19 +40,9 @@ export async function registerWithEmail({ name, email, password, role = ROLES.CL
     const profile = await createUserProfile({
       uid,
       email: normalizedEmail,
-      role: resolvedRole,
       name,
     })
-    logFirebaseAuth('register:firestore-user', { uid, role: profile.role })
-
-    if (resolvedRole === ROLES.ADVISOR) {
-      const advisorRecord = await createAdvisorRecord({
-        uid,
-        email: normalizedEmail,
-        name: profile.name,
-      })
-      logFirebaseAuth('register:firestore-advisor', { uid, advisorKey: advisorRecord.advisorKey })
-    }
+    logFirebaseAuth('register:firestore-user', { uid })
 
     await ensureFinancialDataDoc(uid)
     migrateLocalDataToFirestore(uid).catch((err) => {

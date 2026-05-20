@@ -1,5 +1,3 @@
-import { ROLES } from './constants'
-
 export class PermissionError extends Error {
   constructor(message) {
     super(message)
@@ -7,42 +5,28 @@ export class PermissionError extends Error {
   }
 }
 
-export function isClient(user) {
-  return user?.role === ROLES.CLIENT
-}
-
-export function isAdvisor(user) {
-  return user?.role === ROLES.ADVISOR
-}
-
-/** Solo el cliente puede modificar sus propios datos financieros. */
 function actorUid(actor) {
   return actor?.uid ?? actor?.id
 }
 
-export function canWriteFinancialData(actor, clientId) {
-  if (!actor || !clientId) return false
-  return isClient(actor) && actorUid(actor) === clientId
+export function canWriteFinancialData(actor, userId) {
+  if (!actor || !userId) return false
+  return actorUid(actor) === userId
 }
 
-/** Cliente: solo los suyos. Asesor: clientes vinculados. */
-export function canReadFinancialData(actor, clientId, advisorClientIds = []) {
-  if (!actor || !clientId) return false
-  if (isClient(actor) && actorUid(actor) === clientId) return true
-  if (isAdvisor(actor) && Array.isArray(advisorClientIds)) {
-    return advisorClientIds.includes(clientId)
-  }
-  return false
+export function canReadFinancialData(actor, userId) {
+  if (!actor || !userId) return false
+  return actorUid(actor) === userId
 }
 
-export function assertCanWrite(actor, clientId) {
-  if (!canWriteFinancialData(actor, clientId)) {
+export function assertCanWrite(actor, userId) {
+  if (!canWriteFinancialData(actor, userId)) {
     throw new PermissionError('No tienes permiso para modificar estos datos financieros.')
   }
 }
 
-export function assertCanRead(actor, clientId, advisorClientIds = []) {
-  if (!canReadFinancialData(actor, clientId, advisorClientIds)) {
+export function assertCanRead(actor, userId) {
+  if (!canReadFinancialData(actor, userId)) {
     throw new PermissionError('No tienes permiso para ver estos datos financieros.')
   }
 }

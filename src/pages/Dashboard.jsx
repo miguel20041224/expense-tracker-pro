@@ -1,8 +1,9 @@
 import { useMemo, useRef, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
-import { AdvisorLinkPanel } from '../components/client/AdvisorLinkPanel'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
+import { FinancialHealthScore } from '../components/intelligence/FinancialHealthScore'
+import { InsightFeed } from '../components/intelligence/InsightFeed'
 import { MetricCard } from '../components/dashboard/MetricCard'
 import { SavingsProgress } from '../components/dashboard/SavingsProgress'
 import { TransactionList } from '../components/dashboard/TransactionList'
@@ -27,10 +28,11 @@ import { useMovementActions } from '../hooks/useMovementActions'
 import { MovementActionsLayer } from '../components/movements/MovementActionsLayer'
 import { useOnboarding } from '../hooks/useOnboarding'
 import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
+import { runFinancialAnalysis } from '../intelligence'
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const [activeTab, setActiveTab] = useState('resumen')
+  const [activeTab, setActiveTab] = useState('inicio')
   const {
     transactions,
     addExpense,
@@ -61,6 +63,18 @@ export default function Dashboard() {
   const summary = useMemo(() => computeSummary(transactions, income), [transactions, income])
   const categories = useMemo(() => computeCategories(transactions), [transactions])
 
+  const analysis = useMemo(
+    () =>
+      runFinancialAnalysis({
+        transactions,
+        creditCards: cards,
+        goals,
+        debts,
+        income,
+      }),
+    [transactions, cards, goals, debts, income],
+  )
+
   const expenseShare =
     summary.income > 0
       ? `${Math.round((summary.expenses / summary.income) * 100)}% de tus ingresos`
@@ -72,7 +86,7 @@ export default function Dashboard() {
       : null
 
   function scrollToExpenseForm() {
-    setActiveTab('resumen')
+    setActiveTab('inicio')
     window.requestAnimationFrame(() => {
       expenseFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       const firstInput = expenseFormRef.current?.querySelector('input, select')
@@ -107,7 +121,7 @@ export default function Dashboard() {
           <CurrencySelector className="w-full sm:w-auto" />
         </div>
 
-        {activeTab === 'resumen' ? (
+        {activeTab === 'inicio' ? (
           <>
             {showOnboarding ? (
               <OnboardingBanner
@@ -115,6 +129,9 @@ export default function Dashboard() {
                 onDismiss={dismissOnboarding}
               />
             ) : null}
+
+            <FinancialHealthScore health={analysis.health} />
+            <InsightFeed insights={analysis.insights} />
 
             <BalanceHero summary={summary} />
 
@@ -264,7 +281,6 @@ export default function Dashboard() {
           <SnowballPanel debts={debts} onAddDebt={addDebt} onDeleteDebt={deleteDebt} />
         ) : null}
 
-        {activeTab === 'asesor' ? <AdvisorLinkPanel /> : null}
       </div>
       <MovementActionsLayer
         editingTransaction={editingTransaction}

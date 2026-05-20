@@ -1,10 +1,3 @@
-export const ROLES = {
-  CLIENT: 'client',
-  ADVISOR: 'advisor',
-}
-
-export const MAX_ADVISOR_CLIENTS = 5
-
 export const USERS_STORAGE_KEY = 'vault-users'
 export const SESSION_STORAGE_KEY = 'vault-session'
 

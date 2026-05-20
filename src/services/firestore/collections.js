@@ -1,6 +1,5 @@
 export const COLLECTIONS = {
   users: 'users',
-  advisors: 'advisors',
   financialData: 'financialData',
 }
 

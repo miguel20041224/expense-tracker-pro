@@ -1,4 +1,4 @@
-/** Tipos de gasto para filtros y analítica (asesor). */
+/** Tipos de gasto para filtros y analítica del copiloto. */
 export const EXPENSE_TYPES = [
   { id: 'comida', label: 'Comida' },
   { id: 'transporte', label: 'Transporte' },
