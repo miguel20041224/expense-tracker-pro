@@ -4,6 +4,7 @@ import { buildReportPdfFilename, exportReportToPdf } from '../../services/export
 import { ReportDocument } from './ReportDocument'
 import { Button } from '../ui/Button'
 import { Card } from '../ui/Card'
+import { SectionHeader } from '../ui/SectionHeader'
 import { cn } from '../../utils/cn'
 
 const REPORT_TYPES = [
@@ -52,15 +53,12 @@ export function ReportsPanel({ financialData, userName }) {
 
   return (
     <section className="space-y-6">
-      <header className="rounded-2xl border border-accent/15 bg-linear-to-br from-accent/8 via-surface-card/60 to-surface-card/60 p-5 print:hidden">
-        <p className="text-xs font-medium tracking-widest text-accent/90 uppercase">
-          Reportes profesionales
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Análisis automático con categorías, hábitos, proyecciones y consejos. Imprime o descarga
-          el reporte en PDF con un clic.
-        </p>
-      </header>
+      <SectionHeader
+        variant="accent"
+        eyebrow="Reportes profesionales"
+        description="Análisis automático con categorías, hábitos, proyecciones y consejos. Imprime o descarga el reporte en PDF con un clic."
+        className="print:hidden"
+      />
 
       <div className="flex flex-col gap-4 print:hidden sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-wrap gap-2">

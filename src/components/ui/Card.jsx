@@ -1,10 +1,17 @@
 import { cn } from '../../utils/cn'
 
-export function Card({ className, children, ...props }) {
+const paddingMap = {
+  sm: 'p-4',
+  md: 'p-5',
+  lg: 'p-6',
+}
+
+export function Card({ className, children, padding = 'md', ...props }) {
   return (
     <section
       className={cn(
-        'rounded-2xl border border-border-subtle bg-surface-card/80 p-5 backdrop-blur-sm',
+        'rounded-2xl border border-border-subtle bg-surface-card/80 backdrop-blur-sm transition-colors',
+        paddingMap[padding] ?? paddingMap.md,
         className,
       )}
       {...props}
