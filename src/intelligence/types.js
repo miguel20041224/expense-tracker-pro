@@ -8,7 +8,7 @@
  * @property {InsightSeverity} type
  * @property {string} text
  * @property {number} [priority] Menor = más importante
- * @property {string} [category] daily | weekly | monthly | habits | debt
+ * @property {string} [category] daily | weekly | monthly | habits | debt | predictive
  */
 
 /**
