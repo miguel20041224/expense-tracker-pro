@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Card } from '../ui/Card'
 import { IconBadge } from '../ui/IconBadge'
 import { Money } from '../currency/Money'
@@ -10,7 +11,7 @@ const accentMap = {
   balance: 'text-white',
 }
 
-export function MetricCard({ label, value, icon, variant, subtitle, isEmpty, emptyHint }) {
+function MetricCardInner({ label, value, icon, variant, subtitle, isEmpty, emptyHint }) {
   const isNegative = !isEmpty && value < 0
   const valueClass = isNegative
     ? 'text-expense'
@@ -35,3 +36,5 @@ export function MetricCard({ label, value, icon, variant, subtitle, isEmpty, emp
     </Card>
   )
 }
+
+export const MetricCard = memo(MetricCardInner)

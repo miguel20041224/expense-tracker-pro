@@ -12,7 +12,7 @@ export function AppShell({ children, activeTab, onTabChange, alertCount = 0 }) {
         <div className="no-print">
           <Header activeTab={activeTab} onTabChange={onTabChange} alertCount={alertCount} />
         </div>
-        <main className="flex-1 pt-6 sm:pt-8">{children}</main>
+        <main className="flex-1 pt-5 sm:pt-7 lg:pt-8">{children}</main>
       </div>
     </div>
   )
