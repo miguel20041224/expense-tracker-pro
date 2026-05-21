@@ -37,7 +37,7 @@ import { MovementActionsLayer } from '../components/movements/MovementActionsLay
 import { useOnboarding } from '../hooks/useOnboarding'
 import { useIntelligenceCache } from '../hooks/useIntelligenceCache'
 import { computeSummary, computeCategories, hasBudgetData } from '../utils/finance'
-import { runFinancialAnalysis, filterActiveAlerts } from '../intelligence'
+import { runFinancialAnalysis, filterActiveAlerts, projectFinancialOutlook } from '../intelligence'
 
 export default function Dashboard() {
   const { user } = useAuth()

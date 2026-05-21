@@ -14,6 +14,7 @@ const categoryLabels = {
   monthly: 'Mes',
   habits: 'Hábitos',
   debt: 'Deudas',
+  predictive: 'Proyección',
 }
 
 export function InsightFeed({ insights }) {
