@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { cn } from '../../utils/cn'
 
@@ -14,9 +15,10 @@ const categoryLabels = {
   monthly: 'Mes',
   habits: 'Hábitos',
   debt: 'Deudas',
+  predictive: 'Proyección',
 }
 
-export function InsightFeed({ insights }) {
+function InsightFeedInner({ insights }) {
   if (!insights?.length) return null
 
   return (
@@ -50,3 +52,5 @@ export function InsightFeed({ insights }) {
     </Card>
   )
 }
+
+export const InsightFeed = memo(InsightFeedInner)

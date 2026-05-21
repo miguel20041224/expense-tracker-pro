@@ -1,32 +1,20 @@
+import { memo } from 'react'
 import {
   CartesianGrid,
   Legend,
   Line,
   LineChart,
-  ResponsiveContainer,
   Tooltip,
   XAxis,
   YAxis,
 } from 'recharts'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
+import { ChartShell } from '../charts/ChartShell'
+import { ChartTooltip } from '../charts/ChartTooltip'
 import { IconChart } from '../icons'
 
-function ChartTooltip({ active, payload, label }) {
-  if (!active || !payload?.length) return null
-  return (
-    <div className="rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-xs shadow-lg">
-      <p className="mb-1 font-medium text-slate-300">{label}</p>
-      {payload.map((entry) => (
-        <p key={entry.dataKey} style={{ color: entry.color }} className="tabular-nums">
-          {entry.name}: {Number(entry.value).toLocaleString('es')}
-        </p>
-      ))}
-    </div>
-  )
-}
-
-export function ExpenseTrendChart({ trend }) {
+function ExpenseTrendChartInner({ trend }) {
   const hasData = trend?.some((p) => p.income > 0 || p.expenses > 0)
 
   return (
@@ -37,8 +25,7 @@ export function ExpenseTrendChart({ trend }) {
       </CardHeader>
 
       {hasData ? (
-        <div className="h-56 w-full">
-          <ResponsiveContainer width="100%" height="100%">
+        <ChartShell height={224}>
             <LineChart data={trend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
               <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
               <XAxis
@@ -82,8 +69,7 @@ export function ExpenseTrendChart({ trend }) {
                 activeDot={{ r: 4 }}
               />
             </LineChart>
-          </ResponsiveContainer>
-        </div>
+        </ChartShell>
       ) : (
         <EmptyState
           icon={<IconChart className="size-6" />}
@@ -94,3 +80,5 @@ export function ExpenseTrendChart({ trend }) {
     </Card>
   )
 }
+
+export const ExpenseTrendChart = memo(ExpenseTrendChartInner)

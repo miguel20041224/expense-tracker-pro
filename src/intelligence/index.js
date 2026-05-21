@@ -13,6 +13,11 @@ export { buildMonthlyExpenseTrend } from './trends'
 export { INSIGHT_RULES } from './rules'
 export { buildAllReports, buildReport } from './reports'
 export { generateAlerts, filterActiveAlerts, buildAlertKey, getDismissedHistory } from './alerts'
+export {
+  projectFinancialOutlook,
+  generatePredictiveInsights,
+  buildHistoricalAndForecastTrend,
+} from './projections'
 
 /** Análisis completo para el dashboard del copiloto financiero. */
 export function runFinancialAnalysis(financialData) {
