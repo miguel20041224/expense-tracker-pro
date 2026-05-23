@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { IconStar } from '../icons'
 import { isMovementFavorite } from '../../utils/movementFlags'
 import { cn } from '../../utils/cn'
@@ -10,8 +11,12 @@ const toggleClass =
   'active:scale-95 motion-safe:transition-transform'
 
 export function MovementFavoriteToggle({ transaction, onToggle, className }) {
+  const { t } = useTranslation('forms')
   const isFavorite = isMovementFavorite(transaction)
   const [justToggled, setJustToggled] = useState(false)
+  const favoriteLabel = isFavorite
+    ? t('movements.actions.removeFavorite')
+    : t('movements.actions.addFavorite')
 
   function handleClick(event) {
     event.preventDefault()
@@ -31,8 +36,8 @@ export function MovementFavoriteToggle({ transaction, onToggle, className }) {
       )}
       onClick={handleClick}
       aria-pressed={isFavorite}
-      aria-label={isFavorite ? 'Quitar de favoritos' : 'Marcar como favorito'}
-      title={isFavorite ? 'Quitar de favoritos' : 'Marcar como favorito'}
+      aria-label={favoriteLabel}
+      title={favoriteLabel}
     >
       <IconStar
         filled={isFavorite}

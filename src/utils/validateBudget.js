@@ -8,21 +8,25 @@ export function getEmptyBudgetForm() {
   }
 }
 
-export function validateBudgetForm(values, locale) {
+function validationMessage(t, key) {
+  return t(`validation.${key}`, { ns: 'forms' })
+}
+
+export function validateBudgetForm(values, locale, t) {
   const errors = {}
   const amount = parseAmountInput(values.amount, locale)
 
   if (!values.amount?.trim() || !Number.isFinite(amount) || amount <= 0) {
-    errors.amount = 'Ingresa un monto válido mayor a cero'
+    errors.amount = validationMessage(t, 'invalidAmountGreaterZero')
   }
 
   if (!values.budgetType) {
-    errors.budgetType = 'Selecciona un tipo de presupuesto'
+    errors.budgetType = validationMessage(t, 'selectBudgetType')
   }
 
   const description = values.description?.trim() ?? ''
   if (description.length > 200) {
-    errors.description = 'Máximo 200 caracteres'
+    errors.description = validationMessage(t, 'descriptionMaxLength')
   }
 
   return errors

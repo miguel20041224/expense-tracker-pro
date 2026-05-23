@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -10,6 +11,7 @@ function getEmptyForm() {
 }
 
 export function CreditCardForm({ onSubmit }) {
+  const { t } = useTranslation('forms')
   const { currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyForm)
   const [errors, setErrors] = useState({})
@@ -32,10 +34,10 @@ export function CreditCardForm({ onSubmit }) {
     event.preventDefault()
     const nextErrors = {}
 
-    if (!values.name.trim()) nextErrors.name = 'El nombre es obligatorio'
+    if (!values.name.trim()) nextErrors.name = t('validation.requiredName')
     const limit = parseAmount(values.limit)
     if (!values.limit || Number.isNaN(limit) || limit <= 0) {
-      nextErrors.limit = 'Introduce un cupo válido'
+      nextErrors.limit = t('validation.invalidLimit')
     }
 
     setErrors(nextErrors)
@@ -60,25 +62,25 @@ export function CreditCardForm({ onSubmit }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Nueva tarjeta</CardTitle>
+        <CardTitle>{t('cards.form.title')}</CardTitle>
         {submitted ? (
-          <span className="text-xs font-medium text-income">Tarjeta agregada</span>
+          <span className="text-xs font-medium text-income">{t('cards.form.submitted')}</span>
         ) : null}
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <FormField label="Nombre" htmlFor="card-name" error={errors.name}>
+        <FormField label={t('fields.name')} htmlFor="card-name" error={errors.name}>
           <Input
             id="card-name"
             value={values.name}
             onChange={updateField('name')}
-            placeholder="Ej. Visa Bancolombia"
+            placeholder={t('cards.form.namePlaceholder')}
             error={errors.name}
           />
         </FormField>
 
         <FormField
-          label={`Cupo (${currencyCode})`}
+          label={t('fields.limitWithCurrency', { currency: currencyCode })}
           htmlFor="card-limit"
           error={errors.limit}
         >
@@ -93,9 +95,9 @@ export function CreditCardForm({ onSubmit }) {
         </FormField>
 
         <FormField
-          label={`Saldo usado inicial (${currencyCode})`}
+          label={t('fields.startingBalanceWithCurrency', { currency: currencyCode })}
           htmlFor="card-balance"
-          hint="Opcional: cargos previos no registrados en la app"
+          hint={t('cards.form.startingBalanceHint')}
         >
           <Input
             id="card-balance"
@@ -106,18 +108,18 @@ export function CreditCardForm({ onSubmit }) {
           />
         </FormField>
 
-        <FormField label="Beneficios" htmlFor="card-benefits">
+        <FormField label={t('fields.benefits')} htmlFor="card-benefits">
           <Input
             id="card-benefits"
             value={values.benefits}
             onChange={updateField('benefits')}
-            placeholder="Cashback, puntos, millas..."
+            placeholder={t('cards.form.benefitsPlaceholder')}
           />
         </FormField>
 
         <div className="flex justify-end pt-1">
           <Button type="submit" size="lg">
-            Guardar tarjeta
+            {t('cards.form.submit')}
           </Button>
         </div>
       </form>

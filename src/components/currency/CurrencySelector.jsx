@@ -1,10 +1,12 @@
 import { useEffect, useId, useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { SUPPORTED_CURRENCIES } from '../../config/currencies'
 import { useCurrency } from '../../hooks/useCurrency'
 import { IconChevronDown } from '../icons'
 import { cn } from '../../utils/cn'
 
 export function CurrencySelector({ className }) {
+  const { t } = useTranslation('common')
   const { currency, currencyCode, selectCurrency } = useCurrency()
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null)
@@ -47,6 +49,7 @@ export function CurrencySelector({ className }) {
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-controls={listboxId}
+        aria-label={t('currency.select')}
       >
         <span className="flex min-w-0 items-center gap-2">
           <span className="text-base leading-none" aria-hidden>
@@ -66,7 +69,7 @@ export function CurrencySelector({ className }) {
         <ul
           id={listboxId}
           role="listbox"
-          aria-label="Seleccionar moneda"
+          aria-label={t('currency.select')}
           className="absolute right-0 z-50 mt-2 max-h-72 w-full min-w-[16rem] overflow-auto rounded-xl border border-border-subtle bg-slate-900/95 p-1.5 shadow-xl shadow-black/40 backdrop-blur-md sm:w-64"
         >
           {SUPPORTED_CURRENCIES.map((item) => {
@@ -91,7 +94,7 @@ export function CurrencySelector({ className }) {
                       <span className="font-semibold">{item.code}</span>
                       {selected ? (
                         <span className="rounded-md bg-accent/20 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent">
-                          Activa
+                          {t('currency.active')}
                         </span>
                       ) : null}
                     </span>

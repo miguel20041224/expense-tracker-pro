@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { GoalForm } from './GoalForm'
 import { GoalCard } from './GoalCard'
 import { Card } from '../ui/Card'
@@ -5,14 +6,16 @@ import { EmptyState } from '../ui/EmptyState'
 import { IconTarget } from '../icons'
 
 export function GoalsPanel({ goals, onAddGoal, onContribute, onDeleteGoal }) {
+  const { t } = useTranslation('forms')
+
   return (
     <section className="space-y-6">
       <header className="rounded-2xl border border-border-subtle bg-surface-card/60 p-5">
         <p className="text-xs font-medium tracking-widest text-slate-500 uppercase">
-          Metas financieras
+          {t('goals.panel.eyebrow')}
         </p>
         <p className="mt-1 text-sm text-slate-400">
-          Define objetivos, sigue el progreso y activa aportes automáticos al registrar ingresos.
+          {t('goals.panel.description')}
         </p>
       </header>
 
@@ -26,8 +29,8 @@ export function GoalsPanel({ goals, onAddGoal, onContribute, onDeleteGoal }) {
             <Card>
               <EmptyState
                 icon={<IconTarget className="size-6" />}
-                title="Sin metas definidas"
-                description="Crea tu primera meta de ahorro o inversión."
+                title={t('goals.empty.title')}
+                description={t('goals.empty.description')}
               />
             </Card>
           ) : (

@@ -1,73 +1,105 @@
 import {
   buildCategorySection,
   formatReportDate,
+  formatReportMoney,
   percentChange,
-  pickTips,
   topExpensesToday,
 } from './shared'
+import {
+  pickLocalizedTips,
+  resolveReportLocale,
+  translateHealthLevel,
+} from '../../i18n/reportLocale'
 
-export function buildDailyReport(context, analysis) {
+export function buildDailyReport(context, analysis, options = {}) {
+  const { locale, t } = resolveReportLocale(options)
   const { temporal, transactions, metrics } = context
   const { today, yesterday, todayExpenses, yesterdayExpenses } = temporal
   const change = percentChange(todayExpenses, yesterdayExpenses)
   const todayCategories = buildCategorySection(transactions, today, today, 3)
-  const topToday = topExpensesToday(transactions, today)
+  const topToday = topExpensesToday(transactions, today, 5, t)
 
   const highlights = []
   if (todayExpenses > yesterdayExpenses && yesterdayExpenses > 0) {
-    highlights.push(`Gastaste ${Math.round(change)}% más que ayer.`)
+    highlights.push(
+      t('daily.highlights.spentMore', { percent: Math.round(change) }),
+    )
   } else if (todayExpenses < yesterdayExpenses && yesterdayExpenses > 0) {
-    highlights.push(`Gastaste ${Math.round(Math.abs(change))}% menos que ayer.`)
+    highlights.push(
+      t('daily.highlights.spentLess', { percent: Math.round(Math.abs(change)) }),
+    )
   }
   if (todayExpenses === 0) {
-    highlights.push('Sin gastos registrados hoy.')
+    highlights.push(t('daily.highlights.noExpenses'))
   }
+
+  const incomeUsedPercent = Math.round(
+    (metrics.summary.expenses / Math.max(metrics.summary.income, 1)) * 100,
+  )
 
   return {
     id: 'daily',
-    title: 'Reporte diario',
-    subtitle: 'Resumen de tu día financiero',
-    periodLabel: formatReportDate(new Date()),
+    title: t('daily.title'),
+    subtitle: t('daily.subtitle'),
+    periodLabel: formatReportDate(new Date(), locale),
     generatedAt: new Date().toISOString(),
     healthScore: analysis.health.score,
-    healthLabel: analysis.health.levelLabel,
+    healthLevel: analysis.health.level,
+    healthLabel: translateHealthLevel(
+      analysis.health.level,
+      analysis.health.levelLabel,
+      options.tDashboard,
+    ),
     highlights,
-    tips: pickTips(analysis.insights, 3),
+    tips: pickLocalizedTips(analysis.insights, 3, options.localizeMessage),
     sections: [
       {
         id: 'summary',
-        title: 'Resumen del día',
+        title: t('daily.sections.summary.title'),
         metrics: [
-          { label: 'Gastos hoy', value: todayExpenses, variant: 'expense' },
-          { label: 'Gastos ayer', value: yesterdayExpenses, variant: 'neutral' },
           {
-            label: 'Variación',
+            label: t('daily.sections.summary.metrics.todayExpenses'),
+            value: todayExpenses,
+            variant: 'expense',
+          },
+          {
+            label: t('daily.sections.summary.metrics.yesterdayExpenses'),
+            value: yesterdayExpenses,
+            variant: 'neutral',
+          },
+          {
+            label: t('daily.sections.summary.metrics.variation'),
             value: change,
             variant: change > 0 ? 'expense' : 'income',
             format: 'percent',
           },
-          { label: 'Salud financiera', value: analysis.health.score, variant: 'accent', format: 'score' },
+          {
+            label: t('daily.sections.summary.metrics.health'),
+            value: analysis.health.score,
+            variant: 'accent',
+            format: 'score',
+          },
         ],
       },
       {
         id: 'categories',
-        title: 'Categorías de hoy',
+        title: t('daily.sections.categories.title'),
         categories: todayCategories,
-        emptyMessage: 'No hay gastos categorizados hoy.',
+        emptyMessage: t('daily.sections.categories.empty'),
       },
       {
         id: 'movements',
-        title: 'Mayores gastos del día',
+        title: t('daily.sections.movements.title'),
         items: topToday,
-        emptyMessage: 'Sin movimientos hoy.',
+        emptyMessage: t('daily.sections.movements.empty'),
       },
       {
         id: 'context',
-        title: 'Contexto mensual',
+        title: t('daily.sections.context.title'),
         paragraphs: [
           metrics.summary.isOverBudget
-            ? 'Vas sobre presupuesto este mes. Conviene frenar gastos discrecionales.'
-            : `Llevas ${Math.round((metrics.summary.expenses / Math.max(metrics.summary.income, 1)) * 100)}% de tus ingresos usados en gastos este mes.`,
+            ? t('daily.sections.context.overBudget')
+            : t('daily.sections.context.incomeUsed', { percent: incomeUsedPercent }),
         ],
       },
     ],

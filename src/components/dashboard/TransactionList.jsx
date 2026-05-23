@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { IconReceipt } from '../icons'
@@ -13,23 +14,26 @@ export function TransactionList({
   onToggleFavorite,
   creditCardNames,
 }) {
+  const { t } = useTranslation('forms')
   const sorted = sortTransactionsByDate(transactions)
   const visible = limit ? sorted.slice(0, limit) : sorted
 
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>Últimos movimientos</CardTitle>
+        <CardTitle>{t('movements.recent.title')}</CardTitle>
         {!isEmpty ? (
-          <span className="text-xs text-slate-500">{transactions.length} en total</span>
+          <span className="text-xs text-slate-500">
+            {t('movements.recent.totalCount', { count: transactions.length })}
+          </span>
         ) : null}
       </CardHeader>
 
       {isEmpty ? (
         <EmptyState
           icon={<IconReceipt className="size-6" />}
-          title="Aún no has agregado movimientos"
-          description="Agrega un presupuesto en la pestaña Presupuesto o un gasto con el formulario de la izquierda."
+          title={t('movements.recent.emptyTitle')}
+          description={t('movements.recent.emptyDescription')}
         />
       ) : (
         <ul className="relative ml-1 border-l border-border-subtle">

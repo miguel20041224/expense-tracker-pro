@@ -17,6 +17,7 @@ export const weeklyRules = [
           priority: 15,
           category: 'weekly',
           text: `Tus gastos de los últimos 7 días subieron ${pct}% respecto a la semana anterior.`,
+          params: { pct },
         }
       }
       return null
@@ -39,6 +40,7 @@ export const weeklyRules = [
           priority: 85,
           category: 'weekly',
           text: `Bajaste tus gastos ${pct}% esta semana comparado con la semana pasada.`,
+          params: { pct },
         }
       }
       return null

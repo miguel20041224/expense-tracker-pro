@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -13,6 +14,7 @@ import {
 } from '../../utils/validateExpense'
 
 export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
+  const { t } = useTranslation('forms')
   const { currency, currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(() => ({
     ...getEmptyExpenseForm(),
@@ -35,7 +37,7 @@ export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const validationErrors = validateExpenseForm(values, currency.locale)
+    const validationErrors = validateExpenseForm(values, currency.locale, t)
     setErrors(validationErrors)
     if (hasValidationErrors(validationErrors)) return
 
@@ -54,22 +56,26 @@ export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Gasto en {cardName}</CardTitle>
+        <CardTitle>{t('cards.expenseForm.title', { cardName })}</CardTitle>
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <FormField label="Descripción" htmlFor="card-expense-name" error={errors.name}>
+        <FormField label={t('fields.description')} htmlFor="card-expense-name" error={errors.name}>
           <Input
             id="card-expense-name"
             value={values.name}
             onChange={updateField('name')}
-            placeholder="Ej. Supermercado"
+            placeholder={t('cards.expenseForm.namePlaceholder')}
             error={errors.name}
           />
         </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField label={`Monto (${currencyCode})`} htmlFor="card-expense-amount" error={errors.amount}>
+          <FormField
+            label={t('fields.montoWithCurrency', { currency: currencyCode })}
+            htmlFor="card-expense-amount"
+            error={errors.amount}
+          >
             <Input
               id="card-expense-amount"
               value={values.amount}
@@ -80,7 +86,7 @@ export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
             />
           </FormField>
 
-          <FormField label="Fecha" htmlFor="card-expense-date" error={errors.date}>
+          <FormField label={t('fields.date')} htmlFor="card-expense-date" error={errors.date}>
             <Input
               id="card-expense-date"
               type="date"
@@ -92,14 +98,14 @@ export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
           </FormField>
         </div>
 
-        <FormField label="Categoría" htmlFor="card-expense-category" error={errors.category}>
+        <FormField label={t('fields.category')} htmlFor="card-expense-category" error={errors.category}>
           <Select
             id="card-expense-category"
             value={values.category}
             onChange={updateField('category')}
             error={errors.category}
           >
-            <option value="">Selecciona una categoría</option>
+            <option value="">{t('expenses.form.selectCategory')}</option>
             {expenseCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -108,17 +114,17 @@ export function CreditCardExpenseForm({ cardId, cardName, onSubmit }) {
           </Select>
         </FormField>
 
-        <FormField label="Notas (opcional)" htmlFor="card-expense-desc">
+        <FormField label={t('fields.notesOptional')} htmlFor="card-expense-desc">
           <Input
             id="card-expense-desc"
             value={values.description}
             onChange={updateField('description')}
-            placeholder="Detalle del cargo"
+            placeholder={t('cards.expenseForm.notesPlaceholder')}
           />
         </FormField>
 
         <div className="flex justify-end">
-          <Button type="submit">Registrar en tarjeta</Button>
+          <Button type="submit">{t('cards.expenseForm.submit')}</Button>
         </div>
       </form>
     </Card>

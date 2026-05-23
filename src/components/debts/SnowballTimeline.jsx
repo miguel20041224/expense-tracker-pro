@@ -1,8 +1,12 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
-import { Money } from '../currency/Money'
+import { useCurrency } from '../../hooks/useCurrency'
 import { cn } from '../../utils/cn'
 
 export function SnowballTimeline({ ordered, steps, totalMonths }) {
+  const { t } = useTranslation('forms')
+  const { formatCurrency } = useCurrency()
+
   if (!ordered?.length) return null
 
   const maxMonth = Math.max(totalMonths, 1)
@@ -10,8 +14,8 @@ export function SnowballTimeline({ ordered, steps, totalMonths }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Cronograma de libertad</CardTitle>
-        <span className="text-xs text-slate-500">Cuándo se liquida cada deuda</span>
+        <CardTitle>{t('debts.timeline.title')}</CardTitle>
+        <span className="text-xs text-slate-500">{t('debts.timeline.subtitle')}</span>
       </CardHeader>
 
       <div className="relative space-y-4 pl-2">
@@ -41,16 +45,16 @@ export function SnowballTimeline({ ordered, steps, totalMonths }) {
                   <p className="font-medium text-white">{debt.name}</p>
                   {month ? (
                     <p className="text-xs font-medium text-income">
-                      Mes {month}
-                      {month === maxMonth ? ' · ¡Libre de deudas!' : ''}
+                      {t('debts.timeline.month', { month })}
+                      {month === maxMonth ? t('debts.timeline.debtFree') : ''}
                     </p>
                   ) : (
-                    <p className="text-xs text-slate-500">En espera</p>
+                    <p className="text-xs text-slate-500">{t('debts.timeline.waiting')}</p>
                   )}
                 </div>
 
                 <p className="mt-0.5 text-xs text-slate-500">
-                  Saldo <Money value={debt.balance} />
+                  {t('debts.timeline.balance', { amount: formatCurrency(debt.balance) })}
                 </p>
 
                 <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/5">

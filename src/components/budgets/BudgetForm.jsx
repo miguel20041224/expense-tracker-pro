@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -13,6 +14,7 @@ import {
 } from '../../utils/validateBudget'
 
 export function BudgetForm({ onSubmit }) {
+  const { t } = useTranslation('forms')
   const { currencyCode, amountPlaceholder, formatCurrency, parseAmount, currency } = useCurrency()
   const [values, setValues] = useState(getEmptyBudgetForm)
   const [errors, setErrors] = useState({})
@@ -36,7 +38,7 @@ export function BudgetForm({ onSubmit }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const validationErrors = validateBudgetForm(values, currency.locale)
+    const validationErrors = validateBudgetForm(values, currency.locale, t)
     setErrors(validationErrors)
 
     if (hasValidationErrors(validationErrors)) {
@@ -66,19 +68,19 @@ export function BudgetForm({ onSubmit }) {
   return (
     <Card className="motion-safe:animate-fade-in-up">
       <CardHeader>
-        <CardTitle>Agregar presupuesto</CardTitle>
+        <CardTitle>{t('budget.form.title')}</CardTitle>
         {submitted ? (
-          <span className="text-xs font-medium text-income">Presupuesto registrado</span>
+          <span className="text-xs font-medium text-income">{t('budget.form.submitted')}</span>
         ) : null}
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField
-            label={`Monto (${currencyCode})`}
+            label={t('fields.montoWithCurrency', { currency: currencyCode })}
             htmlFor="budget-amount"
             error={errors.amount}
-            hint={`Ej. ${amountExample}`}
+            hint={t('fields.exampleHint', { example: amountExample })}
           >
             <Input
               id="budget-amount"
@@ -94,7 +96,7 @@ export function BudgetForm({ onSubmit }) {
             />
           </FormField>
 
-          <FormField label="Tipo de presupuesto" htmlFor="budget-type" error={errors.budgetType}>
+          <FormField label={t('fields.budgetType')} htmlFor="budget-type" error={errors.budgetType}>
             <Select
               id="budget-type"
               name="budgetType"
@@ -103,10 +105,10 @@ export function BudgetForm({ onSubmit }) {
               error={errors.budgetType}
               aria-describedby={errors.budgetType ? 'budget-type-error' : undefined}
             >
-              <option value="">Selecciona un tipo</option>
+              <option value="">{t('budget.form.selectType')}</option>
               {budgetTypes.map((type) => (
                 <option key={type.id} value={type.id}>
-                  {type.label.charAt(0).toUpperCase() + type.label.slice(1)}
+                  {t(`budget.types.${type.id}`, { defaultValue: type.label })}
                 </option>
               ))}
             </Select>
@@ -114,7 +116,7 @@ export function BudgetForm({ onSubmit }) {
         </div>
 
         <FormField
-          label="Descripción (opcional)"
+          label={t('fields.descriptionOptional')}
           htmlFor="budget-description"
           error={errors.description}
         >
@@ -122,7 +124,7 @@ export function BudgetForm({ onSubmit }) {
             id="budget-description"
             name="description"
             type="text"
-            placeholder="Ej. Gastos del hogar"
+            placeholder={t('budget.form.descriptionPlaceholder')}
             value={values.description}
             onChange={updateField('description')}
             error={errors.description}
@@ -133,10 +135,10 @@ export function BudgetForm({ onSubmit }) {
 
         <div className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={handleReset}>
-            Limpiar
+            {t('actions.clear')}
           </Button>
           <Button type="submit" size="lg">
-            Agregar presupuesto
+            {t('budget.form.submit')}
           </Button>
         </div>
       </form>

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { IconPencil, IconTrash } from '../icons'
 import { cn } from '../../utils/cn'
 
@@ -7,13 +8,15 @@ const actionButtonClass =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/30'
 
 export function MovementActionButtons({ onEdit, onDelete, className }) {
+  const { t } = useTranslation('forms')
+
   return (
     <div className={cn('flex shrink-0 items-center gap-1', className)}>
       <button
         type="button"
         className={cn(actionButtonClass, 'hover:text-accent')}
         onClick={onEdit}
-        aria-label="Editar movimiento"
+        aria-label={t('movements.actions.editAriaLabel')}
       >
         <IconPencil className="size-4" />
       </button>
@@ -21,7 +24,7 @@ export function MovementActionButtons({ onEdit, onDelete, className }) {
         type="button"
         className={cn(actionButtonClass, 'hover:text-expense')}
         onClick={onDelete}
-        aria-label="Eliminar movimiento"
+        aria-label={t('movements.actions.deleteAriaLabel')}
       >
         <IconTrash className="size-4" />
       </button>

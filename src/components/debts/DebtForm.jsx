@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -10,6 +11,7 @@ function getEmptyForm() {
 }
 
 export function DebtForm({ onSubmit }) {
+  const { t } = useTranslation('forms')
   const { currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyForm)
   const [errors, setErrors] = useState({})
@@ -30,16 +32,16 @@ export function DebtForm({ onSubmit }) {
   function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = {}
-    if (!values.name.trim()) nextErrors.name = 'Nombre obligatorio'
+    if (!values.name.trim()) nextErrors.name = t('validation.requiredNameShort')
 
     const balance = parseAmount(values.balance)
     if (!values.balance || Number.isNaN(balance) || balance <= 0) {
-      nextErrors.balance = 'Saldo inválido'
+      nextErrors.balance = t('validation.invalidBalance')
     }
 
     const minPayment = parseAmount(values.minPayment)
     if (!values.minPayment || Number.isNaN(minPayment) || minPayment <= 0) {
-      nextErrors.minPayment = 'Pago mínimo inválido'
+      nextErrors.minPayment = t('validation.invalidMinPayment')
     }
 
     setErrors(nextErrors)
@@ -58,16 +60,16 @@ export function DebtForm({ onSubmit }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Registrar deuda</CardTitle>
+        <CardTitle>{t('debts.form.title')}</CardTitle>
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <FormField label="Nombre" htmlFor="debt-name" error={errors.name}>
+        <FormField label={t('fields.name')} htmlFor="debt-name" error={errors.name}>
           <Input id="debt-name" value={values.name} onChange={updateField('name')} error={errors.name} />
         </FormField>
 
         <FormField
-          label={`Saldo pendiente (${currencyCode})`}
+          label={t('fields.pendingBalanceWithCurrency', { currency: currencyCode })}
           htmlFor="debt-balance"
           error={errors.balance}
         >
@@ -82,7 +84,7 @@ export function DebtForm({ onSubmit }) {
         </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField label="Tasa anual (%)" htmlFor="debt-rate" hint="Opcional">
+          <FormField label={t('fields.annualRate')} htmlFor="debt-rate" hint={t('fields.optional')}>
             <Input
               id="debt-rate"
               type="number"
@@ -90,12 +92,12 @@ export function DebtForm({ onSubmit }) {
               step="0.1"
               value={values.interestRate}
               onChange={updateField('interestRate')}
-              placeholder="Ej. 24"
+              placeholder={t('debts.form.ratePlaceholder')}
             />
           </FormField>
 
           <FormField
-            label={`Pago mínimo mensual (${currencyCode})`}
+            label={t('fields.minPaymentWithCurrency', { currency: currencyCode })}
             htmlFor="debt-min"
             error={errors.minPayment}
           >
@@ -112,7 +114,7 @@ export function DebtForm({ onSubmit }) {
 
         <div className="flex justify-end">
           <Button type="submit" size="lg">
-            Agregar deuda
+            {t('debts.form.submit')}
           </Button>
         </div>
       </form>

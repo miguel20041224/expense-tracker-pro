@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import {
   CartesianGrid,
@@ -10,35 +11,40 @@ import {
 } from 'recharts'
 import { cn } from '../../utils/cn'
 
-const directionCopy = {
-  improving: { label: 'Tendencia positiva', className: 'text-emerald-400' },
-  declining: { label: 'Requiere atención', className: 'text-rose-400' },
-  stable: { label: 'Estable', className: 'text-slate-400' },
-}
-
 export function HealthProjectionCard({ health }) {
+  const { t } = useTranslation(['projections', 'forms'])
+
   if (!health) return null
+
+  const directionCopy = {
+    improving: { label: t('health.improving'), className: 'text-emerald-400' },
+    declining: { label: t('health.declining'), className: 'text-rose-400' },
+    stable: { label: t('health.stable'), className: 'text-slate-400' },
+  }
 
   const dir = directionCopy[health.direction] ?? directionCopy.stable
   const chartData = [
-    { label: 'Hoy', score: health.currentScore },
-    ...(health.points?.map((p) => ({ label: `+${p.month}m`, score: p.score })) ?? []),
+    { label: t('projections.healthChart.today', { ns: 'forms' }), score: health.currentScore },
+    ...(health.points?.map((p) => ({
+      label: t('projections.healthChart.monthOffset', { ns: 'forms', months: p.month }),
+      score: p.score,
+    })) ?? []),
   ]
 
   return (
     <Card className="border-sky-500/15 bg-linear-to-br from-sky-500/5 to-transparent">
       <CardHeader>
-        <CardTitle>Salud financiera futura</CardTitle>
+        <CardTitle>{t('health.title')}</CardTitle>
         <span className={cn('text-xs font-medium', dir.className)}>{dir.label}</span>
       </CardHeader>
 
       <div className="flex flex-wrap items-end gap-6">
         <div>
-          <p className="text-xs text-slate-500">Hoy</p>
+          <p className="text-xs text-slate-500">{t('health.today')}</p>
           <p className="text-3xl font-semibold text-white tabular-nums">{health.currentScore}</p>
         </div>
         <div>
-          <p className="text-xs text-slate-500">Proyección</p>
+          <p className="text-xs text-slate-500">{t('health.projection')}</p>
           <p className="text-3xl font-semibold text-sky-300 tabular-nums">
             {health.projectedScore}
           </p>

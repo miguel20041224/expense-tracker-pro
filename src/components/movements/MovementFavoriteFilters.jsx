@@ -1,16 +1,20 @@
-import { FAVORITE_FILTER_OPTIONS } from '../../config/movementFilters'
+import { useTranslation } from 'react-i18next'
+import { useMovementFilterOptions } from '../../hooks/useMovementFilterOptions'
 import { FilterChip } from '../ui/FilterChip'
 import { IconStar } from '../icons'
 import { cn } from '../../utils/cn'
 
 export function MovementFavoriteFilters({ value, onChange, favoriteCount = 0 }) {
+  const { t } = useTranslation('forms')
+  const { favorites: favoriteOptions } = useMovementFilterOptions()
+
   return (
     <div
       className="flex gap-2 overflow-x-auto pb-0.5"
       role="group"
-      aria-label="Filtro de favoritos"
+      aria-label={t('movements.filters.favoritesAriaLabel')}
     >
-      {FAVORITE_FILTER_OPTIONS.map((option) => {
+      {favoriteOptions.map((option) => {
         const isFavorites = option.id === 'favorites'
         const active = value === option.id
 

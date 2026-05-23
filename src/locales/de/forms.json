@@ -1,0 +1,438 @@
+{
+  "fields": {
+    "name": "Name",
+    "amount": "Betrag",
+    "amountWithCurrency": "Betrag ({{currency}})",
+    "montoWithCurrency": "Betrag ({{currency}})",
+    "date": "Datum",
+    "category": "Kategorie",
+    "description": "Beschreibung",
+    "descriptionOptional": "Beschreibung (optional)",
+    "notesOptional": "Notizen (optional)",
+    "paymentMethod": "Zahlungsmethode",
+    "creditCardOptional": "Kreditkarte (optional)",
+    "period": "Zeitraum",
+    "type": "Typ",
+    "budgetType": "Budgettyp",
+    "flow": "Cashflow",
+    "budgetOrExpense": "Budget / Ausgabe",
+    "sortBy": "Sortieren nach",
+    "targetDate": "Zieldatum",
+    "targetWithCurrency": "Ziel ({{currency}})",
+    "currentProgressWithCurrency": "Aktueller Fortschritt ({{currency}})",
+    "pendingBalanceWithCurrency": "Offener Saldo ({{currency}})",
+    "annualRate": "Jahreszins (%)",
+    "minPaymentWithCurrency": "Monatliche Mindestzahlung ({{currency}})",
+    "limitWithCurrency": "Kreditlimit ({{currency}})",
+    "startingBalanceWithCurrency": "Anfänglich genutzter Saldo ({{currency}})",
+    "benefits": "Vorteile",
+    "additionalAmount": "Zusätzlicher Betrag",
+    "optional": "Optional",
+    "exampleHint": "Z. B. {{example}}"
+  },
+  "actions": {
+    "clear": "Leeren",
+    "save": "Speichern",
+    "saveChanges": "Änderungen speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "confirm": "Bestätigen",
+    "resetFilters": "Filter zurücksetzen",
+    "clearFilters": "Filter leeren",
+    "viewAll": "Alle anzeigen",
+    "retry": "Erneut versuchen",
+    "reload": "Neu laden"
+  },
+  "movements": {
+    "panel": {
+      "title": "Transaktionsverlauf",
+      "resultsFiltered": "{{resultCount}} von {{totalCount}} Ergebnissen",
+      "totalOnly": "{{totalCount}} insgesamt",
+      "favoritesSuffix": "{{count}} Favoriten",
+      "allInFeatured": "Alle sichtbaren Transaktionen sind unter Hervorgehoben."
+    },
+    "types": {
+      "budget": "Budget",
+      "expense": "Ausgabe",
+      "income": "Einnahmen",
+      "savings": "Ersparnisse",
+      "movement": "Transaktion"
+    },
+    "empty": {
+      "noDataTitle": "Keine Transaktionen erfasst",
+      "noDataDescription": "Fügen Sie ein Budget im Budget-Tab oder eine Ausgabe in Übersicht hinzu, um Ihren Verlauf hier zu sehen.",
+      "noResultsTitle": "Keine Ergebnisse",
+      "noResultsDescription": "Versuchen Sie andere Suchbegriffe oder passen Sie die Filter an, um mehr Transaktionen zu sehen."
+    },
+    "recent": {
+      "title": "Letzte Transaktionen",
+      "totalCount": "{{count}} insgesamt",
+      "emptyTitle": "Sie haben noch keine Transaktionen hinzugefügt",
+      "emptyDescription": "Fügen Sie ein Budget im Budget-Tab oder eine Ausgabe über das Formular links hinzu."
+    },
+    "search": {
+      "placeholder": "Nach Name oder Kategorie suchen…",
+      "ariaLabel": "Transaktionen suchen",
+      "clearAriaLabel": "Suche löschen"
+    },
+    "toolbar": {
+      "advancedFilters": "Erweiterte Filter"
+    },
+    "filters": {
+      "quickRangeAriaLabel": "Schnellfilter nach Datum",
+      "favoritesAriaLabel": "Favoritenfilter",
+      "allCategories": "Alle Kategorien",
+      "periodAll": "Alle",
+      "periodToday": "Heute",
+      "periodWeek": "Diese Woche",
+      "periodMonth": "Dieser Monat",
+      "flowAll": "Alle Cashflows",
+      "flowIncome": "Einnahmen",
+      "flowExpense": "Ausgaben",
+      "kindAll": "Alle Typen",
+      "kindBudget": "Budget",
+      "kindExpense": "Erfasste Ausgabe",
+      "sortNewest": "Neueste",
+      "sortOldest": "Älteste",
+      "sortExpenseHigh": "Höchste Ausgabe",
+      "sortExpenseLow": "Niedrigste Ausgabe",
+      "sortIncomeHigh": "Höchstes Einkommen",
+      "favoritesAll": "Alle",
+      "favoritesOnly": "Favoriten"
+    },
+    "featured": {
+      "ariaLabel": "Hervorgehobene Transaktionen",
+      "title": "Hervorgehoben",
+      "favoriteCount_one": "1 Favorit-Transaktion",
+      "favoriteCount_other": "{{count}} Favorit-Transaktionen"
+    },
+    "actions": {
+      "editAriaLabel": "Transaktion bearbeiten",
+      "deleteAriaLabel": "Transaktion löschen",
+      "addFavorite": "Als Favorit markieren",
+      "removeFavorite": "Aus Favoriten entfernen"
+    },
+    "audit": {
+      "registeredAt": "Erfasst am",
+      "editedAt": "Bearbeitet am {{datetime}}"
+    }
+  },
+  "expenses": {
+    "form": {
+      "title": "Ausgabe hinzufügen",
+      "submitted": "Ausgabe erfasst",
+      "nameLabel": "Name der Ausgabe",
+      "namePlaceholder": "Z. B. Netflix",
+      "selectCategory": "Kategorie auswählen",
+      "submit": "Ausgabe speichern"
+    },
+    "paymentMethods": {
+      "credit_card": "Kreditkarte",
+      "debit": "Debit",
+      "cash": "Bargeld",
+      "bank_transfer": "Bank / Überweisung"
+    },
+    "cardSelect": {
+      "none": "Keine Karte (normale Ausgabe)"
+    }
+  },
+  "budget": {
+    "form": {
+      "title": "Budget hinzufügen",
+      "submitted": "Budget erfasst",
+      "selectType": "Typ auswählen",
+      "descriptionPlaceholder": "Z. B. Haushaltsausgaben",
+      "submit": "Budget hinzufügen"
+    },
+    "income": {
+      "title": "Einkommen pro Zeitraum",
+      "saved": "Gespeichert",
+      "monthlyPreview": "≈ {{amount}} / Monat",
+      "monthlyBudget": "Monatsbudget",
+      "spentThisMonth": "Diesen Monat ausgegeben",
+      "available": "Verfügbar",
+      "usageLabel": "Budgetnutzung: {{percent}} %",
+      "overBudget": " · Budget überschritten",
+      "emptyHint": "Legen Sie Ihr Einkommen fest, um verfügbares Budget, verbleibende Ausgaben und Nutzungsprozent zu berechnen.",
+      "saving": "Wird gespeichert…",
+      "submit": "Einkommen speichern",
+      "saveError": "Einkommen konnte nicht gespeichert werden.",
+      "invalidAmount": "Geben Sie einen gültigen Betrag größer als null ein."
+    },
+    "periods": {
+      "daily": "Täglich",
+      "weekly": "Wöchentlich",
+      "biweekly": "Zweiwöchentlich",
+      "monthly": "Monatlich"
+    },
+    "types": {
+      "monthly": "monatlich",
+      "biweekly": "zweiwöchentlich",
+      "weekly": "wöchentlich",
+      "daily": "täglich"
+    },
+    "summary": {
+      "title": "Budgetübersicht",
+      "basedOnIncome": "Basierend auf Ihrem konfigurierten Einkommen",
+      "availableThisMonth": "Verfügbar diesen Monat · Ausgegeben: {{spent}} von {{limit}}",
+      "usagePercent": "{{percent}} % des Budgets genutzt",
+      "monthTitle": "Monatsbudget",
+      "allocations_one": "{{count}} Zuweisung",
+      "allocations_other": "{{count}} Zuweisungen",
+      "totalAssigned": "Diesen Monat zugewiesen. Verfügbarer Saldo: {{balance}}.",
+      "emptyHint": "Konfigurieren Sie Ihr Einkommen oben oder fügen Sie ein manuelles Budget hinzu, um Ihren Saldo zu aktualisieren."
+    }
+  },
+  "goals": {
+    "panel": {
+      "eyebrow": "Finanzielle Ziele",
+      "description": "Setzen Sie Ziele, verfolgen Sie den Fortschritt und aktivieren Sie automatische Beiträge beim Erfassen von Einkommen."
+    },
+    "form": {
+      "title": "Neues Ziel",
+      "autoContributionLabel": "Automatischer Beitrag aus Einkommen (%)",
+      "autoContributionHint": "Beim Erfassen von Budget/Einkommen wird dieser % dem Ziel gutgeschrieben",
+      "autoContributionPlaceholder": "Z. B. 10",
+      "submit": "Ziel erstellen"
+    },
+    "card": {
+      "progressOf": "{{current}} von {{target}}",
+      "completed": "Ziel erreicht",
+      "remaining": "Noch {{amount}} · {{percent}} %",
+      "targetDate": " · Ziel {{date}}",
+      "autoContribution": " · Auto {{percent}} % des Einkommens",
+      "manualPlaceholder": "Manueller Beitrag",
+      "contribute": "Beitragen",
+      "delete": "Ziel löschen"
+    },
+    "status": {
+      "completed": "Abgeschlossen",
+      "overdue": "Überfällig",
+      "inProgress": "In Bearbeitung"
+    },
+    "empty": {
+      "title": "Keine Ziele definiert",
+      "description": "Erstellen Sie Ihr erstes Spar- oder Anlageziel."
+    }
+  },
+  "debts": {
+    "panel": {
+      "eyebrow": "Schuldenstrategie (Schneeball)",
+      "description": "Sortieren Sie vom kleinsten zum größten Saldo, simulieren Sie Extrazahlungen und sehen Sie, wann Sie schuldenfrei sind. Vergleichen Sie die Wirkung gegenüber der Zahlung nur der Mindestbeträge."
+    },
+    "form": {
+      "title": "Schuld erfassen",
+      "ratePlaceholder": "Z. B. 24",
+      "submit": "Schuld hinzufügen"
+    },
+    "extraPayment": {
+      "title": "Monatliche Extrazahlung",
+      "hint": "Wird jeden Monat zur prioritären Schuld addiert",
+      "tryAmounts": "Beträge testen:"
+    },
+    "summary": {
+      "title": "Übersicht",
+      "totalBalance": "Gesamtsaldo",
+      "monthlyMinimums": "Monatliche Mindestbeträge",
+      "freeIn": "Schuldenfrei in",
+      "monthsCount": "{{count}} Monate",
+      "estimatedTotalPaid": "Geschätzt gezahlt",
+      "priority": "Priorität: zuerst {{name}} tilgen ({{balance}})"
+    },
+    "impact": {
+      "title": "Wirkung der Extrazahlung",
+      "perMonth": "+{{amount}}/Monat",
+      "noExtraSimulated": "Keine Extrazahlung simuliert",
+      "withoutExtra": "Ohne Extra",
+      "minimumOnly": "nur Mindestbeträge",
+      "withYourExtra": "Mit Ihrem Extra",
+      "freeAround": "schuldenfrei ~{{date}}",
+      "monthsSaved": "Monate gespart",
+      "vsMinimumOnly": "vs nur Mindestbeträge",
+      "tryHigherAmount": "versuchen Sie einen höheren Betrag",
+      "estimatedInterest": "Geschätzte Zinsen",
+      "lessInterestPaid": "weniger gezahlte Zinsen",
+      "strategyComparison": "Mit derselben Extrazahlung würde die {{strategy}}-Methode Ihre Schulden in {{months}} Monaten tilgen (die andere in {{otherMonths}}).",
+      "avalanche": "Lawine",
+      "snowball": "Schneeball"
+    },
+    "chart": {
+      "title": "Saldo-Prognose",
+      "subtitle": "Schneeball",
+      "balance": "Saldo",
+      "withExtra": "Mit Extra",
+      "minimumOnly": "Nur Mindestbeträge",
+      "withExtraPayment": "Mit Extrazahlung",
+      "emptyTitle": "Keine Prognose",
+      "emptyDescription": "Fügen Sie Schulden hinzu, um zu sehen, wie Ihr Saldo Monat für Monat sinkt.",
+      "monthLabel": "Monat {{index}}"
+    },
+    "timeline": {
+      "title": "Freiheits-Zeitplan",
+      "subtitle": "Wann jede Schuld getilgt ist",
+      "month": "Monat {{month}}",
+      "debtFree": " · Schuldenfrei!",
+      "waiting": "Wartend",
+      "balance": "Saldo {{amount}}"
+    },
+    "order": {
+      "title": "Empfohlene Zahlungsreihenfolge",
+      "min": "Min.",
+      "annualRate": " · {{rate}} % p. a.",
+      "freeInMonth": "Schuldenfrei in Monat {{month}}",
+      "remove": "Entfernen"
+    },
+    "empty": {
+      "title": "Keine Schulden erfasst",
+      "description": "Fügen Sie Ihre Schulden hinzu, um die empfohlene Reihenfolge, Prognose und den Zeitplan zu sehen."
+    }
+  },
+  "cards": {
+    "panel": {
+      "eyebrow": "Kreditkarten",
+      "description": "Verfolgen Sie Limit, genutzten Saldo und Verlauf jeder Karte. Belastungen erscheinen auch unter Transaktionen.",
+      "totalUsed": "Gesamt genutzt: {{amount}}"
+    },
+    "form": {
+      "title": "Neue Karte",
+      "submitted": "Karte hinzugefügt",
+      "namePlaceholder": "Z. B. Visa Sparkasse",
+      "startingBalanceHint": "Optional: frühere Belastungen, die nicht in der App erfasst sind",
+      "benefitsPlaceholder": "Cashback, Punkte, Meilen...",
+      "submit": "Karte speichern"
+    },
+    "expenseForm": {
+      "title": "Ausgabe auf {{cardName}}",
+      "namePlaceholder": "Z. B. Supermarkt",
+      "notesPlaceholder": "Details der Belastung",
+      "submit": "Auf Karte erfassen"
+    },
+    "visual": {
+      "label": "Kreditkarte",
+      "overLimit": "Limit überschritten",
+      "used": "Genutzt",
+      "available": "Verfügbar",
+      "limitUsage": "Limitnutzung",
+      "limitSummary": "Limit {{limit}} · {{count}} Ausgabe",
+      "limitSummary_other": "Limit {{limit}} · {{count}} Ausgaben",
+      "delete": "Karte löschen"
+    },
+    "history": {
+      "title": "Verlauf · {{name}}",
+      "chargesTotal": "{{amount}} in Belastungen",
+      "emptyTitle": "Keine Ausgaben auf dieser Karte",
+      "emptyDescription": "Erfassen Sie eine Belastung oder weisen Sie bestehende Transaktionen dieser Karte zu."
+    },
+    "empty": {
+      "title": "Keine Karten erfasst",
+      "description": "Fügen Sie Ihre erste Karte hinzu, um Limit, Nutzung und zugehörige Ausgaben zu sehen."
+    }
+  },
+  "projections": {
+    "impact": {
+      "monthsDelta": "{{sign}}{{count}} Monate vs aktuell",
+      "amountDelta": "{{sign}}{{amount}} vs aktuell"
+    },
+    "healthChart": {
+      "today": "Heute",
+      "monthOffset": "+{{months}}m"
+    }
+  },
+  "reports": {
+    "errorTitle": "Fehler bei Berichten",
+    "errorMessage": "Der Bericht konnte nicht erstellt werden.",
+    "dailySpend": "Ausgaben pro Tag",
+    "copilotTips": "Copilot-Tipps",
+    "health": "Gesundheit",
+    "generated": "Erstellt {{date}}"
+  },
+  "dialogs": {
+    "closeAriaLabel": "Dialog schließen",
+    "deleteMovement": {
+      "title": "Transaktion löschen",
+      "description": "Diese Aktion kann nicht rückgängig gemacht werden. Saldo, Statistiken und Kategorien werden aktualisiert.",
+      "confirmQuestion": "Möchten Sie diese Transaktion wirklich aus Ihrem Verlauf löschen?"
+    },
+    "editMovement": {
+      "editExpense": "Ausgabe bearbeiten",
+      "editBudget": "Budget bearbeiten",
+      "description": "Das ursprüngliche Datum und die Uhrzeit der Transaktion werden nicht geändert.",
+      "notesPlaceholder": "Zusätzliche Notizen"
+    }
+  },
+  "savings": {
+    "progress": {
+      "title": "Budgetnutzung",
+      "spentPercent": "{{percent}} % ausgegeben",
+      "availableOf": " verfügbar von {{amount}}",
+      "progressAriaLabel": "Prozentsatz des ausgegebenen Budgets",
+      "overBudget": "Sie haben Ihr Budget um {{amount}} überschritten.",
+      "remainingPercent": "Ihnen bleiben {{percent}} % Ihres zugewiesenen Budgets diesen Monat."
+    },
+    "hero": {
+      "emptyTitle": "Ihre Finanzübersicht erscheint hier",
+      "emptyDescription": "Fügen Sie ein Budget hinzu oder erfassen Sie eine Ausgabe, um Ihren Saldo in Echtzeit zu berechnen.",
+      "availableLabel": "Verfügbarer Saldo",
+      "breakdown": "{{budgets}} in Budgets − {{expenses}} in Ausgaben"
+    },
+    "onboarding": {
+      "ariaLabel": "Erste Schritte",
+      "welcome": "Willkommen",
+      "title": "Beginnen Sie mit Ihrer ersten Ausgabe",
+      "description": "Ihr Dashboard füllt sich mit echten Daten, sobald Sie Transaktionen erfassen.",
+      "steps": {
+        "trackExpenses": {
+          "title": "Ausgaben erfassen",
+          "description": "Erfassen Sie jede Ausgabe mit Kategorie und Datum."
+        },
+        "viewSummary": {
+          "title": "Übersicht ansehen",
+          "description": "Ihre Finanzübersicht erscheint hier."
+        },
+        "controlMoney": {
+          "title": "Geld im Griff behalten",
+          "description": "Prüfen Sie Saldo, Kategorien und Transaktionen."
+        }
+      },
+      "skip": "Überspringen",
+      "cta": "Erste Ausgabe hinzufügen"
+    },
+    "categoryBreakdown": {
+      "title": "Ausgaben nach Kategorie",
+      "thisMonth": "Dieser Monat",
+      "emptyTitle": "Keine Ausgaben nach Kategorie",
+      "emptyDescription": "Wenn Sie kategorisierte Ausgaben erfassen, sehen Sie hier die Aufschlüsselung und Monatsprozente."
+    },
+    "trendChart": {
+      "title": "Entwicklung (6 Monate)",
+      "subtitle": "Einnahmen vs Ausgaben",
+      "income": "Einnahmen",
+      "expenses": "Ausgaben",
+      "emptyTitle": "Nicht genug Verlauf",
+      "emptyDescription": "Erfassen Sie Transaktionen in früheren Monaten, um den Trend zu sehen."
+    }
+  },
+  "validation": {
+    "requiredName": "Name ist erforderlich",
+    "requiredNameShort": "Name ist erforderlich",
+    "nameMinLength": "Mindestens 2 Zeichen",
+    "requiredAmount": "Betrag ist erforderlich",
+    "invalidAmountPositive": "Geben Sie einen Betrag größer als 0 ein",
+    "invalidAmountGreaterZero": "Geben Sie einen gültigen Betrag größer als null ein",
+    "selectCategory": "Wählen Sie eine Kategorie",
+    "requiredDate": "Datum ist erforderlich",
+    "invalidDate": "Ungültiges Datum",
+    "futureDate": "Datum darf nicht in der Zukunft liegen",
+    "descriptionMaxLength": "Maximal 200 Zeichen",
+    "selectBudgetType": "Wählen Sie einen Budgettyp",
+    "invalidTarget": "Ungültiges Ziel",
+    "percentRange": "Zwischen 0 und 100",
+    "invalidBalance": "Ungültiger Saldo",
+    "invalidMinPayment": "Ungültige Mindestzahlung",
+    "invalidLimit": "Geben Sie ein gültiges Kreditlimit ein"
+  },
+  "errors": {
+    "appTitle": "App konnte nicht geladen werden",
+    "appMessage": "Unerwarteter Fehler in der Benutzeroberfläche."
+  }
+}

@@ -1,26 +1,26 @@
+import { useTranslation } from 'react-i18next'
 import { FormField } from '../ui/FormField'
 import { Select } from '../ui/Select'
 import { Input } from '../ui/Input'
-import {
-  FLOW_FILTER_OPTIONS,
-  KIND_FILTER_OPTIONS,
-  SORT_OPTIONS,
-} from '../../config/movementFilters'
+import { useMovementFilterOptions } from '../../hooks/useMovementFilterOptions'
 
 export function MovementFilterFields({
   filters,
   categories,
   onFilterChange,
 }) {
+  const { t } = useTranslation('forms')
+  const { flow: flowOptions, kind: kindOptions, sort: sortOptions } = useMovementFilterOptions()
+
   return (
     <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-      <FormField label="Flujo" htmlFor="filter-flow">
+      <FormField label={t('fields.flow')} htmlFor="filter-flow">
         <Select
           id="filter-flow"
           value={filters.flow}
           onChange={(event) => onFilterChange('flow', event.target.value)}
         >
-          {FLOW_FILTER_OPTIONS.map((option) => (
+          {flowOptions.map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
@@ -28,13 +28,13 @@ export function MovementFilterFields({
         </Select>
       </FormField>
 
-      <FormField label="Presupuesto / gasto" htmlFor="filter-kind">
+      <FormField label={t('fields.budgetOrExpense')} htmlFor="filter-kind">
         <Select
           id="filter-kind"
           value={filters.kind}
           onChange={(event) => onFilterChange('kind', event.target.value)}
         >
-          {KIND_FILTER_OPTIONS.map((option) => (
+          {kindOptions.map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
@@ -42,13 +42,13 @@ export function MovementFilterFields({
         </Select>
       </FormField>
 
-      <FormField label="Categoría" htmlFor="filter-category">
+      <FormField label={t('fields.category')} htmlFor="filter-category">
         <Select
           id="filter-category"
           value={filters.category}
           onChange={(event) => onFilterChange('category', event.target.value)}
         >
-          <option value="all">Todas las categorías</option>
+          <option value="all">{t('movements.filters.allCategories')}</option>
           {categories.map((category) => (
             <option key={category} value={category}>
               {category}
@@ -57,7 +57,7 @@ export function MovementFilterFields({
         </Select>
       </FormField>
 
-      <FormField label="Fecha" htmlFor="filter-date">
+      <FormField label={t('fields.date')} htmlFor="filter-date">
         <Input
           id="filter-date"
           type="date"
@@ -67,13 +67,13 @@ export function MovementFilterFields({
         />
       </FormField>
 
-      <FormField label="Ordenar por" htmlFor="filter-sort">
+      <FormField label={t('fields.sortBy')} htmlFor="filter-sort">
         <Select
           id="filter-sort"
           value={filters.sort}
           onChange={(event) => onFilterChange('sort', event.target.value)}
         >
-          {SORT_OPTIONS.map((option) => (
+          {sortOptions.map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>

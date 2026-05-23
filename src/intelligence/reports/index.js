@@ -10,7 +10,7 @@ import { buildMonthlyReport } from './monthlyReport'
 export { buildDailyReport, buildWeeklyReport, buildMonthlyReport }
 
 /** Genera los tres reportes a partir de datos financieros. */
-export function buildAllReports(financialData) {
+export function buildAllReports(financialData, options = {}) {
   const context = buildFinancialContext(financialData)
   const insights = runInsightRules(context)
   const health = computeFinancialHealthScore(context.metrics)
@@ -27,14 +27,14 @@ export function buildAllReports(financialData) {
   }
 
   return {
-    daily: buildDailyReport(context, analysis),
-    weekly: buildWeeklyReport(context, analysis),
-    monthly: buildMonthlyReport(context, analysis),
+    daily: buildDailyReport(context, analysis, options),
+    weekly: buildWeeklyReport(context, analysis, options),
+    monthly: buildMonthlyReport(context, analysis, options),
     analysis,
   }
 }
 
-export function buildReport(financialData, type) {
-  const all = buildAllReports(financialData)
+export function buildReport(financialData, type, options = {}) {
+  const all = buildAllReports(financialData, options)
   return all[type] ?? all.monthly
 }

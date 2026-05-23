@@ -1,4 +1,20 @@
 {
+  "center": {
+    "eyebrow": "Benachrichtigungszentrum",
+    "description": "Automatisch generierte Benachrichtigungen basierend auf Ihren Transaktionen, Schulden und Gewohnheiten. Sie können sie verwerfen; sie erscheinen in der nächsten Periode wieder, wenn das Risiko bestehen bleibt.",
+    "criticalCount": "{{count}} kritisch",
+    "warningCount": "{{count}} Warnungen",
+    "activeCount": "{{count}} aktiv",
+    "dismissAll": "Alle aktiven verwerfen",
+    "activeTitle": "Aktive Benachrichtigungen",
+    "emptyTitle": "Keine aktiven Benachrichtigungen",
+    "emptyDescription": "Wenn wir finanzielle Risiken erkennen, erscheinen sie hier.",
+    "dismissedTitle": "Kürzlich verworfen",
+    "restore": "Wiederherstellen"
+  },
+  "strip": {
+    "viewAll": "Alle anzeigen"
+  },
   "messages": {
     "critical-balance": "Kritisches Saldo: Ihre Ausgaben dieses Monats übersteigen Ihr zugewiesenes Einkommen.",
     "spending-pace-critical": "95 % oder mehr Ihres Einkommens sind diesen Monat bereits für Ausgaben verplant.",

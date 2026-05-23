@@ -1,4 +1,20 @@
 {
+  "center": {
+    "eyebrow": "Centro de alertas",
+    "description": "Alertas geradas automaticamente com base em suas transações, dívidas e hábitos. Você pode descartá-las; elas voltarão no próximo período se o risco persistir.",
+    "criticalCount": "{{count}} críticas",
+    "warningCount": "{{count}} avisos",
+    "activeCount": "{{count}} ativas",
+    "dismissAll": "Descartar todas as ativas",
+    "activeTitle": "Alertas ativas",
+    "emptyTitle": "Nenhuma alerta ativa",
+    "emptyDescription": "Quando detectarmos riscos financeiros, eles aparecerão aqui.",
+    "dismissedTitle": "Descartadas recentemente",
+    "restore": "Restaurar"
+  },
+  "strip": {
+    "viewAll": "Ver todas"
+  },
   "messages": {
     "critical-balance": "Saldo crítico: suas despesas do mês superam sua renda alocada.",
     "spending-pace-critical": "95% ou mais da sua renda já está comprometida com despesas neste mês.",

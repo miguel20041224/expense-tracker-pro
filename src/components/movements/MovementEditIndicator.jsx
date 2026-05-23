@@ -1,11 +1,19 @@
-import { formatEditedLabel, wasTransactionEdited } from '../../utils/transactionAudit'
+import { useTranslation } from 'react-i18next'
+import { formatMovementDateTime } from '../../utils/movements'
+import { isValidAuditTimestamp, wasTransactionEdited } from '../../utils/transactionAudit'
 import { cn } from '../../utils/cn'
 
 export function MovementEditIndicator({ transaction, locale, className }) {
+  const { t } = useTranslation('forms')
+
   if (!wasTransactionEdited(transaction)) return null
 
-  const label = formatEditedLabel(transaction.updatedAt, locale)
-  if (!label) return null
+  const updatedAt = transaction.updatedAt
+  if (!isValidAuditTimestamp(updatedAt)) return null
+
+  const label = t('movements.audit.editedAt', {
+    datetime: formatMovementDateTime(updatedAt, locale),
+  })
 
   return (
     <p

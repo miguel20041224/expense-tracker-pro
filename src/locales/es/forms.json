@@ -1,0 +1,438 @@
+{
+  "fields": {
+    "name": "Nombre",
+    "amount": "Cantidad",
+    "amountWithCurrency": "Cantidad ({{currency}})",
+    "montoWithCurrency": "Monto ({{currency}})",
+    "date": "Fecha",
+    "category": "Categoría",
+    "description": "Descripción",
+    "descriptionOptional": "Descripción (opcional)",
+    "notesOptional": "Notas (opcional)",
+    "paymentMethod": "Método de pago",
+    "creditCardOptional": "Tarjeta de crédito (opcional)",
+    "period": "Periodo",
+    "type": "Tipo",
+    "budgetType": "Tipo de presupuesto",
+    "flow": "Flujo",
+    "budgetOrExpense": "Presupuesto / gasto",
+    "sortBy": "Ordenar por",
+    "targetDate": "Fecha objetivo",
+    "targetWithCurrency": "Objetivo ({{currency}})",
+    "currentProgressWithCurrency": "Progreso actual ({{currency}})",
+    "pendingBalanceWithCurrency": "Saldo pendiente ({{currency}})",
+    "annualRate": "Tasa anual (%)",
+    "minPaymentWithCurrency": "Pago mínimo mensual ({{currency}})",
+    "limitWithCurrency": "Cupo ({{currency}})",
+    "startingBalanceWithCurrency": "Saldo usado inicial ({{currency}})",
+    "benefits": "Beneficios",
+    "additionalAmount": "Monto adicional",
+    "optional": "Opcional",
+    "exampleHint": "Ej. {{example}}"
+  },
+  "actions": {
+    "clear": "Limpiar",
+    "save": "Guardar",
+    "saveChanges": "Guardar cambios",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "confirm": "Confirmar",
+    "resetFilters": "Restablecer filtros",
+    "clearFilters": "Limpiar filtros",
+    "viewAll": "Ver todos",
+    "retry": "Reintentar",
+    "reload": "Recargar"
+  },
+  "movements": {
+    "panel": {
+      "title": "Historial de movimientos",
+      "resultsFiltered": "{{resultCount}} de {{totalCount}} resultados",
+      "totalOnly": "{{totalCount}} en total",
+      "favoritesSuffix": "{{count}} favoritos",
+      "allInFeatured": "Todos tus movimientos visibles están en destacados."
+    },
+    "types": {
+      "budget": "Presupuesto",
+      "expense": "Gasto",
+      "income": "Ingreso",
+      "savings": "Ahorro",
+      "movement": "Movimiento"
+    },
+    "empty": {
+      "noDataTitle": "Sin movimientos registrados",
+      "noDataDescription": "Agrega un presupuesto en la pestaña Presupuesto o un gasto en Resumen para ver tu historial aquí.",
+      "noResultsTitle": "No hay resultados",
+      "noResultsDescription": "Prueba con otros términos de búsqueda o ajusta los filtros para ver más movimientos."
+    },
+    "recent": {
+      "title": "Últimos movimientos",
+      "totalCount": "{{count}} en total",
+      "emptyTitle": "Aún no has agregado movimientos",
+      "emptyDescription": "Agrega un presupuesto en la pestaña Presupuesto o un gasto con el formulario de la izquierda."
+    },
+    "search": {
+      "placeholder": "Buscar por nombre o categoría…",
+      "ariaLabel": "Buscar movimientos",
+      "clearAriaLabel": "Limpiar búsqueda"
+    },
+    "toolbar": {
+      "advancedFilters": "Filtros avanzados"
+    },
+    "filters": {
+      "quickRangeAriaLabel": "Filtros rápidos por fecha",
+      "favoritesAriaLabel": "Filtro de favoritos",
+      "allCategories": "Todas las categorías",
+      "periodAll": "Todos",
+      "periodToday": "Hoy",
+      "periodWeek": "Esta semana",
+      "periodMonth": "Este mes",
+      "flowAll": "Todos los flujos",
+      "flowIncome": "Ingreso",
+      "flowExpense": "Gasto",
+      "kindAll": "Todos los tipos",
+      "kindBudget": "Presupuesto",
+      "kindExpense": "Gasto registrado",
+      "sortNewest": "Más recientes",
+      "sortOldest": "Más antiguos",
+      "sortExpenseHigh": "Mayor gasto",
+      "sortExpenseLow": "Menor gasto",
+      "sortIncomeHigh": "Mayor ingreso",
+      "favoritesAll": "Todos",
+      "favoritesOnly": "Favoritos"
+    },
+    "featured": {
+      "ariaLabel": "Movimientos destacados",
+      "title": "Destacados",
+      "favoriteCount_one": "1 movimiento favorito",
+      "favoriteCount_other": "{{count}} movimientos favoritos"
+    },
+    "actions": {
+      "editAriaLabel": "Editar movimiento",
+      "deleteAriaLabel": "Eliminar movimiento",
+      "addFavorite": "Marcar como favorito",
+      "removeFavorite": "Quitar de favoritos"
+    },
+    "audit": {
+      "registeredAt": "Registrado el",
+      "editedAt": "Editado el {{datetime}}"
+    }
+  },
+  "expenses": {
+    "form": {
+      "title": "Agregar gasto",
+      "submitted": "Gasto registrado",
+      "nameLabel": "Nombre del gasto",
+      "namePlaceholder": "Ej. Netflix",
+      "selectCategory": "Selecciona una categoría",
+      "submit": "Guardar gasto"
+    },
+    "paymentMethods": {
+      "credit_card": "Tarjeta de crédito",
+      "debit": "Débito",
+      "cash": "Efectivo",
+      "bank_transfer": "Banco / transferencia"
+    },
+    "cardSelect": {
+      "none": "Sin tarjeta (gasto normal)"
+    }
+  },
+  "budget": {
+    "form": {
+      "title": "Agregar presupuesto",
+      "submitted": "Presupuesto registrado",
+      "selectType": "Selecciona un tipo",
+      "descriptionPlaceholder": "Ej. Gastos del hogar",
+      "submit": "Agregar presupuesto"
+    },
+    "income": {
+      "title": "Ingreso por periodo",
+      "saved": "Guardado",
+      "monthlyPreview": "≈ {{amount}} / mes",
+      "monthlyBudget": "Presupuesto mensual",
+      "spentThisMonth": "Gastado este mes",
+      "available": "Disponible",
+      "usageLabel": "Uso del presupuesto: {{percent}}%",
+      "overBudget": " · Presupuesto superado",
+      "emptyHint": "Define tu ingreso para calcular presupuesto disponible, gasto restante y porcentaje de uso.",
+      "saving": "Guardando…",
+      "submit": "Guardar ingreso",
+      "saveError": "No se pudo guardar el ingreso.",
+      "invalidAmount": "Ingresa un monto válido mayor a cero."
+    },
+    "periods": {
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "biweekly": "Quincenal",
+      "monthly": "Mensual"
+    },
+    "types": {
+      "monthly": "mensual",
+      "biweekly": "quincenal",
+      "weekly": "semanal",
+      "daily": "diario"
+    },
+    "summary": {
+      "title": "Resumen del presupuesto",
+      "basedOnIncome": "Basado en tu ingreso configurado",
+      "availableThisMonth": "Disponible este mes · Gastado: {{spent}} de {{limit}}",
+      "usagePercent": "{{percent}}% del presupuesto usado",
+      "monthTitle": "Presupuesto del mes",
+      "allocations_one": "{{count}} asignación",
+      "allocations_other": "{{count}} asignaciones",
+      "totalAssigned": "Total asignado este mes. Balance disponible: {{balance}}.",
+      "emptyHint": "Configura tu ingreso arriba o agrega un presupuesto manual para actualizar tu balance."
+    }
+  },
+  "goals": {
+    "panel": {
+      "eyebrow": "Metas financieras",
+      "description": "Define objetivos, sigue el progreso y activa aportes automáticos al registrar ingresos."
+    },
+    "form": {
+      "title": "Nueva meta",
+      "autoContributionLabel": "Aporte automático desde ingresos (%)",
+      "autoContributionHint": "Al registrar presupuesto/ingreso, se aporta este % a la meta",
+      "autoContributionPlaceholder": "Ej. 10",
+      "submit": "Crear meta"
+    },
+    "card": {
+      "progressOf": "{{current}} de {{target}}",
+      "completed": "Meta alcanzada",
+      "remaining": "Faltan {{amount}} · {{percent}}%",
+      "targetDate": " · Objetivo {{date}}",
+      "autoContribution": " · Auto {{percent}}% de ingresos",
+      "manualPlaceholder": "Aporte manual",
+      "contribute": "Aportar",
+      "delete": "Eliminar meta"
+    },
+    "status": {
+      "completed": "Completada",
+      "overdue": "Atrasada",
+      "inProgress": "En progreso"
+    },
+    "empty": {
+      "title": "Sin metas definidas",
+      "description": "Crea tu primera meta de ahorro o inversión."
+    }
+  },
+  "debts": {
+    "panel": {
+      "eyebrow": "Estrategia de deudas (bola de nieve)",
+      "description": "Ordena de menor a mayor saldo, simula pagos extra y visualiza cuándo quedarás libre de deudas. Compara el impacto frente a pagar solo los mínimos."
+    },
+    "form": {
+      "title": "Registrar deuda",
+      "ratePlaceholder": "Ej. 24",
+      "submit": "Agregar deuda"
+    },
+    "extraPayment": {
+      "title": "Pago extra mensual",
+      "hint": "Se suma a la deuda prioritaria cada mes",
+      "tryAmounts": "Probar montos:"
+    },
+    "summary": {
+      "title": "Resumen",
+      "totalBalance": "Saldo total",
+      "monthlyMinimums": "Mínimos mensuales",
+      "freeIn": "Libre en",
+      "monthsCount": "{{count}} meses",
+      "estimatedTotalPaid": "Total pagado (est.)",
+      "priority": "Prioridad: pagar primero {{name}} ({{balance}})"
+    },
+    "impact": {
+      "title": "Impacto del pago extra",
+      "perMonth": "+{{amount}}/mes",
+      "noExtraSimulated": "Sin pago extra simulado",
+      "withoutExtra": "Sin extra",
+      "minimumOnly": "solo mínimos",
+      "withYourExtra": "Con tu extra",
+      "freeAround": "libre ~{{date}}",
+      "monthsSaved": "Meses ahorrados",
+      "vsMinimumOnly": "vs solo mínimos",
+      "tryHigherAmount": "prueba un monto mayor",
+      "estimatedInterest": "Interés estimado",
+      "lessInterestPaid": "menos intereses pagados",
+      "strategyComparison": "Con el mismo pago extra, el método {{strategy}} liquidaría tus deudas en {{months}} meses (el otro en {{otherMonths}}).",
+      "avalanche": "avalancha",
+      "snowball": "bola de nieve"
+    },
+    "chart": {
+      "title": "Proyección de saldo",
+      "subtitle": "Bola de nieve",
+      "balance": "Saldo",
+      "withExtra": "Con extra",
+      "minimumOnly": "Solo mínimos",
+      "withExtraPayment": "Con pago extra",
+      "emptyTitle": "Sin proyección",
+      "emptyDescription": "Agrega deudas para ver cómo baja tu saldo mes a mes.",
+      "monthLabel": "Mes {{index}}"
+    },
+    "timeline": {
+      "title": "Cronograma de libertad",
+      "subtitle": "Cuándo se liquida cada deuda",
+      "month": "Mes {{month}}",
+      "debtFree": " · ¡Libre de deudas!",
+      "waiting": "En espera",
+      "balance": "Saldo {{amount}}"
+    },
+    "order": {
+      "title": "Orden de pago recomendado",
+      "min": "Mín.",
+      "annualRate": " · {{rate}}% anual",
+      "freeInMonth": "Libre en mes {{month}}",
+      "remove": "Quitar"
+    },
+    "empty": {
+      "title": "Sin deudas registradas",
+      "description": "Agrega tus deudas para ver el orden recomendado, proyección y cronograma."
+    }
+  },
+  "cards": {
+    "panel": {
+      "eyebrow": "Tarjetas de crédito",
+      "description": "Controla el cupo, el saldo usado y el historial de cada tarjeta. Los cargos también aparecen en Movimientos.",
+      "totalUsed": "Total usado: {{amount}}"
+    },
+    "form": {
+      "title": "Nueva tarjeta",
+      "submitted": "Tarjeta agregada",
+      "namePlaceholder": "Ej. Visa Bancolombia",
+      "startingBalanceHint": "Opcional: cargos previos no registrados en la app",
+      "benefitsPlaceholder": "Cashback, puntos, millas...",
+      "submit": "Guardar tarjeta"
+    },
+    "expenseForm": {
+      "title": "Gasto en {{cardName}}",
+      "namePlaceholder": "Ej. Supermercado",
+      "notesPlaceholder": "Detalle del cargo",
+      "submit": "Registrar en tarjeta"
+    },
+    "visual": {
+      "label": "Tarjeta de crédito",
+      "overLimit": "Sobre cupo",
+      "used": "Usado",
+      "available": "Disponible",
+      "limitUsage": "Uso del cupo",
+      "limitSummary": "Cupo {{limit}} · {{count}} gasto",
+      "limitSummary_other": "Cupo {{limit}} · {{count}} gastos",
+      "delete": "Eliminar tarjeta"
+    },
+    "history": {
+      "title": "Historial · {{name}}",
+      "chargesTotal": "{{amount}} en cargos",
+      "emptyTitle": "Sin gastos en esta tarjeta",
+      "emptyDescription": "Registra un cargo o asigna movimientos existentes a esta tarjeta."
+    },
+    "empty": {
+      "title": "Sin tarjetas registradas",
+      "description": "Agrega tu primera tarjeta para ver cupo, uso y gastos asociados."
+    }
+  },
+  "projections": {
+    "impact": {
+      "monthsDelta": "{{sign}}{{count}} meses vs actual",
+      "amountDelta": "{{sign}}{{amount}} vs actual"
+    },
+    "healthChart": {
+      "today": "Hoy",
+      "monthOffset": "+{{months}}m"
+    }
+  },
+  "reports": {
+    "errorTitle": "Error en reportes",
+    "errorMessage": "No se pudo generar el reporte.",
+    "dailySpend": "Gasto por día",
+    "copilotTips": "Consejos del copiloto",
+    "health": "Salud",
+    "generated": "Generado {{date}}"
+  },
+  "dialogs": {
+    "closeAriaLabel": "Cerrar diálogo",
+    "deleteMovement": {
+      "title": "Eliminar movimiento",
+      "description": "Esta acción no se puede deshacer. Se actualizarán balance, estadísticas y categorías.",
+      "confirmQuestion": "¿Confirmas que deseas eliminar este movimiento de tu historial?"
+    },
+    "editMovement": {
+      "editExpense": "Editar gasto",
+      "editBudget": "Editar presupuesto",
+      "description": "La fecha y hora originales del movimiento no se modifican.",
+      "notesPlaceholder": "Notas adicionales"
+    }
+  },
+  "savings": {
+    "progress": {
+      "title": "Uso del presupuesto",
+      "spentPercent": "{{percent}}% gastado",
+      "availableOf": " disponibles de {{amount}}",
+      "progressAriaLabel": "Porcentaje del presupuesto gastado",
+      "overBudget": "Has superado tu presupuesto en {{amount}}.",
+      "remainingPercent": "Te queda un {{percent}}% de tu presupuesto asignado este mes."
+    },
+    "hero": {
+      "emptyTitle": "Tu resumen financiero aparecerá aquí",
+      "emptyDescription": "Agrega un presupuesto o registra un gasto para calcular tu balance en tiempo real.",
+      "availableLabel": "Balance disponible",
+      "breakdown": "{{budgets}} en presupuestos − {{expenses}} en gastos"
+    },
+    "onboarding": {
+      "ariaLabel": "Primeros pasos",
+      "welcome": "Bienvenido",
+      "title": "Empieza agregando tu primer gasto",
+      "description": "Tu panel se llenará con datos reales a medida que registres movimientos.",
+      "steps": {
+        "trackExpenses": {
+          "title": "Registra gastos",
+          "description": "Añade cada gasto con categoría y fecha."
+        },
+        "viewSummary": {
+          "title": "Visualiza tu resumen",
+          "description": "Tu resumen financiero aparecerá aquí."
+        },
+        "controlMoney": {
+          "title": "Controla tu dinero",
+          "description": "Revisa balance, categorías y movimientos."
+        }
+      },
+      "skip": "Omitir",
+      "cta": "Agregar primer gasto"
+    },
+    "categoryBreakdown": {
+      "title": "Gastos por categoría",
+      "thisMonth": "Este mes",
+      "emptyTitle": "Sin gastos por categoría",
+      "emptyDescription": "Cuando registres gastos con categoría, verás aquí el desglose y los porcentajes del mes."
+    },
+    "trendChart": {
+      "title": "Evolución (6 meses)",
+      "subtitle": "Ingresos vs gastos",
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "emptyTitle": "Sin historial suficiente",
+      "emptyDescription": "Registra movimientos en meses anteriores para ver la tendencia."
+    }
+  },
+  "validation": {
+    "requiredName": "El nombre es obligatorio",
+    "requiredNameShort": "Nombre obligatorio",
+    "nameMinLength": "Mínimo 2 caracteres",
+    "requiredAmount": "La cantidad es obligatoria",
+    "invalidAmountPositive": "Introduce un importe mayor que 0",
+    "invalidAmountGreaterZero": "Ingresa un monto válido mayor a cero",
+    "selectCategory": "Selecciona una categoría",
+    "requiredDate": "La fecha es obligatoria",
+    "invalidDate": "Fecha no válida",
+    "futureDate": "La fecha no puede ser futura",
+    "descriptionMaxLength": "Máximo 200 caracteres",
+    "selectBudgetType": "Selecciona un tipo de presupuesto",
+    "invalidTarget": "Objetivo inválido",
+    "percentRange": "Entre 0 y 100",
+    "invalidBalance": "Saldo inválido",
+    "invalidMinPayment": "Pago mínimo inválido",
+    "invalidLimit": "Introduce un cupo válido"
+  },
+  "errors": {
+    "appTitle": "No se pudo cargar la aplicación",
+    "appMessage": "Error inesperado en la interfaz."
+  }
+}

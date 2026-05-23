@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Modal } from '../ui/Modal'
 import { Button } from '../ui/Button'
 import { Money } from '../currency/Money'
@@ -8,6 +9,7 @@ import { isExpenseTransaction } from '../../utils/expense'
 import { cn } from '../../utils/cn'
 
 export function DeleteMovementDialog({ transaction, open, onClose, onConfirm }) {
+  const { t } = useTranslation('forms')
   const { currency } = useCurrency()
 
   if (!transaction) return null
@@ -21,8 +23,8 @@ export function DeleteMovementDialog({ transaction, open, onClose, onConfirm }) 
     <Modal
       open={open}
       onClose={onClose}
-      title="Eliminar movimiento"
-      description="Esta acción no se puede deshacer. Se actualizarán balance, estadísticas y categorías."
+      title={t('dialogs.deleteMovement.title')}
+      description={t('dialogs.deleteMovement.description')}
       size="sm"
     >
       <div className="space-y-4">
@@ -41,12 +43,12 @@ export function DeleteMovementDialog({ transaction, open, onClose, onConfirm }) 
         </div>
 
         <p className="text-sm text-slate-400">
-          ¿Confirmas que deseas eliminar este movimiento de tu historial?
+          {t('dialogs.deleteMovement.confirmQuestion')}
         </p>
 
         <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={onClose}>
-            Cancelar
+            {t('actions.cancel')}
           </Button>
           <Button
             type="button"
@@ -54,7 +56,7 @@ export function DeleteMovementDialog({ transaction, open, onClose, onConfirm }) 
             className="bg-rose-600 shadow-rose-600/25 hover:bg-rose-500 focus-visible:ring-rose-500/40"
             onClick={() => onConfirm?.(transaction.id)}
           >
-            Eliminar
+            {t('actions.delete')}
           </Button>
         </div>
       </div>

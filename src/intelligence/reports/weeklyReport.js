@@ -3,13 +3,20 @@ import {
   buildCategorySection,
   buildDailyExpenseSeries,
   countMovements,
+  formatReportMoney,
+  formatShortDate,
   percentChange,
-  pickTips,
   sumIncomeInRange,
 } from './shared'
 import { toDateKey } from '../rules/helpers'
+import {
+  pickLocalizedTips,
+  resolveReportLocale,
+  translateHealthLevel,
+} from '../../i18n/reportLocale'
 
-export function buildWeeklyReport(context, analysis) {
+export function buildWeeklyReport(context, analysis, options = {}) {
+  const { locale, t } = resolveReportLocale(options)
   const { temporal, transactions, debts } = context
   const now = new Date()
   const today = temporal.today
@@ -30,112 +37,141 @@ export function buildWeeklyReport(context, analysis) {
   const weekIncome = sumIncomeInRange(transactions, fromKey, today)
   const weekChange = percentChange(weekExpenses, prevWeekExpenses)
   const categories = buildCategorySection(transactions, fromKey, today, 6)
-  const dailySeries = buildDailyExpenseSeries(transactions, 7)
+  const dailySeries = buildDailyExpenseSeries(transactions, 7, locale)
   const movementCount = countMovements(transactions, fromKey, today)
 
   const snowball = debts.length > 0 ? buildSnowballAnalysis(debts, 0) : null
+  const healthLevelLabel = translateHealthLevel(
+    analysis.health.level,
+    analysis.health.levelLabel,
+    options.tDashboard,
+  )
 
   const highlights = [
-    `Gastaste ${formatMoney(weekExpenses)} en los últimos 7 días.`,
+    t('weekly.highlights.spentInPeriod', {
+      amount: formatReportMoney(weekExpenses, locale),
+    }),
     weekChange !== 0
-      ? `${weekChange > 0 ? 'Subió' : 'Bajó'} ${Math.round(Math.abs(weekChange))}% vs la semana anterior.`
-      : 'Gasto estable respecto a la semana anterior.',
+      ? weekChange > 0
+        ? t('weekly.highlights.increased', { percent: Math.round(Math.abs(weekChange)) })
+        : t('weekly.highlights.decreased', { percent: Math.round(Math.abs(weekChange)) })
+      : t('weekly.highlights.stable'),
   ]
 
   if (analysis.health.score >= 70) {
-    highlights.push(`Salud financiera en nivel ${analysis.health.levelLabel.toLowerCase()}.`)
+    highlights.push(
+      t('weekly.highlights.healthLevel', { level: healthLevelLabel.toLowerCase() }),
+    )
   }
 
   return {
     id: 'weekly',
-    title: 'Reporte semanal',
-    subtitle: 'Últimos 7 días · hábitos y ritmo de gasto',
-    periodLabel: `${formatShort(fromKey)} – ${formatShort(today)}`,
+    title: t('weekly.title'),
+    subtitle: t('weekly.subtitle'),
+    periodLabel: `${formatShortDate(fromKey, locale)} – ${formatShortDate(today, locale)}`,
     generatedAt: new Date().toISOString(),
     healthScore: analysis.health.score,
-    healthLabel: analysis.health.levelLabel,
+    healthLevel: analysis.health.level,
+    healthLabel: healthLevelLabel,
     highlights,
-    tips: pickTips(analysis.insights, 5),
+    tips: pickLocalizedTips(analysis.insights, 5, options.localizeMessage),
     dailySeries,
     sections: [
       {
         id: 'summary',
-        title: 'Resumen semanal',
+        title: t('weekly.sections.summary.title'),
         metrics: [
-          { label: 'Gastos 7 días', value: weekExpenses, variant: 'expense' },
-          { label: 'Ingresos 7 días', value: weekIncome, variant: 'income' },
           {
-            label: 'vs semana anterior',
+            label: t('weekly.sections.summary.metrics.weekExpenses'),
+            value: weekExpenses,
+            variant: 'expense',
+          },
+          {
+            label: t('weekly.sections.summary.metrics.weekIncome'),
+            value: weekIncome,
+            variant: 'income',
+          },
+          {
+            label: t('weekly.sections.summary.metrics.vsPreviousWeek'),
             value: weekChange,
             variant: weekChange > 0 ? 'expense' : 'income',
             format: 'percent',
           },
-          { label: 'Movimientos', value: movementCount, variant: 'neutral', format: 'number' },
+          {
+            label: t('weekly.sections.summary.metrics.movements'),
+            value: movementCount,
+            variant: 'neutral',
+            format: 'number',
+          },
         ],
       },
       {
         id: 'categories',
-        title: 'Categorías de la semana',
+        title: t('weekly.sections.categories.title'),
         categories,
-        emptyMessage: 'Sin gastos esta semana.',
+        emptyMessage: t('weekly.sections.categories.empty'),
       },
       {
         id: 'habits',
-        title: 'Hábitos detectados',
-        bullets: buildHabitBullets(context, weekExpenses, prevWeekExpenses),
+        title: t('weekly.sections.habits.title'),
+        bullets: buildHabitBullets(context, weekExpenses, prevWeekExpenses, t),
       },
       {
         id: 'debts',
-        title: 'Deudas',
+        title: t('weekly.sections.debts.title'),
         paragraphs: snowball
           ? [
-              `Saldo total: ${formatMoney(snowball.totalBalance)}. Libre en ~${snowball.withExtra.months} meses (solo mínimos).`,
+              t('weekly.sections.debts.totalBalance', {
+                amount: formatReportMoney(snowball.totalBalance, locale),
+                months: snowball.withExtra.months,
+              }),
               snowball.priority
-                ? `Prioridad bola de nieve: ${snowball.priority.name}.`
+                ? t('weekly.sections.debts.snowballPriority', { name: snowball.priority.name })
                 : '',
             ].filter(Boolean)
-          : ['Sin deudas registradas.'],
+          : [t('weekly.sections.debts.noDebts')],
       },
       {
         id: 'projection',
-        title: 'Proyección',
+        title: t('weekly.sections.projection.title'),
         paragraphs: [
           weekIncome > weekExpenses
-            ? `Ritmo semanal positivo: ahorro estimado de ${formatMoney(weekIncome - weekExpenses)} en el período.`
-            : 'El ritmo semanal consume más de lo que ingresas en el período. Ajusta gastos o revisa presupuesto.',
+            ? t('weekly.sections.projection.positivePace', {
+                amount: formatReportMoney(weekIncome - weekExpenses, locale),
+              })
+            : t('weekly.sections.projection.negativePace'),
         ],
       },
     ],
   }
 }
 
-function buildHabitBullets(context, weekExp, prevWeek) {
+function buildHabitBullets(context, weekExp, prevWeek, t) {
   const bullets = []
   const top = context.categoryGrowth[0]
   if (top) {
-    bullets.push(`"${top.name}" creció ${Math.round(top.growthPercent)}% vs el mes pasado.`)
+    bullets.push(
+      t('weekly.sections.habits.categoryGrowth', {
+        name: top.name,
+        percent: Math.round(top.growthPercent),
+      }),
+    )
   }
   if (context.microSpends.count >= 4) {
     bullets.push(
-      `${context.microSpends.count} gastos hormiga (${Math.round(context.microSpends.sharePercent)}% del mes).`,
+      t('weekly.sections.habits.microSpends', {
+        count: context.microSpends.count,
+        sharePercent: Math.round(context.microSpends.sharePercent),
+      }),
     )
   }
   if (weekExp > prevWeek * 1.1) {
-    bullets.push('Tendencia al alza en gastos semanales.')
+    bullets.push(t('weekly.sections.habits.spendingUp'))
   } else if (weekExp < prevWeek * 0.9 && prevWeek > 0) {
-    bullets.push('Mejor control de gastos vs la semana pasada.')
+    bullets.push(t('weekly.sections.habits.spendingDown'))
   }
   if (bullets.length === 0) {
-    bullets.push('Sin cambios de hábito significativos esta semana.')
+    bullets.push(t('weekly.sections.habits.noChanges'))
   }
   return bullets
-}
-
-function formatMoney(n) {
-  return new Intl.NumberFormat('es', { maximumFractionDigits: 0 }).format(n)
-}
-
-function formatShort(key) {
-  const [y, m, d] = key.split('-').map(Number)
-  return new Date(y, m - 1, d).toLocaleDateString('es', { day: 'numeric', month: 'short' })
 }

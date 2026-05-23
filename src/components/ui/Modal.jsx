@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useEffect, useId, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import { IconX } from '../icons'
@@ -13,6 +14,7 @@ export function Modal({
   panelClassName,
   size = 'md',
 }) {
+  const { t } = useTranslation('common')
   const titleId = useId()
   const descriptionId = useId()
   const panelRef = useRef(null)
@@ -49,7 +51,7 @@ export function Modal({
       <button
         type="button"
         className="absolute inset-0 bg-slate-950/70 backdrop-blur-sm motion-safe:animate-fade-in"
-        aria-label="Cerrar"
+        aria-label={t('actions.close')}
         onClick={onClose}
       />
 
@@ -91,7 +93,7 @@ export function Modal({
             type="button"
             onClick={onClose}
             className="shrink-0 rounded-lg p-1.5 text-slate-400 transition hover:bg-white/8 hover:text-slate-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
-            aria-label="Cerrar diálogo"
+            aria-label={t('actions.close')}
           >
             <IconX className="size-5" />
           </button>

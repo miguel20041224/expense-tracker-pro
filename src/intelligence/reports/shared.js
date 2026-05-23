@@ -4,9 +4,11 @@ import {
   sumExpensesInRange,
   toDateKey,
 } from '../rules/helpers'
+import { formatReportMoney } from '../../i18n/reportLocale'
+import i18n from '../../i18n'
 
-export function formatReportDate(date = new Date()) {
-  return date.toLocaleDateString('es', {
+export function formatReportDate(date = new Date(), locale = i18n.language) {
+  return date.toLocaleDateString(locale, {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -14,9 +16,9 @@ export function formatReportDate(date = new Date()) {
   })
 }
 
-export function formatShortDate(dateKey) {
+export function formatShortDate(dateKey, locale = i18n.language) {
   const [y, m, d] = dateKey.split('-').map(Number)
-  return new Date(y, m - 1, d).toLocaleDateString('es', { day: 'numeric', month: 'short' })
+  return new Date(y, m - 1, d).toLocaleDateString(locale, { day: 'numeric', month: 'short' })
 }
 
 export function filterTransactionsInRange(transactions, fromKey, toKey) {
@@ -56,19 +58,22 @@ export function buildCategorySection(transactions, fromKey, toKey, limit = 5) {
   return computeCategoriesFromTransactions(inRange).slice(0, limit)
 }
 
-export function topExpensesToday(transactions, dateKey, limit = 5) {
+export function topExpensesToday(transactions, dateKey, limit = 5, t) {
+  const expenseLabel = t ? t('common.expense') : 'Gasto'
+  const otherLabel = t ? t('common.other') : 'Otros'
+
   return filterExpenses(transactions)
-    .filter((t) => t.date?.startsWith(dateKey))
+    .filter((tx) => tx.date?.startsWith(dateKey))
     .sort((a, b) => Math.abs(b.amount) - Math.abs(a.amount))
     .slice(0, limit)
-    .map((t) => ({
-      label: t.description || t.category || 'Gasto',
-      category: t.category || 'Otros',
-      amount: Math.abs(t.amount),
+    .map((tx) => ({
+      label: tx.description || tx.category || expenseLabel,
+      category: tx.category || otherLabel,
+      amount: Math.abs(tx.amount),
     }))
 }
 
-export function buildDailyExpenseSeries(transactions, days = 7) {
+export function buildDailyExpenseSeries(transactions, days = 7, locale = i18n.language) {
   const now = new Date()
   const points = []
   for (let i = days - 1; i >= 0; i -= 1) {
@@ -77,7 +82,7 @@ export function buildDailyExpenseSeries(transactions, days = 7) {
     const key = toDateKey(d)
     points.push({
       date: key,
-      label: d.toLocaleDateString('es', { weekday: 'short' }),
+      label: d.toLocaleDateString(locale, { weekday: 'short' }),
       expenses: sumExpensesInRange(transactions, (date) => date === key),
     })
   }
@@ -94,3 +99,5 @@ export function projectMonthEndSavings(summary, dayOfMonth, daysInMonth) {
     daysRemaining: daysInMonth - dayOfMonth,
   }
 }
+
+export { formatReportMoney }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -11,6 +12,7 @@ import { useCurrency } from '../../hooks/useCurrency'
 import { periodToMonthlyAmount } from '../../utils/incomeBudget'
 
 export function IncomeBudgetSettings({ income, overview, onSave, readOnly = false, loading = false }) {
+  const { t } = useTranslation('forms')
   const { currencyCode, amountPlaceholder, parseAmount, formatCurrency } = useCurrency()
   const [type, setType] = useState(income?.type ?? 'monthly')
   const [amount, setAmount] = useState(income?.amount > 0 ? String(income.amount) : '')
@@ -30,7 +32,7 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
     setError('')
     const parsed = parseAmount(amount)
     if (!parsed || parsed <= 0) {
-      setError('Ingresa un monto válido mayor a cero.')
+      setError(t('budget.income.invalidAmount'))
       return
     }
 
@@ -40,7 +42,7 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
       setSaved(true)
       window.setTimeout(() => setSaved(false), 2500)
     } catch (err) {
-      setError(err.message ?? 'No se pudo guardar el ingreso.')
+      setError(err.message ?? t('budget.income.saveError'))
     } finally {
       setSaving(false)
     }
@@ -49,13 +51,13 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
   return (
     <Card className="motion-safe:animate-fade-in-up">
       <CardHeader>
-        <CardTitle>Ingreso por periodo</CardTitle>
-        {saved ? <span className="text-xs font-medium text-income">Guardado</span> : null}
+        <CardTitle>{t('budget.income.title')}</CardTitle>
+        {saved ? <span className="text-xs font-medium text-income">{t('budget.income.saved')}</span> : null}
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid gap-4 sm:grid-cols-2">
-          <FormField label="Periodo" htmlFor="income-type">
+          <FormField label={t('fields.period')} htmlFor="income-type">
             <Select
               id="income-type"
               value={type}
@@ -64,17 +66,21 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
             >
               {INCOME_PERIOD_TYPES.map((opt) => (
                 <option key={opt.id} value={opt.id}>
-                  {opt.label}
+                  {t(`budget.periods.${opt.id}`, { defaultValue: opt.label })}
                 </option>
               ))}
             </Select>
           </FormField>
 
           <FormField
-            label={`Monto (${currencyCode})`}
+            label={t('fields.montoWithCurrency', { currency: currencyCode })}
             htmlFor="income-amount"
             error={error}
-            hint={previewMonthly > 0 ? `≈ ${formatCurrency(previewMonthly)} / mes` : undefined}
+            hint={
+              previewMonthly > 0
+                ? t('budget.income.monthlyPreview', { amount: formatCurrency(previewMonthly) })
+                : undefined
+            }
           >
             <Input
               id="income-amount"
@@ -92,15 +98,15 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
         {overview?.hasLimit ? (
           <div className="space-y-3 rounded-xl border border-border-subtle bg-white/5 p-4">
             <div className="flex justify-between text-sm">
-              <span className="text-slate-400">Presupuesto mensual</span>
+              <span className="text-slate-400">{t('budget.income.monthlyBudget')}</span>
               <Money value={overview.limit} className="font-medium text-white" />
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-400">Gastado este mes</span>
+              <span className="text-slate-400">{t('budget.income.spentThisMonth')}</span>
               <Money value={overview.spent} className="text-expense" />
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-400">Disponible</span>
+              <span className="text-slate-400">{t('budget.income.available')}</span>
               <Money
                 value={overview.remaining}
                 className={overview.isOverBudget ? 'text-expense' : 'text-income'}
@@ -111,19 +117,17 @@ export function IncomeBudgetSettings({ income, overview, onSave, readOnly = fals
               variant={overview.isOverBudget ? 'expense' : 'default'}
             />
             <p className="text-xs text-slate-500">
-              Uso del presupuesto: {Math.round(overview.usagePercent)}%
-              {overview.isOverBudget ? ' · Presupuesto superado' : ''}
+              {t('budget.income.usageLabel', { percent: Math.round(overview.usagePercent) })}
+              {overview.isOverBudget ? t('budget.income.overBudget') : ''}
             </p>
           </div>
         ) : (
-          <p className="text-sm text-slate-500">
-            Define tu ingreso para calcular presupuesto disponible, gasto restante y porcentaje de uso.
-          </p>
+          <p className="text-sm text-slate-500">{t('budget.income.emptyHint')}</p>
         )}
 
         {!readOnly ? (
           <Button type="submit" className="w-full sm:w-auto" disabled={saving || loading}>
-            {saving ? 'Guardando…' : 'Guardar ingreso'}
+            {saving ? t('budget.income.saving') : t('budget.income.submit')}
           </Button>
         ) : null}
       </form>

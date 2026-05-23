@@ -7,19 +7,21 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { IconPiggyBank } from '../icons'
 
 export function SavingsProjectionChart({ savingsProjection }) {
+  const { t, i18n } = useTranslation('projections')
   const points = savingsProjection?.points ?? []
   const hasData = points.some((p) => p.cumulative > 0)
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Ahorro acumulado proyectado</CardTitle>
-        <span className="text-xs text-slate-500">12 meses al ritmo simulado</span>
+        <CardTitle>{t('savingsChart.title')}</CardTitle>
+        <span className="text-xs text-slate-500">{t('savingsChart.subtitle')}</span>
       </CardHeader>
 
       {hasData ? (
@@ -48,7 +50,7 @@ export function SavingsProjectionChart({ savingsProjection }) {
                 tickFormatter={(v) => (v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v)}
               />
               <Tooltip
-                formatter={(v) => Number(v).toLocaleString('es')}
+                formatter={(v) => Number(v).toLocaleString(i18n.language)}
                 contentStyle={{
                   background: 'var(--color-surface-card)',
                   border: '1px solid var(--color-border-subtle)',
@@ -59,7 +61,7 @@ export function SavingsProjectionChart({ savingsProjection }) {
               <Area
                 type="monotone"
                 dataKey="cumulative"
-                name="Acumulado"
+                name={t('savingsChart.cumulative')}
                 stroke="#34d399"
                 strokeWidth={2}
                 fill="url(#savingsProjGrad)"
@@ -70,8 +72,8 @@ export function SavingsProjectionChart({ savingsProjection }) {
       ) : (
         <EmptyState
           icon={<IconPiggyBank className="size-6" />}
-          title="Sin margen proyectable"
-          description="Un margen mensual positivo generará proyección de ahorro acumulado."
+          title={t('savingsChart.emptyTitle')}
+          description={t('savingsChart.emptyDescription')}
         />
       )}
     </Card>
