@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { SUPPORTED_LANGUAGES } from '../../i18n/languages'
+import { SUPPORTED_LANGUAGES, normalizeLanguageCode } from '../../i18n/languages'
 import { IconChevronDown } from '../icons'
 import { cn } from '../../utils/cn'
 
@@ -9,8 +9,9 @@ export function LanguageSelector({ className }) {
   const [open, setOpen] = useState(false)
   const containerRef = useRef(null)
   const listboxId = useId()
+  const currentCode = normalizeLanguageCode(i18n.resolvedLanguage ?? i18n.language)
   const current =
-    SUPPORTED_LANGUAGES.find((l) => l.code === i18n.language) ?? SUPPORTED_LANGUAGES[0]
+    SUPPORTED_LANGUAGES.find((l) => l.code === currentCode) ?? SUPPORTED_LANGUAGES[0]
 
   useEffect(() => {
     if (!open) return
@@ -31,9 +32,15 @@ export function LanguageSelector({ className }) {
     }
   }, [open])
 
-  function handleSelect(code) {
-    void i18n.changeLanguage(code)
+  async function handleSelect(code) {
     setOpen(false)
+    const normalized = normalizeLanguageCode(code)
+    if (normalized === currentCode) return
+    try {
+      await i18n.changeLanguage(normalized)
+    } catch (error) {
+      console.error('[i18n] No se pudo cambiar el idioma:', error)
+    }
   }
 
   return (
@@ -66,7 +73,7 @@ export function LanguageSelector({ className }) {
           className="absolute right-0 z-50 mt-2 max-h-72 w-full min-w-[14rem] overflow-auto rounded-xl border border-border-subtle bg-slate-900/95 p-1.5 shadow-xl shadow-black/40 backdrop-blur-md sm:w-56"
         >
           {SUPPORTED_LANGUAGES.map((item) => {
-            const selected = item.code === i18n.language
+            const selected = item.code === currentCode
             return (
               <li key={item.code} role="option" aria-selected={selected}>
                 <button

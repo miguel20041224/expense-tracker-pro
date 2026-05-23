@@ -15,3 +15,10 @@ export const I18N_NAMESPACES = ['common', 'dashboard', 'reports', 'alerts', 'pro
 export const DEFAULT_LANGUAGE = 'es'
 
 export const FALLBACK_LANGUAGE = 'es'
+
+/** Normaliza códigos tipo "en-US" → "en" para coincidir con supportedLngs. */
+export function normalizeLanguageCode(code) {
+  if (!code) return FALLBACK_LANGUAGE
+  const base = code.split('-')[0]?.toLowerCase()
+  return LANGUAGE_CODES.includes(base) ? base : FALLBACK_LANGUAGE
+}
