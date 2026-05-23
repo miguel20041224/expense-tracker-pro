@@ -11,6 +11,7 @@ import { ScenarioImpactCard } from './ScenarioImpactCard'
 import { InsightFeed } from '../intelligence/InsightFeed'
 import { DebtPayoffChart } from '../debts/DebtPayoffChart'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
+import { SectionHeader } from '../ui/SectionHeader'
 
 export function ProjectionsPanel({ financialData }) {
   const [expenseReductionPercent, setExpenseReductionPercent] = useState(0)
@@ -35,15 +36,11 @@ export function ProjectionsPanel({ financialData }) {
 
   return (
     <section className="space-y-6">
-      <header className="rounded-2xl border border-violet-500/15 bg-linear-to-br from-violet-500/8 via-surface-card/60 to-surface-card/60 p-5">
-        <p className="text-xs font-medium tracking-widest text-violet-400/90 uppercase">
-          Proyecciones financieras
-        </p>
-        <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Predicciones basadas en tu historial y ritmo actual: ahorro, gastos, deudas, metas y
-          salud financiera. Ajusta escenarios para simular el futuro sin comprometer tus datos.
-        </p>
-      </header>
+      <SectionHeader
+        variant="violet"
+        eyebrow="Proyecciones financieras"
+        description="Predicciones basadas en tu historial y ritmo actual: ahorro, gastos, deudas, metas y salud financiera. Ajusta escenarios para simular el futuro sin comprometer tus datos."
+      />
 
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-2">

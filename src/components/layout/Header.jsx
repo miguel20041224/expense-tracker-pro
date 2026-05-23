@@ -9,7 +9,7 @@ export function Header({ activeTab = 'inicio', onTabChange, alertCount = 0 }) {
   const { user, logout } = useAuth()
 
   return (
-    <header className="flex flex-col gap-4 border-b border-border-subtle py-5">
+    <header className="sticky top-0 z-20 -mx-4 flex flex-col gap-4 border-b border-border-subtle bg-surface/90 px-4 py-4 backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 lg:py-5">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-3">
           <IconBadge variant="accent">
@@ -46,20 +46,24 @@ export function Header({ activeTab = 'inicio', onTabChange, alertCount = 0 }) {
         </div>
       </div>
 
-      <nav className="flex gap-1 overflow-x-auto pb-1 sm:pb-0" aria-label="Navegación principal">
+      <nav
+        className="nav-scroll -mx-1 flex gap-1 overflow-x-auto overscroll-x-contain px-1 pb-1 sm:pb-0"
+        aria-label="Navegación principal"
+      >
         {NAV_TABS.map((item) => {
           const isActive = activeTab === item.id
           const showBadge = item.id === 'alertas' && alertCount > 0
           return (
             <button
               key={item.id}
+              id={`tab-${item.id}`}
               type="button"
               onClick={() => onTabChange?.(item.id)}
               aria-current={isActive ? 'page' : undefined}
               className={cn(
-                'relative shrink-0 rounded-lg px-3.5 py-2 text-sm font-medium transition',
+                'relative shrink-0 rounded-xl px-3.5 py-2 text-sm font-medium transition-colors duration-150',
                 isActive
-                  ? 'bg-white/8 text-white'
+                  ? 'bg-white/10 text-white shadow-sm shadow-black/20'
                   : 'text-slate-500 hover:bg-white/5 hover:text-slate-300',
               )}
             >
