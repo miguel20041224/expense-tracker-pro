@@ -1,3 +1,5 @@
+import { formatMoney } from './helpers'
+
 /** @type {import('../types').InsightRule[]} */
 export const dailyRules = [
   {
@@ -17,6 +19,7 @@ export const dailyRules = [
           priority: 10,
           category: 'daily',
           text: `Hoy gastaste más que ayer (+${pct}%). Llevas ${formatMoney(todayExpenses)} en gastos hoy.`,
+          params: { pct, amount: formatMoney(todayExpenses) },
         }
       }
 
@@ -27,6 +30,7 @@ export const dailyRules = [
           priority: 25,
           category: 'daily',
           text: `Hoy registraste ${formatMoney(todayExpenses)} en gastos. Ayer no hubo gastos registrados.`,
+          params: { amount: formatMoney(todayExpenses) },
         }
       }
 
@@ -52,7 +56,3 @@ export const dailyRules = [
     },
   },
 ]
-
-function formatMoney(amount) {
-  return new Intl.NumberFormat('es', { maximumFractionDigits: 0 }).format(amount)
-}

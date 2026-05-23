@@ -1,11 +1,14 @@
-export const NAV_TABS = [
-  { id: 'inicio', label: 'Inicio' },
-  { id: 'alertas', label: 'Alertas' },
-  { id: 'movimientos', label: 'Movimientos' },
-  { id: 'presupuesto', label: 'Presupuesto' },
-  { id: 'tarjetas', label: 'Tarjetas' },
-  { id: 'metas', label: 'Metas' },
-  { id: 'deudas', label: 'Deudas' },
-  { id: 'proyecciones', label: 'Proyecciones' },
-  { id: 'reportes', label: 'Reportes' },
+export const NAV_TAB_IDS = [
+  'inicio',
+  'alertas',
+  'movimientos',
+  'presupuesto',
+  'tarjetas',
+  'metas',
+  'deudas',
+  'proyecciones',
+  'reportes',
 ]
+
+/** @deprecated Use NAV_TAB_IDS + useNavTabs() for localized labels */
+export const NAV_TABS = NAV_TAB_IDS.map((id) => ({ id, label: id }))

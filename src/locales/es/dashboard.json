@@ -1,0 +1,121 @@
+{
+  "health": {
+    "title": "Salud financiera",
+    "scoreOutOf": "/ 100",
+    "levels": {
+      "saludable": "Saludable",
+      "estable": "Estable",
+      "en-riesgo": "En riesgo",
+      "critico": "Crítico"
+    },
+    "recommendations": {
+      "overBudget": "Reduce gastos o ajusta tu presupuesto para cerrar el mes en positivo.",
+      "debtToIncome": "Prioriza pagos de deuda; tu carga supera el 40% de tus ingresos.",
+      "creditUsage": "Baja el uso de tarjetas de crédito por debajo del 70%.",
+      "leisureHigh": "Revisa gastos de ocio y entretenimiento; representan gran parte del mes.",
+      "snowballPriority": "Destina pagos extra a \"{{name}}\" (método bola de nieve).",
+      "maintainSavings": "Mantén el ritmo de ahorro y revisa tus metas cada semana.",
+      "registerMore": "Registra movimientos con frecuencia para un análisis más preciso."
+    }
+  },
+  "insights": {
+    "title": "Insights automáticos",
+    "daily-spend-spike": "Hoy gastaste más que ayer (+{{pct}}%). Llevas {{amount}} en gastos hoy.",
+    "daily-spend-start": "Hoy registraste {{amount}} en gastos. Ayer no hubo gastos registrados.",
+    "daily-spend-calm": "Hoy llevas menos gasto que ayer. Buen control diario.",
+    "weekly-spend-increase": "Tus gastos de los últimos 7 días subieron {{pct}}% respecto a la semana anterior.",
+    "weekly-spend-decrease": "Bajaste tus gastos {{pct}}% esta semana comparado con la semana pasada.",
+    "weekly-cash-flow-pressure": "Tu ritmo de gasto semanal supera lo que podrías gastar según tus ingresos mensuales.",
+    "leisure-high": "Estás gastando más del {{pct}}% en ocio y entretenimiento este mes.",
+    "leisure-moderate": "El {{pct}}% de tus gastos del mes corresponde a categorías de ocio.",
+    "risk-level": "Alto riesgo de sobreendeudamiento. Revisa gastos, crédito y deudas con prioridad.",
+    "risk-moderate": "Riesgo financiero moderado: conviene reforzar ahorro y control de deuda.",
+    "over-budget": "Superaste tu presupuesto mensual. Tus gastos superan los ingresos asignados.",
+    "debt-to-income-high": "Tu deuda total representa el {{pct}}% de tus ingresos mensuales.",
+    "debt-to-income": "Tu deuda ya supera el 40% de tus ingresos ({{pct}}%).",
+    "credit-usage": "Uso de crédito muy alto ({{pct}}%). Riesgo de impago en tarjetas.",
+    "category-concentration": "Concentración en \"{{name}}\": {{pct}}% del gasto mensual.",
+    "card-priority": "Prioriza el pago de la tarjeta {{cardName}} ({{pct}}% de uso).",
+    "snowball-priority": "Prioriza la deuda \"{{name}}\" con el método bola de nieve.",
+    "savings-positive": "Ahorro mensual estimado: {{pct}}% de tus ingresos.",
+    "savings-none": "No te queda margen de ahorro este mes. Revisa gastos hormiga y categorías recurrentes.",
+    "debt-min-payments": "Tus pagos mínimos de deuda consumen el {{pct}}% de tus ingresos mensuales.",
+    "category-growth": "Tus gastos en \"{{name}}\" aumentaron {{pct}}% respecto al mes pasado.",
+    "micro-spends": "Podrías ahorrar más reduciendo gastos hormiga: {{count}} gastos pequeños suman el {{pct}}% del mes."
+  },
+  "metrics": {
+    "sectionAriaLabel": "Resumen financiero",
+    "income": {
+      "label": "Ingresos",
+      "emptyHint": "Agrega presupuesto en la pestaña Presupuesto",
+      "subtitleBudgets": "Presupuestos del mes",
+      "subtitleIncome": "Ingresos del mes"
+    },
+    "expenses": {
+      "label": "Gastos",
+      "emptyHint": "Tus gastos aparecerán aquí al registrarlos",
+      "shareOfIncome": "{{pct}}% de tus ingresos",
+      "subtitleTotal": "Total del mes actual"
+    },
+    "savings": {
+      "label": "Ahorro",
+      "emptyHint": "Disponible = presupuestos − gastos",
+      "overBudget": "Presupuesto superado este mes",
+      "availableRate": "{{pct}}% disponible",
+      "subtitleBalance": "Saldo disponible del mes"
+    },
+    "balance": {
+      "label": "Balance total",
+      "emptyHint": "Se calcula con tus movimientos del mes",
+      "subtitle": "Presupuestos − gastos",
+      "heroEmptyTitle": "Tu resumen financiero aparecerá aquí",
+      "heroEmptyDescription": "Agrega un presupuesto o registra un gasto para calcular tu balance en tiempo real.",
+      "availableLabel": "Balance disponible",
+      "breakdown": "{{budgets}} en presupuestos − {{expenses}} en gastos"
+    }
+  },
+  "charts": {
+    "trend": {
+      "title": "Evolución (6 meses)",
+      "subtitle": "Ingresos vs gastos",
+      "income": "Ingresos",
+      "expenses": "Gastos",
+      "emptyTitle": "Sin historial suficiente",
+      "emptyDescription": "Registra movimientos en meses anteriores para ver la tendencia."
+    },
+    "categories": {
+      "title": "Gastos por categoría",
+      "thisMonth": "Este mes",
+      "emptyTitle": "Sin gastos por categoría",
+      "emptyDescription": "Cuando registres gastos con categoría, verás aquí el desglose y los porcentajes del mes."
+    }
+  },
+  "onboarding": {
+    "ariaLabel": "Primeros pasos",
+    "welcome": "Bienvenido",
+    "title": "Empieza agregando tu primer gasto",
+    "description": "Tu panel se llenará con datos reales a medida que registres movimientos.",
+    "steps": {
+      "trackExpenses": {
+        "title": "Registra gastos",
+        "description": "Añade cada gasto con categoría y fecha."
+      },
+      "viewSummary": {
+        "title": "Visualiza tu resumen",
+        "description": "Tu resumen financiero aparecerá aquí."
+      },
+      "controlMoney": {
+        "title": "Controla tu dinero",
+        "description": "Revisa balance, categorías y movimientos."
+      }
+    },
+    "skip": "Omitir",
+    "cta": "Agregar primer gasto"
+  },
+  "transactions": {
+    "title": "Últimos movimientos",
+    "totalCount": "{{count}} en total",
+    "emptyTitle": "Aún no has agregado movimientos",
+    "emptyDescription": "Agrega un presupuesto en la pestaña Presupuesto o un gasto con el formulario de la izquierda."
+  }
+}

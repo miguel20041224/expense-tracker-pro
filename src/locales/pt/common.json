@@ -1,0 +1,122 @@
+{
+  "app": {
+    "name": "Vault",
+    "tagline": "Finanças pessoais",
+    "subtitle": "Seu copiloto financeiro pessoal · Insights automáticos, sem complicação"
+  },
+  "nav": {
+    "inicio": "Início",
+    "alertas": "Alertas",
+    "movimientos": "Transações",
+    "presupuesto": "Orçamento",
+    "tarjetas": "Cartões",
+    "metas": "Metas",
+    "deudas": "Dívidas",
+    "proyecciones": "Projeções",
+    "reportes": "Relatórios",
+    "main": "Navegação principal"
+  },
+  "actions": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "close": "Fechar",
+    "logout": "Sair",
+    "dismiss": "Descartar",
+    "dismissAll": "Descartar todas",
+    "restore": "Restaurar",
+    "viewAll": "Ver todas",
+    "print": "Imprimir",
+    "downloadPdf": "Baixar PDF",
+    "add": "Adicionar",
+    "search": "Buscar",
+    "retry": "Tentar novamente",
+    "reload": "Recarregar",
+    "getStarted": "Começar"
+  },
+  "auth": {
+    "login": "Entrar",
+    "register": "Criar conta",
+    "name": "Nome",
+    "email": "E-mail",
+    "password": "Senha",
+    "loginError": "Erro de autenticação",
+    "loading": "Entrando…"
+  },
+  "loading": {
+    "app": "Carregando Vault…",
+    "appHint": "Preparando seu copiloto financeiro",
+    "alerts": "Carregando alertas…",
+    "movements": "Carregando transações…",
+    "budget": "Carregando orçamento…",
+    "cards": "Carregando cartões…",
+    "goals": "Carregando metas…",
+    "debts": "Carregando dívidas…",
+    "projections": "Carregando projeções…",
+    "reports": "Carregando relatórios…",
+    "generic": "Carregando…"
+  },
+  "errors": {
+    "appTitle": "Não foi possível carregar o aplicativo",
+    "appMessage": "Erro inesperado na interface.",
+    "reportTitle": "Erro ao carregar relatórios",
+    "reportMessage": "Ocorreu um problema ao renderizar este relatório.",
+    "pdfLocate": "Não foi possível localizar o relatório.",
+    "pdfGenerate": "Não foi possível gerar o PDF. Tente novamente."
+  },
+  "currency": {
+    "select": "Selecionar moeda",
+    "active": "Ativa"
+  },
+  "language": {
+    "select": "Selecionar idioma",
+    "active": "Ativo",
+    "label": "Idioma"
+  },
+  "filters": {
+    "periodAll": "Todos",
+    "periodToday": "Hoje",
+    "periodWeek": "Esta semana",
+    "periodMonth": "Este mês",
+    "flowAll": "Todos os fluxos",
+    "flowIncome": "Receita",
+    "flowExpense": "Despesa",
+    "typeAll": "Todos os tipos",
+    "typeBudget": "Orçamento",
+    "typeExpense": "Despesa registrada",
+    "sortNewest": "Mais recentes",
+    "sortOldest": "Mais antigos",
+    "sortExpenseHigh": "Maior despesa",
+    "sortExpenseLow": "Menor despesa",
+    "sortIncomeHigh": "Maior receita",
+    "favoritesAll": "Todos",
+    "favoritesOnly": "Favoritos"
+  },
+  "severity": {
+    "critical": "Crítica",
+    "warning": "Aviso",
+    "info": "Info",
+    "success": "Sucesso"
+  },
+  "categories": {
+    "balance": "Saldo",
+    "debt": "Dívidas",
+    "credit": "Crédito",
+    "habits": "Hábitos",
+    "daily": "Hoje",
+    "weekly": "Semana",
+    "monthly": "Mês",
+    "predictive": "Projeção"
+  },
+  "alerts": {
+    "activeCount_one": "{{count}} alerta ativa",
+    "activeCount_other": "{{count}} alertas ativas"
+  },
+  "copilot": "Copiloto",
+  "empty": {
+    "noData": "Sem dados",
+    "noResults": "Sem resultados"
+  }
+}

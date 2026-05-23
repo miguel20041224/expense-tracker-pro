@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { projectFinancialOutlook } from '../../intelligence'
 import { buildFinancialContext } from '../../intelligence/contextBuilder'
 import { ScenarioControls } from './ScenarioControls'
@@ -14,6 +15,7 @@ import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { SectionHeader } from '../ui/SectionHeader'
 
 export function ProjectionsPanel({ financialData }) {
+  const { t, i18n } = useTranslation('projections')
   const [expenseReductionPercent, setExpenseReductionPercent] = useState(0)
   const [savingsBoostPercent, setSavingsBoostPercent] = useState(0)
   const [extraDebtPayment, setExtraDebtPayment] = useState(0)
@@ -31,21 +33,21 @@ export function ProjectionsPanel({ financialData }) {
 
   const outlook = useMemo(
     () => projectFinancialOutlook(context, scenarioOptions),
-    [context, scenarioOptions],
+    [context, scenarioOptions, i18n.language],
   )
 
   return (
     <section className="space-y-6">
       <SectionHeader
         variant="violet"
-        eyebrow="Proyecciones financieras"
-        description="Predicciones basadas en tu historial y ritmo actual: ahorro, gastos, deudas, metas y salud financiera. Ajusta escenarios para simular el futuro sin comprometer tus datos."
+        eyebrow={t('panel.eyebrow')}
+        description={t('panel.description')}
       />
 
       <div className="grid gap-4 lg:grid-cols-5">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle>Simular escenario</CardTitle>
+            <CardTitle>{t('scenario.title')}</CardTitle>
           </CardHeader>
           <ScenarioControls
             expenseReductionPercent={expenseReductionPercent}

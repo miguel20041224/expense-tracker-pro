@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../utils/cn'
 
-export function PanelFallback({ label = 'Cargando…', className }) {
+export function PanelFallback({ label, className }) {
+  const { t } = useTranslation('common')
+
   return (
     <div
       className={cn(
@@ -12,7 +15,7 @@ export function PanelFallback({ label = 'Cargando…', className }) {
       aria-busy="true"
     >
       <div className="size-7 animate-spin rounded-full border-2 border-accent/25 border-t-accent" />
-      <p className="text-sm text-slate-400">{label}</p>
+      <p className="text-sm text-slate-400">{label ?? t('loading.generic')}</p>
     </div>
   )
 }

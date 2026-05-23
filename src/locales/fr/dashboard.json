@@ -1,0 +1,121 @@
+{
+  "health": {
+    "title": "Santé financière",
+    "scoreOutOf": "/ 100",
+    "levels": {
+      "saludable": "Saine",
+      "estable": "Stable",
+      "en-riesgo": "À risque",
+      "critico": "Critique"
+    },
+    "recommendations": {
+      "overBudget": "Réduisez vos dépenses ou ajustez votre budget pour terminer le mois en positif.",
+      "debtToIncome": "Priorisez le remboursement des dettes ; votre charge dépasse 40 % de vos revenus.",
+      "creditUsage": "Réduisez l'utilisation des cartes de crédit en dessous de 70 %.",
+      "leisureHigh": "Examinez les dépenses de loisirs et de divertissement ; elles représentent une grande part du mois.",
+      "snowballPriority": "Affectez des paiements supplémentaires à « {{name}} » (méthode boule de neige).",
+      "maintainSavings": "Maintenez votre rythme d'épargne et revoyez vos objectifs chaque semaine.",
+      "registerMore": "Enregistrez vos mouvements régulièrement pour une analyse plus précise."
+    }
+  },
+  "insights": {
+    "title": "Insights automatiques",
+    "daily-spend-spike": "Aujourd'hui vous avez dépensé plus qu'hier (+{{pct}} %). Vous avez {{amount}} de dépenses aujourd'hui.",
+    "daily-spend-start": "Aujourd'hui vous avez enregistré {{amount}} de dépenses. Hier aucune dépense n'a été enregistrée.",
+    "daily-spend-calm": "Aujourd'hui vos dépenses sont inférieures à celles d'hier. Bon contrôle quotidien.",
+    "weekly-spend-increase": "Vos dépenses des 7 derniers jours ont augmenté de {{pct}} % par rapport à la semaine précédente.",
+    "weekly-spend-decrease": "Vous avez réduit vos dépenses de {{pct}} % cette semaine par rapport à la semaine dernière.",
+    "weekly-cash-flow-pressure": "Votre rythme de dépenses hebdomadaire dépasse ce que vous pourriez dépenser selon vos revenus mensuels.",
+    "leisure-high": "Vous dépensez plus de {{pct}} % en loisirs et divertissement ce mois-ci.",
+    "leisure-moderate": "{{pct}} % de vos dépenses du mois correspondent aux catégories de loisirs.",
+    "risk-level": "Risque élevé de surendettement. Examinez en priorité les dépenses, le crédit et les dettes.",
+    "risk-moderate": "Risque financier modéré : renforcez l'épargne et le contrôle de la dette.",
+    "over-budget": "Vous avez dépassé votre budget mensuel. Vos dépenses dépassent les revenus alloués.",
+    "debt-to-income-high": "Votre dette totale représente {{pct}} % de vos revenus mensuels.",
+    "debt-to-income": "Votre dette dépasse déjà 40 % de vos revenus ({{pct}} %).",
+    "credit-usage": "Utilisation du crédit très élevée ({{pct}} %). Risque d'impayés sur les cartes.",
+    "category-concentration": "Concentration sur « {{name}} » : {{pct}} % des dépenses mensuelles.",
+    "card-priority": "Priorisez le remboursement de la carte {{cardName}} ({{pct}} % d'utilisation).",
+    "snowball-priority": "Priorisez la dette « {{name}} » avec la méthode boule de neige.",
+    "savings-positive": "Épargne mensuelle estimée : {{pct}} % de vos revenus.",
+    "savings-none": "Il ne vous reste aucune marge d'épargne ce mois-ci. Examinez les petites dépenses et les catégories récurrentes.",
+    "debt-min-payments": "Vos paiements minimums de dette consomment {{pct}} % de vos revenus mensuels.",
+    "category-growth": "Vos dépenses en « {{name}} » ont augmenté de {{pct}} % par rapport au mois dernier.",
+    "micro-spends": "Vous pourriez épargner davantage en réduisant les petites dépenses : {{count}} petits achats représentent {{pct}} % du mois."
+  },
+  "metrics": {
+    "sectionAriaLabel": "Résumé financier",
+    "income": {
+      "label": "Revenus",
+      "emptyHint": "Ajoutez un budget dans l'onglet Budget",
+      "subtitleBudgets": "Budgets du mois",
+      "subtitleIncome": "Revenus du mois"
+    },
+    "expenses": {
+      "label": "Dépenses",
+      "emptyHint": "Vos dépenses apparaîtront ici lorsque vous les enregistrerez",
+      "shareOfIncome": "{{pct}} % de vos revenus",
+      "subtitleTotal": "Total du mois en cours"
+    },
+    "savings": {
+      "label": "Épargne",
+      "emptyHint": "Disponible = budgets − dépenses",
+      "overBudget": "Budget dépassé ce mois-ci",
+      "availableRate": "{{pct}} % disponible",
+      "subtitleBalance": "Solde disponible du mois"
+    },
+    "balance": {
+      "label": "Solde total",
+      "emptyHint": "Calculé à partir de vos mouvements du mois",
+      "subtitle": "Budgets − dépenses",
+      "heroEmptyTitle": "Votre résumé financier apparaîtra ici",
+      "heroEmptyDescription": "Ajoutez un budget ou enregistrez une dépense pour calculer votre solde en temps réel.",
+      "availableLabel": "Solde disponible",
+      "breakdown": "{{budgets}} en budgets − {{expenses}} en dépenses"
+    }
+  },
+  "charts": {
+    "trend": {
+      "title": "Évolution (6 mois)",
+      "subtitle": "Revenus vs dépenses",
+      "income": "Revenus",
+      "expenses": "Dépenses",
+      "emptyTitle": "Historique insuffisant",
+      "emptyDescription": "Enregistrez des mouvements dans les mois précédents pour voir la tendance."
+    },
+    "categories": {
+      "title": "Dépenses par catégorie",
+      "thisMonth": "Ce mois-ci",
+      "emptyTitle": "Aucune dépense par catégorie",
+      "emptyDescription": "Lorsque vous enregistrerez des dépenses avec une catégorie, vous verrez ici la répartition et les pourcentages du mois."
+    }
+  },
+  "onboarding": {
+    "ariaLabel": "Premiers pas",
+    "welcome": "Bienvenue",
+    "title": "Commencez par ajouter votre première dépense",
+    "description": "Votre tableau de bord se remplira de données réelles au fur et à mesure que vous enregistrerez des mouvements.",
+    "steps": {
+      "trackExpenses": {
+        "title": "Enregistrez vos dépenses",
+        "description": "Ajoutez chaque dépense avec une catégorie et une date."
+      },
+      "viewSummary": {
+        "title": "Visualisez votre résumé",
+        "description": "Votre résumé financier apparaîtra ici."
+      },
+      "controlMoney": {
+        "title": "Contrôlez votre argent",
+        "description": "Consultez le solde, les catégories et les mouvements."
+      }
+    },
+    "skip": "Ignorer",
+    "cta": "Ajouter la première dépense"
+  },
+  "transactions": {
+    "title": "Derniers mouvements",
+    "totalCount": "{{count}} au total",
+    "emptyTitle": "Vous n'avez pas encore ajouté de mouvements",
+    "emptyDescription": "Ajoutez un budget dans l'onglet Budget ou une dépense avec le formulaire à gauche."
+  }
+}

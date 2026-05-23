@@ -50,7 +50,7 @@ export function buildMonthlyReport(context, analysis) {
     highlights,
     tips: [
       ...pickTips(analysis.insights, 4),
-      ...analysis.health.recommendations.slice(0, 2),
+      ...analysis.health.recommendations.slice(0, 2).map((r) => (typeof r === 'string' ? r : r.text)),
     ],
     trend,
     sections: [
@@ -112,7 +112,9 @@ export function buildMonthlyReport(context, analysis) {
       {
         id: 'recommendations',
         title: 'Consejos automáticos',
-        bullets: analysis.health.recommendations,
+        bullets: analysis.health.recommendations.map((r) =>
+          typeof r === 'string' ? r : r.text,
+        ),
       },
     ],
   }

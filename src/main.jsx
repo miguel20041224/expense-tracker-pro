@@ -1,7 +1,9 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
+import './i18n'
 import './index.css'
 import App from './App.jsx'
+import { LoadingScreen } from './components/ui/LoadingScreen'
 
 const rootEl = document.getElementById('root')
 
@@ -21,7 +23,9 @@ if (!rootEl) {
 
   createRoot(rootEl).render(
     <StrictMode>
-      <App />
+      <Suspense fallback={<LoadingScreen />}>
+        <App />
+      </Suspense>
     </StrictMode>,
   )
   if (import.meta.env.DEV) {

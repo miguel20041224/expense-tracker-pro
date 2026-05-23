@@ -1,6 +1,8 @@
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { cn } from '../../utils/cn'
+import { useIntelligenceMessage } from '../../i18n/useIntelligenceMessage'
 
 const typeStyles = {
   danger: 'border-rose-500/30 bg-rose-500/10 text-rose-200',
@@ -9,24 +11,18 @@ const typeStyles = {
   success: 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200',
 }
 
-const categoryLabels = {
-  daily: 'Hoy',
-  weekly: 'Semana',
-  monthly: 'Mes',
-  habits: 'Hábitos',
-  debt: 'Deudas',
-  predictive: 'Proyección',
-}
-
 function InsightFeedInner({ insights }) {
+  const { t } = useTranslation(['dashboard', 'common'])
+  const localize = useIntelligenceMessage()
+
   if (!insights?.length) return null
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Insights automáticos</CardTitle>
+        <CardTitle>{t('insights.title', { ns: 'dashboard' })}</CardTitle>
         <span className="rounded-full bg-accent/15 px-2 py-0.5 text-xs font-medium text-accent">
-          Copiloto
+          {t('copilot')}
         </span>
       </CardHeader>
       <ul className="space-y-2">
@@ -41,10 +37,10 @@ function InsightFeedInner({ insights }) {
             <div className="flex flex-wrap items-start gap-2">
               {item.category ? (
                 <span className="shrink-0 rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] font-medium tracking-wide text-slate-400 uppercase">
-                  {categoryLabels[item.category] ?? item.category}
+                  {t(`categories.${item.category}`, { ns: 'common', defaultValue: item.category })}
                 </span>
               ) : null}
-              <span className="min-w-0 flex-1">{item.text}</span>
+              <span className="min-w-0 flex-1">{localize(item)}</span>
             </div>
           </li>
         ))}

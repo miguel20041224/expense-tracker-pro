@@ -1,3 +1,5 @@
+import { formatMoney } from '../rules/helpers'
+
 /** @typedef {import('../types').Insight} Insight */
 
 /**
@@ -45,6 +47,7 @@ export function runAlertRules(ctx) {
       periodKey: monthKey,
       source: 'alert',
       text: `Exceso en "${excessCategory.name}": el ${excessCategory.percent}% de tus gastos del mes.`,
+      params: { categoryName: excessCategory.name, percent: excessCategory.percent },
     })
   }
 
@@ -58,7 +61,8 @@ export function runAlertRules(ctx) {
       category: 'debt',
       periodKey: monthKey,
       source: 'alert',
-      text: `Próximas cuotas: ${activeDebts.length} deuda(s) con pagos mínimos de ~${formatAmount(totalMin)} este mes.`,
+      text: `Próximas cuotas: ${activeDebts.length} deuda(s) con pagos mínimos de ~${formatMoney(totalMin)} este mes.`,
+      params: { count: activeDebts.length, totalMin: formatMoney(totalMin) },
     })
   }
 
@@ -76,6 +80,7 @@ export function runAlertRules(ctx) {
 
   const urgentCard = cardStats.find((c) => c.stats.usagePercent >= 85)
   if (urgentCard) {
+    const usagePercent = Math.round(urgentCard.stats.usagePercent)
     alerts.push({
       id: 'credit-limit-critical',
       type: 'danger',
@@ -83,9 +88,11 @@ export function runAlertRules(ctx) {
       category: 'credit',
       periodKey: monthKey,
       source: 'alert',
-      text: `Tarjeta ${urgentCard.card.name} al ${Math.round(urgentCard.stats.usagePercent)}%: riesgo de límite agotado.`,
+      text: `Tarjeta ${urgentCard.card.name} al ${usagePercent}%: riesgo de límite agotado.`,
+      params: { cardName: urgentCard.card.name, usagePercent },
     })
   } else if (creditUsagePercent >= 75) {
+    const usagePercent = Math.round(creditUsagePercent)
     alerts.push({
       id: 'credit-usage-high',
       type: 'warning',
@@ -93,12 +100,14 @@ export function runAlertRules(ctx) {
       category: 'credit',
       periodKey: monthKey,
       source: 'alert',
-      text: `Uso agregado de crédito al ${Math.round(creditUsagePercent)}%. Considera reducir cargos.`,
+      text: `Uso agregado de crédito al ${usagePercent}%. Considera reducir cargos.`,
+      params: { usagePercent },
     })
   }
 
   const topGrowth = ctx.categoryGrowth[0]
   if (topGrowth && topGrowth.growthPercent >= 35) {
+    const growthPercent = Math.round(topGrowth.growthPercent)
     alerts.push({
       id: 'category-spike',
       type: 'warning',
@@ -106,11 +115,13 @@ export function runAlertRules(ctx) {
       category: 'habits',
       periodKey: monthKey,
       source: 'alert',
-      text: `Comportamiento riesgoso: "${topGrowth.name}" creció ${Math.round(topGrowth.growthPercent)}% vs el mes anterior.`,
+      text: `Comportamiento riesgoso: "${topGrowth.name}" creció ${growthPercent}% vs el mes anterior.`,
+      params: { categoryName: topGrowth.name, growthPercent },
     })
   }
 
   if (ctx.microSpends.sharePercent >= 18 && ctx.microSpends.count >= 5) {
+    const sharePercent = Math.round(ctx.microSpends.sharePercent)
     alerts.push({
       id: 'micro-spend-alert',
       type: 'info',
@@ -118,15 +129,12 @@ export function runAlertRules(ctx) {
       category: 'habits',
       periodKey: monthKey,
       source: 'alert',
-      text: `Gastos hormiga acumulados: ${ctx.microSpends.count} movimientos pequeños (${Math.round(ctx.microSpends.sharePercent)}% del gasto).`,
+      text: `Gastos hormiga acumulados: ${ctx.microSpends.count} movimientos pequeños (${sharePercent}% del gasto).`,
+      params: { count: ctx.microSpends.count, sharePercent },
     })
   }
 
   return alerts
-}
-
-function formatAmount(n) {
-  return new Intl.NumberFormat('es', { maximumFractionDigits: 0 }).format(n)
 }
 
 /**

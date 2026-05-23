@@ -1,0 +1,128 @@
+{
+  "app": {
+    "name": "Vault",
+    "tagline": "Finanzas personales",
+    "subtitle": "Tu copiloto financiero personal · Análisis automático sin complicaciones"
+  },
+  "nav": {
+    "inicio": "Inicio",
+    "alertas": "Alertas",
+    "movimientos": "Movimientos",
+    "presupuesto": "Presupuesto",
+    "tarjetas": "Tarjetas",
+    "metas": "Metas",
+    "deudas": "Deudas",
+    "proyecciones": "Proyecciones",
+    "reportes": "Reportes",
+    "main": "Navegación principal"
+  },
+  "actions": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "logout": "Salir",
+    "dismiss": "Descartar",
+    "dismissAll": "Descartar todas",
+    "restore": "Restaurar",
+    "viewAll": "Ver todas",
+    "print": "Imprimir",
+    "downloadPdf": "Descargar PDF",
+    "add": "Agregar",
+    "search": "Buscar",
+    "retry": "Reintentar",
+    "reload": "Recargar",
+    "getStarted": "Empezar"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "register": "Registrarse",
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "loginError": "Error de autenticación",
+    "loading": "Entrando…",
+    "processing": "Procesando…",
+    "enter": "Entrar",
+    "createAccount": "Crear cuenta",
+    "namePlaceholder": "Tu nombre",
+    "emailPlaceholder": "correo@ejemplo.com",
+    "passwordPlaceholder": "Mínimo 6 caracteres"
+  },
+  "loading": {
+    "app": "Cargando Vault…",
+    "appHint": "Preparando tu copiloto financiero",
+    "alerts": "Cargando alertas…",
+    "movements": "Cargando movimientos…",
+    "budget": "Cargando presupuesto…",
+    "cards": "Cargando tarjetas…",
+    "goals": "Cargando metas…",
+    "debts": "Cargando deudas…",
+    "projections": "Cargando proyecciones…",
+    "reports": "Cargando reportes…",
+    "generic": "Cargando…"
+  },
+  "errors": {
+    "appTitle": "No se pudo cargar la aplicación",
+    "appMessage": "Error inesperado en la interfaz.",
+    "reportTitle": "Error al cargar reportes",
+    "reportMessage": "Ocurrió un problema al renderizar este reporte.",
+    "pdfLocate": "No se pudo localizar el reporte.",
+    "pdfGenerate": "No se pudo generar el PDF. Intenta de nuevo."
+  },
+  "currency": {
+    "select": "Seleccionar moneda",
+    "active": "Activa"
+  },
+  "language": {
+    "select": "Seleccionar idioma",
+    "active": "Activo",
+    "label": "Idioma"
+  },
+  "filters": {
+    "periodAll": "Todos",
+    "periodToday": "Hoy",
+    "periodWeek": "Esta semana",
+    "periodMonth": "Este mes",
+    "flowAll": "Todos los flujos",
+    "flowIncome": "Ingreso",
+    "flowExpense": "Gasto",
+    "typeAll": "Todos los tipos",
+    "typeBudget": "Presupuesto",
+    "typeExpense": "Gasto registrado",
+    "sortNewest": "Más recientes",
+    "sortOldest": "Más antiguos",
+    "sortExpenseHigh": "Mayor gasto",
+    "sortExpenseLow": "Menor gasto",
+    "sortIncomeHigh": "Mayor ingreso",
+    "favoritesAll": "Todos",
+    "favoritesOnly": "Favoritos"
+  },
+  "severity": {
+    "critical": "Crítica",
+    "warning": "Aviso",
+    "info": "Info",
+    "success": "Éxito"
+  },
+  "categories": {
+    "balance": "Saldo",
+    "debt": "Deudas",
+    "credit": "Crédito",
+    "habits": "Hábitos",
+    "daily": "Hoy",
+    "weekly": "Semana",
+    "monthly": "Mes",
+    "predictive": "Proyección"
+  },
+  "alerts": {
+    "activeCount_one": "{{count}} alerta activa",
+    "activeCount_other": "{{count}} alertas activas"
+  },
+  "copilot": "Copiloto",
+  "empty": {
+    "noData": "Sin datos",
+    "noResults": "Sin resultados"
+  }
+}

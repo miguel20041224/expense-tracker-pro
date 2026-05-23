@@ -1,0 +1,169 @@
+{
+  "panel": {
+    "eyebrow": "Relatórios profissionais",
+    "description": "Análise automática com categorias, hábitos, projeções e dicas. Imprima ou baixe o relatório em PDF com um clique.",
+    "print": "Imprimir",
+    "downloadPdf": "Baixar PDF",
+    "generatingPdf": "Gerando PDF…",
+    "printHint": "Você também pode usar Imprimir e escolher \"Salvar como PDF\" na caixa de diálogo do navegador.",
+    "pdfDownloaded": "PDF baixado: {{filename}}",
+    "pdfLocateError": "Não foi possível localizar o relatório.",
+    "pdfGenerateError": "Não foi possível gerar o PDF. Tente novamente."
+  },
+  "types": {
+    "daily": {
+      "label": "Diário",
+      "description": "Hoje vs ontem"
+    },
+    "weekly": {
+      "label": "Semanal",
+      "description": "Últimos 7 dias"
+    },
+    "monthly": {
+      "label": "Mensal",
+      "description": "Mês completo"
+    }
+  },
+  "document": {
+    "brand": "FINTRACK",
+    "generated": "Gerado {{date}}",
+    "health": "Saúde",
+    "dailySpend": "Gasto por dia",
+    "copilotTips": "Dicas do copiloto"
+  },
+  "daily": {
+    "title": "Relatório diário",
+    "subtitle": "Resumo do seu dia financeiro",
+    "highlights": {
+      "spentMore": "Você gastou {{percent}}% a mais que ontem.",
+      "spentLess": "Você gastou {{percent}}% a menos que ontem.",
+      "noExpenses": "Sem despesas registradas hoje."
+    },
+    "sections": {
+      "summary": {
+        "title": "Resumo do dia",
+        "metrics": {
+          "todayExpenses": "Despesas hoje",
+          "yesterdayExpenses": "Despesas ontem",
+          "variation": "Variação",
+          "health": "Saúde financeira"
+        }
+      },
+      "categories": {
+        "title": "Categorias de hoje",
+        "empty": "Não há despesas categorizadas hoje."
+      },
+      "movements": {
+        "title": "Maiores despesas do dia",
+        "empty": "Sem movimentos hoje."
+      },
+      "context": {
+        "title": "Contexto mensal",
+        "overBudget": "Você está acima do orçamento neste mês. Vale frear gastos discricionários.",
+        "incomeUsed": "Você já usou {{percent}}% da sua renda em despesas neste mês."
+      }
+    }
+  },
+  "weekly": {
+    "title": "Relatório semanal",
+    "subtitle": "Últimos 7 dias · hábitos e ritmo de gasto",
+    "highlights": {
+      "spentInPeriod": "Você gastou {{amount}} nos últimos 7 dias.",
+      "increased": "Subiu {{percent}}% vs a semana anterior.",
+      "decreased": "Caiu {{percent}}% vs a semana anterior.",
+      "stable": "Gasto estável em relação à semana anterior.",
+      "healthLevel": "Saúde financeira em nível {{level}}."
+    },
+    "sections": {
+      "summary": {
+        "title": "Resumo semanal",
+        "metrics": {
+          "weekExpenses": "Despesas 7 dias",
+          "weekIncome": "Receitas 7 dias",
+          "vsPreviousWeek": "vs semana anterior",
+          "movements": "Movimentos"
+        }
+      },
+      "categories": {
+        "title": "Categorias da semana",
+        "empty": "Sem despesas esta semana."
+      },
+      "habits": {
+        "title": "Hábitos detectados",
+        "categoryGrowth": "\"{{name}}\" cresceu {{percent}}% vs o mês passado.",
+        "microSpends": "{{count}} gastos pequenos ({{sharePercent}}% do mês).",
+        "spendingUp": "Tendência de alta nos gastos semanais.",
+        "spendingDown": "Melhor controle de gastos vs a semana passada.",
+        "noChanges": "Sem mudanças significativas de hábito esta semana."
+      },
+      "debts": {
+        "title": "Dívidas",
+        "totalBalance": "Saldo total: {{amount}}. Livre em ~{{months}} meses (só mínimos).",
+        "snowballPriority": "Prioridade bola de neve: {{name}}.",
+        "noDebts": "Sem dívidas registradas."
+      },
+      "projection": {
+        "title": "Projeção",
+        "positivePace": "Ritmo semanal positivo: poupança estimada de {{amount}} no período.",
+        "negativePace": "O ritmo semanal consome mais do que você recebe no período. Ajuste gastos ou revise o orçamento."
+      }
+    }
+  },
+  "monthly": {
+    "title": "Relatório mensal",
+    "subtitle": "Análise profissional · evolução e projeções",
+    "highlights": {
+      "incomeExpenses": "Receitas do mês: {{income}} · Despesas: {{expenses}}.",
+      "deficitWarning": "Você fechará em déficit se mantiver o ritmo atual.",
+      "savingsRate": "Poupança disponível: {{rate}}% da sua renda.",
+      "healthScore": "Pontuação de saúde: {{score}}/100 ({{level}})."
+    },
+    "sections": {
+      "summary": {
+        "title": "Resumo financeiro",
+        "metrics": {
+          "income": "Receitas",
+          "expenses": "Despesas",
+          "savings": "Poupança",
+          "health": "Saúde"
+        }
+      },
+      "evolution": {
+        "title": "Evolução",
+        "expensesUp": "Despesas subiram {{percent}}% em relação ao mês anterior (série histórica).",
+        "expensesDown": "Despesas caíram {{percent}}% em relação ao mês anterior (série histórica).",
+        "noComparison": "Dados insuficientes do mês anterior para comparar evolução.",
+        "currentMonth": "Mês atual em curso: receitas {{income}}, despesas {{expenses}}."
+      },
+      "categories": {
+        "title": "Distribuição por categoria",
+        "empty": "Sem despesas categorizadas neste mês."
+      },
+      "habits": {
+        "title": "Hábitos e riscos",
+        "leisure": "Lazer/entretenimento: {{percent}}% do gasto mensal.",
+        "creditUsage": "Uso agregado de crédito: {{percent}}%.",
+        "categoryGrowth": "\"{{name}}\" +{{percent}}% vs mês anterior.",
+        "balanced": "Padrões de gasto equilibrados neste mês."
+      },
+      "goals": {
+        "title": "Metas financeiras",
+        "empty": "Você não tem metas ativas."
+      },
+      "debts": {
+        "title": "Dívidas e projeção",
+        "debtToIncome": "A dívida total representa {{percent}}% da sua renda mensal.",
+        "noDebt": "Sem dívida registrada.",
+        "snowballPlan": "Plano bola de neve: livre em {{months}} meses pagando mínimos.",
+        "monthEndProjection": "Projeção fim do mês: ~{{projected}} de margem se mantiver o ritmo ({{daysRemaining}} dias restantes)."
+      },
+      "recommendations": {
+        "title": "Recomendações automáticas"
+      }
+    }
+  },
+  "common": {
+    "expense": "Despesa",
+    "other": "Outros"
+  }
+}

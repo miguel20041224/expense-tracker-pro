@@ -1,4 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { AppShell } from '../components/layout/AppShell'
 import { BalanceHero } from '../components/dashboard/BalanceHero'
@@ -58,6 +59,7 @@ const SnowballPanel = lazy(() =>
 
 export default function Dashboard() {
   const { user } = useAuth()
+  const { t } = useTranslation(['dashboard', 'common'])
   const { activeTab, setActiveTab } = useAppTab()
   const {
     transactions,
@@ -109,13 +111,17 @@ export default function Dashboard() {
 
   const expenseShare = useMemo(() => {
     if (summary.income <= 0) return null
-    return `${Math.round((summary.expenses / summary.income) * 100)}% de tus ingresos`
-  }, [summary.income, summary.expenses])
+    return t('metrics.expenses.shareOfIncome', {
+      pct: Math.round((summary.expenses / summary.income) * 100),
+    })
+  }, [summary.income, summary.expenses, t])
 
   const savingsRate = useMemo(() => {
     if (summary.income <= 0) return null
-    return `${Math.round((Math.max(summary.savings, 0) / summary.income) * 100)}% disponible`
-  }, [summary.income, summary.savings])
+    return t('metrics.savings.availableRate', {
+      pct: Math.round((Math.max(summary.savings, 0) / summary.income) * 100),
+    })
+  }, [summary.income, summary.savings, t])
 
   const scrollToExpenseForm = useCallback(() => {
     setActiveTab('inicio')
@@ -179,53 +185,55 @@ export default function Dashboard() {
 
           <section
             className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
-            aria-label="Resumen financiero"
+            aria-label={t('metrics.sectionAriaLabel')}
           >
             <MetricCard
-              label="Ingresos"
+              label={t('metrics.income.label')}
               value={summary.income}
               variant="income"
               icon={<IconTrendUp />}
               isEmpty={!summary.hasBudgets}
-              emptyHint="Agrega presupuesto en la pestaña Presupuesto"
+              emptyHint={t('metrics.income.emptyHint')}
               subtitle={
                 summary.income > 0
-                  ? `${summary.budgets > 0 ? 'Presupuestos del mes' : 'Ingresos del mes'}`
+                  ? summary.budgets > 0
+                    ? t('metrics.income.subtitleBudgets')
+                    : t('metrics.income.subtitleIncome')
                   : undefined
               }
             />
             <MetricCard
-              label="Gastos"
+              label={t('metrics.expenses.label')}
               value={summary.expenses}
               variant="expense"
               icon={<IconTrendDown />}
               isEmpty={!summary.hasExpenses}
-              emptyHint="Tus gastos aparecerán aquí al registrarlos"
+              emptyHint={t('metrics.expenses.emptyHint')}
               subtitle={
-                expenseShare ?? (summary.expenses > 0 ? 'Total del mes actual' : undefined)
+                expenseShare ?? (summary.expenses > 0 ? t('metrics.expenses.subtitleTotal') : undefined)
               }
             />
             <MetricCard
-              label="Ahorro"
+              label={t('metrics.savings.label')}
               value={summary.savings}
               variant="savings"
               icon={<IconPiggyBank />}
               isEmpty={!summary.hasActivity}
-              emptyHint="Disponible = presupuestos − gastos"
+              emptyHint={t('metrics.savings.emptyHint')}
               subtitle={
                 summary.isOverBudget
-                  ? 'Presupuesto superado este mes'
-                  : savingsRate ?? (summary.savings > 0 ? 'Saldo disponible del mes' : undefined)
+                  ? t('metrics.savings.overBudget')
+                  : savingsRate ?? (summary.savings > 0 ? t('metrics.savings.subtitleBalance') : undefined)
               }
             />
             <MetricCard
-              label="Balance total"
+              label={t('metrics.balance.label')}
               value={summary.balance}
               variant="balance"
               icon={<IconWallet />}
               isEmpty={!summary.hasActivity}
-              emptyHint="Se calcula con tus movimientos del mes"
-              subtitle={summary.hasActivity ? 'Presupuestos − gastos' : undefined}
+              emptyHint={t('metrics.balance.emptyHint')}
+              subtitle={summary.hasActivity ? t('metrics.balance.subtitle') : undefined}
             />
           </section>
 
@@ -257,7 +265,7 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="alertas" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando alertas…" />}>
+          <Suspense fallback={<PanelFallback label={t('common:loading.alerts')} />}>
             <AlertCenter
               activeAlerts={activeAlerts}
               allAlerts={analysis.alerts}
@@ -270,7 +278,7 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="movimientos" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando movimientos…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.movements', { ns: 'common' })} />}>
             <MovementsPanel
               transactions={transactions}
               isEmpty={isEmpty}
@@ -283,7 +291,7 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="presupuesto" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando presupuesto…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.budget', { ns: 'common' })} />}>
             <BudgetTab
               transactions={transactions}
               income={income}
@@ -296,7 +304,7 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="tarjetas" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando tarjetas…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.cards', { ns: 'common' })} />}>
             <CreditCardsPanel
               cards={cards}
               transactions={transactions}
@@ -308,7 +316,7 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="metas" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando metas…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.goals', { ns: 'common' })} />}>
             <GoalsPanel
               goals={goals}
               onAddGoal={addGoal}
@@ -319,20 +327,20 @@ export default function Dashboard() {
         </TabPanel>
 
         <TabPanel tabId="deudas" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando deudas…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.debts', { ns: 'common' })} />}>
             <SnowballPanel debts={debts} onAddDebt={addDebt} onDeleteDebt={deleteDebt} />
           </Suspense>
         </TabPanel>
 
         <TabPanel tabId="proyecciones" activeTab={activeTab}>
-          <Suspense fallback={<PanelFallback label="Cargando proyecciones…" />}>
+          <Suspense fallback={<PanelFallback label={t('loading.projections', { ns: 'common' })} />}>
             <ProjectionsPanel financialData={financialData} />
           </Suspense>
         </TabPanel>
 
         <TabPanel tabId="reportes" activeTab={activeTab}>
           <ReportErrorBoundary>
-            <Suspense fallback={<PanelFallback label="Cargando reportes…" />}>
+            <Suspense fallback={<PanelFallback label={t('loading.reports', { ns: 'common' })} />}>
               <ReportsPanel financialData={financialData} userName={user?.name} />
             </Suspense>
           </ReportErrorBoundary>

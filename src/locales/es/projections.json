@@ -1,0 +1,105 @@
+{
+  "panel": {
+    "eyebrow": "Proyecciones financieras",
+    "description": "Predicciones basadas en tu historial y ritmo actual: ahorro, gastos, deudas, metas y salud financiera. Ajusta escenarios para simular el futuro sin comprometer tus datos."
+  },
+  "scenario": {
+    "title": "Simular escenario",
+    "reduceExpenses": "Reducir gastos",
+    "reduceExpensesHint": "Simula recorte en gastos del mes",
+    "savingsBoost": "Impulso de ahorro",
+    "savingsBoostHint": "Simula mayor margen mensual",
+    "extraDebtPayment": "Pago extra deuda",
+    "extraDebtPaymentHint": "Monto adicional mensual (bola de nieve)"
+  },
+  "simulation": {
+    "title": "Simulación",
+    "emptyHint": "Ajusta los controles para comparar tu ritmo actual con un escenario simulado.",
+    "impactTitle": "Impacto de la simulación",
+    "monthlyMargin": "Margen mensual",
+    "sixMonthSavings": "Ahorro 6 meses",
+    "monthsToDebtFree": "Meses hasta libre de deuda",
+    "vsCurrent": "vs actual"
+  },
+  "summary": {
+    "savings6m": "Ahorro 6 meses",
+    "savings12m": "Ahorro 12 meses",
+    "projectedAccumulated": "Acumulado proyectado",
+    "ifKeepPace": "Si mantienes el ritmo",
+    "debtFreedom": "Libertad de deuda",
+    "noActiveDebts": "Sin deudas activas",
+    "futureHealth": "Salud futura",
+    "monthEnd": "Fin de mes",
+    "daysRemaining": "{{count}} días restantes",
+    "monthMargin": "Margen del mes",
+    "estimatedDaysAtPace": "Días estimados al ritmo actual"
+  },
+  "units": {
+    "months": "meses",
+    "days": "días"
+  },
+  "cashFlow": {
+    "title": "Flujo de caja",
+    "subtitle": "Historial + proyección 6 meses",
+    "forecast": "(proyección)",
+    "income": "Ingresos",
+    "expenses": "Gastos",
+    "margin": "Margen",
+    "marginProjection": "Margen / proyección",
+    "emptyTitle": "Sin datos para proyectar",
+    "emptyDescription": "Registra movimientos en varios meses para ver tendencias y proyecciones."
+  },
+  "savingsChart": {
+    "title": "Ahorro acumulado proyectado",
+    "subtitle": "12 meses al ritmo simulado",
+    "cumulative": "Acumulado",
+    "emptyTitle": "Sin margen proyectable",
+    "emptyDescription": "Un margen mensual positivo generará proyección de ahorro acumulado."
+  },
+  "goals": {
+    "title": "Metas estimadas",
+    "subtitle": "ETA al ritmo actual",
+    "emptyTitle": "Sin metas activas",
+    "emptyDescription": "Crea metas en la pestaña Metas para ver cuándo podrías completarlas.",
+    "remaining": "Faltan {{amount}}",
+    "monthsEta": "~{{count}} meses",
+    "noSavingsPace": "Sin ritmo de ahorro"
+  },
+  "health": {
+    "title": "Salud financiera futura",
+    "improving": "Tendencia positiva",
+    "declining": "Requiere atención",
+    "stable": "Estable",
+    "today": "Hoy",
+    "projection": "Proyección"
+  },
+  "debtChart": {
+    "title": "Proyección de saldo",
+    "subtitle": "Bola de nieve",
+    "balance": "Saldo",
+    "withExtra": "Con extra",
+    "withoutExtra": "Sin extra",
+    "minimumOnly": "Solo mínimos",
+    "withExtraPayment": "Con pago extra",
+    "emptyTitle": "Sin proyección",
+    "emptyDescription": "Agrega deudas para ver cómo baja tu saldo mes a mes."
+  },
+  "insightsFeed": {
+    "title": "Insights automáticos",
+    "copilot": "Copiloto"
+  },
+  "insights": {
+    "predict-savings-12m": "Si mantienes este ritmo, podrías acumular ~{{amount}} de margen en 12 meses.",
+    "predict-savings-6m": "Proyección a 6 meses: ~{{amount}} de ahorro acumulado al ritmo actual.",
+    "predict-debt-free": "Al ritmo actual, terminarías tus deudas en aproximadamente {{monthsToFree}} meses.",
+    "predict-debt-free-extra": "Con tu pago extra, podrías liberarte de deudas en ~{{monthsToFree}} meses ({{monthsSaved}} meses antes que solo mínimos).",
+    "predict-health-up": "Tu salud financiera podría mejorar hacia «{{levelLabel}}» (score ~{{score}}) en los próximos meses.",
+    "predict-health-down": "Si continúas así, tu salud financiera podría bajar a «{{levelLabel}}» (score ~{{score}}).",
+    "predict-expense-over": "Al ritmo actual, cerrarías el mes con gastos proyectados de ~{{projected}} (superando tus ingresos).",
+    "predict-month-end": "Proyección fin de mes: ~{{projected}} de margen si mantienes el ritmo ({{daysRemaining}} días restantes).",
+    "predict-goals-behind": "La meta «{{goalName}}» podría no alcanzarse a tiempo al ritmo actual de ahorro.",
+    "predict-goal-eta": "Podrías completar «{{goalName}}» en ~{{monthsToComplete}} meses si mantienes tu ritmo de ahorro.",
+    "predict-cat": "Tu gasto en {{categoryName}} podría crecer ~{{growthPercent}}% el próximo mes si sigue la tendencia.",
+    "predict-runway": "Tu margen del mes podría agotarse antes de fin de mes al ritmo de gasto actual."
+  }
+}

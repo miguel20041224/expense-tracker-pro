@@ -1,0 +1,105 @@
+{
+  "panel": {
+    "eyebrow": "Financial projections",
+    "description": "Forecasts based on your history and current pace: savings, spending, debt, goals, and financial health. Adjust scenarios to simulate the future without changing your data."
+  },
+  "scenario": {
+    "title": "Simulate scenario",
+    "reduceExpenses": "Reduce spending",
+    "reduceExpensesHint": "Simulate cuts to this month's expenses",
+    "savingsBoost": "Savings boost",
+    "savingsBoostHint": "Simulate a higher monthly surplus",
+    "extraDebtPayment": "Extra debt payment",
+    "extraDebtPaymentHint": "Additional monthly amount (debt snowball)"
+  },
+  "simulation": {
+    "title": "Simulation",
+    "emptyHint": "Adjust the controls to compare your current pace with a simulated scenario.",
+    "impactTitle": "Simulation impact",
+    "monthlyMargin": "Monthly surplus",
+    "sixMonthSavings": "6-month savings",
+    "monthsToDebtFree": "Months until debt-free",
+    "vsCurrent": "vs current"
+  },
+  "summary": {
+    "savings6m": "6-month savings",
+    "savings12m": "12-month savings",
+    "projectedAccumulated": "Projected total",
+    "ifKeepPace": "If you keep this pace",
+    "debtFreedom": "Debt freedom",
+    "noActiveDebts": "No active debts",
+    "futureHealth": "Future health",
+    "monthEnd": "Month end",
+    "daysRemaining": "{{count}} days remaining",
+    "monthMargin": "Monthly surplus",
+    "estimatedDaysAtPace": "Estimated days at current pace"
+  },
+  "units": {
+    "months": "months",
+    "days": "days"
+  },
+  "cashFlow": {
+    "title": "Cash flow",
+    "subtitle": "History + 6-month projection",
+    "forecast": "(forecast)",
+    "income": "Income",
+    "expenses": "Expenses",
+    "margin": "Surplus",
+    "marginProjection": "Surplus / forecast",
+    "emptyTitle": "No data to project",
+    "emptyDescription": "Record transactions across several months to see trends and projections."
+  },
+  "savingsChart": {
+    "title": "Projected cumulative savings",
+    "subtitle": "12 months at simulated pace",
+    "cumulative": "Cumulative",
+    "emptyTitle": "No projectable surplus",
+    "emptyDescription": "A positive monthly surplus will generate a cumulative savings projection."
+  },
+  "goals": {
+    "title": "Estimated goals",
+    "subtitle": "ETA at current pace",
+    "emptyTitle": "No active goals",
+    "emptyDescription": "Create goals in the Goals tab to see when you could complete them.",
+    "remaining": "{{amount}} remaining",
+    "monthsEta": "~{{count}} months",
+    "noSavingsPace": "No savings pace"
+  },
+  "health": {
+    "title": "Future financial health",
+    "improving": "Positive trend",
+    "declining": "Needs attention",
+    "stable": "Stable",
+    "today": "Today",
+    "projection": "Projection"
+  },
+  "debtChart": {
+    "title": "Balance projection",
+    "subtitle": "Debt snowball",
+    "balance": "Balance",
+    "withExtra": "With extra",
+    "withoutExtra": "Without extra",
+    "minimumOnly": "Minimum only",
+    "withExtraPayment": "With extra payment",
+    "emptyTitle": "No projection",
+    "emptyDescription": "Add debts to see how your balance decreases month by month."
+  },
+  "insightsFeed": {
+    "title": "Automatic insights",
+    "copilot": "Copilot"
+  },
+  "insights": {
+    "predict-savings-12m": "If you keep this pace, you could accumulate ~{{amount}} in surplus over 12 months.",
+    "predict-savings-6m": "6-month projection: ~{{amount}} in cumulative savings at the current pace.",
+    "predict-debt-free": "At your current pace, you would pay off your debts in approximately {{monthsToFree}} months.",
+    "predict-debt-free-extra": "With your extra payment, you could be debt-free in ~{{monthsToFree}} months ({{monthsSaved}} months sooner than minimum payments only).",
+    "predict-health-up": "Your financial health could improve toward «{{levelLabel}}» (score ~{{score}}) in the coming months.",
+    "predict-health-down": "If you continue like this, your financial health could drop to «{{levelLabel}}» (score ~{{score}}).",
+    "predict-expense-over": "At the current pace, you would close the month with projected spending of ~{{projected}} (exceeding your income).",
+    "predict-month-end": "Month-end projection: ~{{projected}} in surplus if you keep the pace ({{daysRemaining}} days remaining).",
+    "predict-goals-behind": "Goal «{{goalName}}» may not be reached on time at the current savings pace.",
+    "predict-goal-eta": "You could complete «{{goalName}}» in ~{{monthsToComplete}} months if you keep your savings pace.",
+    "predict-cat": "Your spending on {{categoryName}} could grow ~{{growthPercent}}% next month if the trend continues.",
+    "predict-runway": "Your monthly surplus could run out before month-end at the current spending pace."
+  }
+}

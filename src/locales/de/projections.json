@@ -1,0 +1,105 @@
+{
+  "panel": {
+    "eyebrow": "Finanzprognosen",
+    "description": "Prognosen basierend auf Ihrer Historie und Ihrem aktuellen Tempo: Ersparnisse, Ausgaben, Schulden, Ziele und finanzielle Gesundheit. Passen Sie Szenarien an, um die Zukunft zu simulieren, ohne Ihre Daten zu ändern."
+  },
+  "scenario": {
+    "title": "Szenario simulieren",
+    "reduceExpenses": "Ausgaben reduzieren",
+    "reduceExpensesHint": "Simuliert Kürzungen bei den Monatsausgaben",
+    "savingsBoost": "Spar-Boost",
+    "savingsBoostHint": "Simuliert eine höhere monatliche Überschussmarge",
+    "extraDebtPayment": "Extra-Schuldenzahlung",
+    "extraDebtPaymentHint": "Zusätzlicher monatlicher Betrag (Schneeballmethode)"
+  },
+  "simulation": {
+    "title": "Simulation",
+    "emptyHint": "Passen Sie die Steuerung an, um Ihr aktuelles Tempo mit einem simulierten Szenario zu vergleichen.",
+    "impactTitle": "Simulationsauswirkung",
+    "monthlyMargin": "Monatliche Überschussmarge",
+    "sixMonthSavings": "6-Monats-Ersparnisse",
+    "monthsToDebtFree": "Monate bis schuldenfrei",
+    "vsCurrent": "vs aktuell"
+  },
+  "summary": {
+    "savings6m": "6-Monats-Ersparnisse",
+    "savings12m": "12-Monats-Ersparnisse",
+    "projectedAccumulated": "Prognostizierte Summe",
+    "ifKeepPace": "Bei gleichbleibendem Tempo",
+    "debtFreedom": "Schuldenfreiheit",
+    "noActiveDebts": "Keine aktiven Schulden",
+    "futureHealth": "Zukünftige Gesundheit",
+    "monthEnd": "Monatsende",
+    "daysRemaining": "{{count}} Tage verbleibend",
+    "monthMargin": "Monatsüberschuss",
+    "estimatedDaysAtPace": "Geschätzte Tage bei aktuellem Tempo"
+  },
+  "units": {
+    "months": "Monate",
+    "days": "Tage"
+  },
+  "cashFlow": {
+    "title": "Cashflow",
+    "subtitle": "Historie + 6-Monats-Prognose",
+    "forecast": "(Prognose)",
+    "income": "Einnahmen",
+    "expenses": "Ausgaben",
+    "margin": "Überschuss",
+    "marginProjection": "Überschuss / Prognose",
+    "emptyTitle": "Keine Daten für Prognose",
+    "emptyDescription": "Erfassen Sie Transaktionen über mehrere Monate, um Trends und Prognosen zu sehen."
+  },
+  "savingsChart": {
+    "title": "Prognostizierte kumulierte Ersparnisse",
+    "subtitle": "12 Monate im simulierten Tempo",
+    "cumulative": "Kumuliert",
+    "emptyTitle": "Kein prognostizierbarer Überschuss",
+    "emptyDescription": "Ein positiver Monatsüberschuss erzeugt eine Prognose kumulierter Ersparnisse."
+  },
+  "goals": {
+    "title": "Geschätzte Ziele",
+    "subtitle": "ETA bei aktuellem Tempo",
+    "emptyTitle": "Keine aktiven Ziele",
+    "emptyDescription": "Erstellen Sie Ziele im Tab Ziele, um zu sehen, wann Sie sie erreichen könnten.",
+    "remaining": "Noch {{amount}}",
+    "monthsEta": "~{{count}} Monate",
+    "noSavingsPace": "Kein Sparrhythmus"
+  },
+  "health": {
+    "title": "Zukünftige finanzielle Gesundheit",
+    "improving": "Positiver Trend",
+    "declining": "Erfordert Aufmerksamkeit",
+    "stable": "Stabil",
+    "today": "Heute",
+    "projection": "Prognose"
+  },
+  "debtChart": {
+    "title": "Saldo-Prognose",
+    "subtitle": "Schneeballmethode",
+    "balance": "Saldo",
+    "withExtra": "Mit Extra",
+    "withoutExtra": "Ohne Extra",
+    "minimumOnly": "Nur Mindestzahlungen",
+    "withExtraPayment": "Mit Extrazahlung",
+    "emptyTitle": "Keine Prognose",
+    "emptyDescription": "Fügen Sie Schulden hinzu, um zu sehen, wie Ihr Saldo Monat für Monat sinkt."
+  },
+  "insightsFeed": {
+    "title": "Automatische Insights",
+    "copilot": "Copilot"
+  },
+  "insights": {
+    "predict-savings-12m": "Bei gleichbleibendem Tempo könnten Sie in 12 Monaten ~{{amount}} Überschuss ansammeln.",
+    "predict-savings-6m": "6-Monats-Prognose: ~{{amount}} kumulierte Ersparnisse bei aktuellem Tempo.",
+    "predict-debt-free": "Bei aktuellem Tempo wären Ihre Schulden in etwa {{monthsToFree}} Monaten abbezahlt.",
+    "predict-debt-free-extra": "Mit Ihrer Extrazahlung könnten Sie in ~{{monthsToFree}} Monaten schuldenfrei sein ({{monthsSaved}} Monate früher als nur mit Mindestzahlungen).",
+    "predict-health-up": "Ihre finanzielle Gesundheit könnte sich in den kommenden Monaten Richtung „{{levelLabel}}“ verbessern (Score ~{{score}}).",
+    "predict-health-down": "Wenn Sie so weitermachen, könnte Ihre finanzielle Gesundheit auf „{{levelLabel}}“ sinken (Score ~{{score}}).",
+    "predict-expense-over": "Bei aktuellem Tempo würden Sie den Monat mit prognostizierten Ausgaben von ~{{projected}} abschließen (über Ihrem Einkommen).",
+    "predict-month-end": "Prognose Monatsende: ~{{projected}} Überschuss bei gleichbleibendem Tempo ({{daysRemaining}} Tage verbleibend).",
+    "predict-goals-behind": "Ziel „{{goalName}}“ könnte bei aktuellem Sparrhythmus nicht rechtzeitig erreicht werden.",
+    "predict-goal-eta": "Sie könnten „{{goalName}}“ in ~{{monthsToComplete}} Monaten abschließen, wenn Sie Ihr Sparrhythmus beibehalten.",
+    "predict-cat": "Ihre Ausgaben für {{categoryName}} könnten nächsten Monat um ~{{growthPercent}} % steigen, wenn der Trend anhält.",
+    "predict-runway": "Ihr Monatsüberschuss könnte bei aktuellem Ausgabentempo vor Monatsende aufgebraucht sein."
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "messages": {
+    "critical-balance": "Kritisches Saldo: Ihre Ausgaben dieses Monats übersteigen Ihr zugewiesenes Einkommen.",
+    "spending-pace-critical": "95 % oder mehr Ihres Einkommens sind diesen Monat bereits für Ausgaben verplant.",
+    "category-excess": "Überschreitung bei „{{categoryName}}“: {{percent}} % Ihrer Monatsausgaben.",
+    "upcoming-debt-payments": "Anstehende Raten: {{count}} Schuld(en) mit Mindestzahlungen von ~{{totalMin}} in diesem Monat.",
+    "low-savings": "Geringe Ersparnisse: Weniger als 5 % Ihres Einkommens bleiben diesen Monat verfügbar.",
+    "credit-limit-critical": "Karte {{cardName}} bei {{usagePercent}} %: Risiko, das Kreditlimit zu erreichen.",
+    "credit-usage-high": "Gesamte Kreditnutzung bei {{usagePercent}} %. Erwägen Sie, Belastungen zu reduzieren.",
+    "category-spike": "Riskantes Muster: „{{categoryName}}“ wuchs um {{growthPercent}} % gegenüber dem Vormonat.",
+    "micro-spend-alert": "Kleine Ausgaben summieren sich: {{count}} Mikrotransaktionen ({{sharePercent}} % der Ausgaben)."
+  }
+}

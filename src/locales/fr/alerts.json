@@ -1,0 +1,13 @@
+{
+  "messages": {
+    "critical-balance": "Solde critique : vos dépenses du mois dépassent vos revenus alloués.",
+    "spending-pace-critical": "95 % ou plus de vos revenus sont déjà engagés en dépenses ce mois-ci.",
+    "category-excess": "Excès sur « {{categoryName}} » : {{percent}} % de vos dépenses du mois.",
+    "upcoming-debt-payments": "Échéances à venir : {{count}} dette(s) avec des paiements minimums d'environ {{totalMin}} ce mois-ci.",
+    "low-savings": "Épargne insuffisante : il vous reste moins de 5 % de vos revenus disponibles ce mois-ci.",
+    "credit-limit-critical": "Carte {{cardName}} à {{usagePercent}} % : risque d'atteindre la limite.",
+    "credit-usage-high": "Utilisation globale du crédit à {{usagePercent}} %. Envisagez de réduire vos charges.",
+    "category-spike": "Comportement à risque : « {{categoryName}} » a augmenté de {{growthPercent}} % vs le mois dernier.",
+    "micro-spend-alert": "Micro-dépenses cumulées : {{count}} petits mouvements ({{sharePercent}} % des dépenses)."
+  }
+}

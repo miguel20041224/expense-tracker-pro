@@ -1,0 +1,105 @@
+{
+  "panel": {
+    "eyebrow": "Projections financières",
+    "description": "Prévisions basées sur votre historique et votre rythme actuel : épargne, dépenses, dettes, objectifs et santé financière. Ajustez des scénarios pour simuler l'avenir sans modifier vos données."
+  },
+  "scenario": {
+    "title": "Simuler un scénario",
+    "reduceExpenses": "Réduire les dépenses",
+    "reduceExpensesHint": "Simule une baisse des dépenses du mois",
+    "savingsBoost": "Boost d'épargne",
+    "savingsBoostHint": "Simule une marge mensuelle plus élevée",
+    "extraDebtPayment": "Paiement extra de dette",
+    "extraDebtPaymentHint": "Montant mensuel supplémentaire (boule de neige)"
+  },
+  "simulation": {
+    "title": "Simulation",
+    "emptyHint": "Ajustez les contrôles pour comparer votre rythme actuel à un scénario simulé.",
+    "impactTitle": "Impact de la simulation",
+    "monthlyMargin": "Marge mensuelle",
+    "sixMonthSavings": "Épargne sur 6 mois",
+    "monthsToDebtFree": "Mois avant d'être libre de dettes",
+    "vsCurrent": "vs actuel"
+  },
+  "summary": {
+    "savings6m": "Épargne 6 mois",
+    "savings12m": "Épargne 12 mois",
+    "projectedAccumulated": "Total projeté",
+    "ifKeepPace": "Si vous maintenez le rythme",
+    "debtFreedom": "Liberté de dettes",
+    "noActiveDebts": "Aucune dette active",
+    "futureHealth": "Santé future",
+    "monthEnd": "Fin de mois",
+    "daysRemaining": "{{count}} jours restants",
+    "monthMargin": "Marge du mois",
+    "estimatedDaysAtPace": "Jours estimés au rythme actuel"
+  },
+  "units": {
+    "months": "mois",
+    "days": "jours"
+  },
+  "cashFlow": {
+    "title": "Flux de trésorerie",
+    "subtitle": "Historique + projection sur 6 mois",
+    "forecast": "(projection)",
+    "income": "Revenus",
+    "expenses": "Dépenses",
+    "margin": "Marge",
+    "marginProjection": "Marge / projection",
+    "emptyTitle": "Pas de données à projeter",
+    "emptyDescription": "Enregistrez des mouvements sur plusieurs mois pour voir tendances et projections."
+  },
+  "savingsChart": {
+    "title": "Épargne cumulée projetée",
+    "subtitle": "12 mois au rythme simulé",
+    "cumulative": "Cumulé",
+    "emptyTitle": "Aucune marge projetable",
+    "emptyDescription": "Une marge mensuelle positive générera une projection d'épargne cumulée."
+  },
+  "goals": {
+    "title": "Objectifs estimés",
+    "subtitle": "ETA au rythme actuel",
+    "emptyTitle": "Aucun objectif actif",
+    "emptyDescription": "Créez des objectifs dans l'onglet Objectifs pour voir quand vous pourriez les atteindre.",
+    "remaining": "Il reste {{amount}}",
+    "monthsEta": "~{{count}} mois",
+    "noSavingsPace": "Aucun rythme d'épargne"
+  },
+  "health": {
+    "title": "Santé financière future",
+    "improving": "Tendance positive",
+    "declining": "Nécessite attention",
+    "stable": "Stable",
+    "today": "Aujourd'hui",
+    "projection": "Projection"
+  },
+  "debtChart": {
+    "title": "Projection du solde",
+    "subtitle": "Boule de neige",
+    "balance": "Solde",
+    "withExtra": "Avec extra",
+    "withoutExtra": "Sans extra",
+    "minimumOnly": "Minimums seulement",
+    "withExtraPayment": "Avec paiement extra",
+    "emptyTitle": "Aucune projection",
+    "emptyDescription": "Ajoutez des dettes pour voir comment votre solde diminue mois après mois."
+  },
+  "insightsFeed": {
+    "title": "Insights automatiques",
+    "copilot": "Copilote"
+  },
+  "insights": {
+    "predict-savings-12m": "Si vous maintenez ce rythme, vous pourriez accumuler ~{{amount}} de marge en 12 mois.",
+    "predict-savings-6m": "Projection à 6 mois : ~{{amount}} d'épargne cumulée au rythme actuel.",
+    "predict-debt-free": "Au rythme actuel, vous rembourseriez vos dettes dans environ {{monthsToFree}} mois.",
+    "predict-debt-free-extra": "Avec votre paiement extra, vous pourriez être libre de dettes en ~{{monthsToFree}} mois ({{monthsSaved}} mois plus tôt qu'avec les seuls minimums).",
+    "predict-health-up": "Votre santé financière pourrait s'améliorer vers « {{levelLabel}} » (score ~{{score}}) dans les prochains mois.",
+    "predict-health-down": "Si vous continuez ainsi, votre santé financière pourrait baisser à « {{levelLabel}} » (score ~{{score}}).",
+    "predict-expense-over": "Au rythme actuel, vous clôtureriez le mois avec des dépenses projetées de ~{{projected}} (dépassant vos revenus).",
+    "predict-month-end": "Projection fin de mois : ~{{projected}} de marge si vous maintenez le rythme ({{daysRemaining}} jours restants).",
+    "predict-goals-behind": "L'objectif « {{goalName}} » pourrait ne pas être atteint à temps au rythme d'épargne actuel.",
+    "predict-goal-eta": "Vous pourriez compléter « {{goalName}} » en ~{{monthsToComplete}} mois si vous maintenez votre rythme d'épargne.",
+    "predict-cat": "Vos dépenses en {{categoryName}} pourraient croître de ~{{growthPercent}} % le mois prochain si la tendance se poursuit.",
+    "predict-runway": "Votre marge du mois pourrait s'épuiser avant la fin du mois au rythme de dépenses actuel."
+  }
+}

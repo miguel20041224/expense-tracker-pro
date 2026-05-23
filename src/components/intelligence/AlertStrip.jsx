@@ -1,4 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../utils/cn'
+import { useIntelligenceMessage } from '../../i18n/useIntelligenceMessage'
 
 const styles = {
   danger: 'border-rose-500/40 bg-rose-500/10 text-rose-200',
@@ -6,16 +8,18 @@ const styles = {
 }
 
 export function AlertStrip({ alerts, onViewAll }) {
+  const { t } = useTranslation(['alerts', 'common'])
+  const localize = useIntelligenceMessage()
   const critical = (alerts ?? []).filter((a) => a.type === 'danger' || a.type === 'warning')
   if (critical.length === 0) return null
 
   const top = critical.slice(0, 2)
 
   return (
-    <section className="space-y-2" aria-label="Alertas financieras">
+    <section className="space-y-2" aria-label={t('center.activeTitle')}>
       <div className="flex items-center justify-between gap-2">
         <h2 className="text-xs font-medium tracking-widest text-slate-500 uppercase">
-          Alertas activas
+          {t('center.activeTitle')}
         </h2>
         <div className="flex items-center gap-2">
           <span className="rounded-full bg-rose-500/15 px-2 py-0.5 text-xs font-medium text-rose-300">
@@ -27,7 +31,7 @@ export function AlertStrip({ alerts, onViewAll }) {
               onClick={onViewAll}
               className="text-xs font-medium text-accent hover:text-accent/80"
             >
-              Ver todas
+              {t('strip.viewAll')}
             </button>
           ) : null}
         </div>
@@ -41,7 +45,7 @@ export function AlertStrip({ alerts, onViewAll }) {
               styles[alert.type] ?? styles.warning,
             )}
           >
-            {alert.text}
+            {localize(alert)}
           </li>
         ))}
       </ul>

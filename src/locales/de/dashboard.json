@@ -1,0 +1,121 @@
+{
+  "health": {
+    "title": "Finanzielle Gesundheit",
+    "scoreOutOf": "/ 100",
+    "levels": {
+      "saludable": "Gesund",
+      "estable": "Stabil",
+      "en-riesgo": "Gefährdet",
+      "critico": "Kritisch"
+    },
+    "recommendations": {
+      "overBudget": "Reduzieren Sie Ausgaben oder passen Sie Ihr Budget an, um den Monat positiv abzuschließen.",
+      "debtToIncome": "Priorisieren Sie Schuldentilgung; Ihre Belastung übersteigt 40 % Ihres Einkommens.",
+      "creditUsage": "Senken Sie die Kreditkartennutzung unter 70 %.",
+      "leisureHigh": "Prüfen Sie Freizeit- und Unterhaltungsausgaben; sie machen einen großen Teil des Monats aus.",
+      "snowballPriority": "Leiten Sie Extra-Zahlungen an „{{name}}“ (Schneeball-Methode).",
+      "maintainSavings": "Behalten Sie Ihr Spar-Tempo bei und überprüfen Sie Ihre Ziele wöchentlich.",
+      "registerMore": "Erfassen Sie regelmäßig Buchungen für eine genauere Analyse."
+    }
+  },
+  "insights": {
+    "title": "Automatische Insights",
+    "daily-spend-spike": "Heute haben Sie mehr ausgegeben als gestern (+{{pct}} %). Sie haben heute {{amount}} an Ausgaben.",
+    "daily-spend-start": "Heute haben Sie {{amount}} an Ausgaben erfasst. Gestern wurden keine Ausgaben erfasst.",
+    "daily-spend-calm": "Heute liegen Ihre Ausgaben unter denen von gestern. Gute tägliche Kontrolle.",
+    "weekly-spend-increase": "Ihre Ausgaben der letzten 7 Tage stiegen um {{pct}} % im Vergleich zur Vorwoche.",
+    "weekly-spend-decrease": "Sie haben Ihre Ausgaben diese Woche um {{pct}} % im Vergleich zur letzten Woche gesenkt.",
+    "weekly-cash-flow-pressure": "Ihr wöchentliches Ausgabentempo übersteigt das, was Sie laut Ihrem Monatseinkommen ausgeben könnten.",
+    "leisure-high": "Sie geben diesen Monat mehr als {{pct}} % für Freizeit und Unterhaltung aus.",
+    "leisure-moderate": "{{pct}} % Ihrer Ausgaben dieses Monats entfallen auf Freizeitkategorien.",
+    "risk-level": "Hohes Risiko der Überschuldung. Prüfen Sie Ausgaben, Kredit und Schulden vorrangig.",
+    "risk-moderate": "Mäßiges finanzielles Risiko: Stärken Sie Sparen und Schuldenkontrolle.",
+    "over-budget": "Sie haben Ihr Monatsbudget überschritten. Ihre Ausgaben übersteigen die zugewiesenen Einnahmen.",
+    "debt-to-income-high": "Ihre Gesamtschuld entspricht {{pct}} % Ihres Monatseinkommens.",
+    "debt-to-income": "Ihre Schuld übersteigt bereits 40 % Ihres Einkommens ({{pct}} %).",
+    "credit-usage": "Sehr hohe Kreditnutzung ({{pct}} %). Risiko von Zahlungsausfällen bei Kreditkarten.",
+    "category-concentration": "Konzentration auf „{{name}}“: {{pct}} % der monatlichen Ausgaben.",
+    "card-priority": "Priorisieren Sie die Tilgung der Karte {{cardName}} ({{pct}} % Nutzung).",
+    "snowball-priority": "Priorisieren Sie die Schuld „{{name}}“ mit der Schneeball-Methode.",
+    "savings-positive": "Geschätzte monatliche Ersparnis: {{pct}} % Ihres Einkommens.",
+    "savings-none": "Diesen Monat bleibt keine Sparreserve. Prüfen Sie Kleinausgaben und wiederkehrende Kategorien.",
+    "debt-min-payments": "Ihre Mindestschuldzahlungen verbrauchen {{pct}} % Ihres Monatseinkommens.",
+    "category-growth": "Ihre Ausgaben für „{{name}}“ stiegen um {{pct}} % im Vergleich zum Vormonat.",
+    "micro-spends": "Sie könnten mehr sparen, indem Sie Kleinausgaben reduzieren: {{count}} kleine Ausgaben machen {{pct}} % des Monats aus."
+  },
+  "metrics": {
+    "sectionAriaLabel": "Finanzübersicht",
+    "income": {
+      "label": "Einnahmen",
+      "emptyHint": "Fügen Sie ein Budget im Tab Budget hinzu",
+      "subtitleBudgets": "Monatsbudgets",
+      "subtitleIncome": "Monatseinnahmen"
+    },
+    "expenses": {
+      "label": "Ausgaben",
+      "emptyHint": "Ihre Ausgaben erscheinen hier, sobald Sie sie erfassen",
+      "shareOfIncome": "{{pct}} % Ihres Einkommens",
+      "subtitleTotal": "Gesamtsumme des laufenden Monats"
+    },
+    "savings": {
+      "label": "Ersparnis",
+      "emptyHint": "Verfügbar = Budgets − Ausgaben",
+      "overBudget": "Budget diesen Monat überschritten",
+      "availableRate": "{{pct}} % verfügbar",
+      "subtitleBalance": "Verfügbares Guthaben des Monats"
+    },
+    "balance": {
+      "label": "Gesamtsaldo",
+      "emptyHint": "Berechnet aus Ihren Buchungen des Monats",
+      "subtitle": "Budgets − Ausgaben",
+      "heroEmptyTitle": "Ihre Finanzübersicht erscheint hier",
+      "heroEmptyDescription": "Fügen Sie ein Budget hinzu oder erfassen Sie eine Ausgabe, um Ihren Saldo in Echtzeit zu berechnen.",
+      "availableLabel": "Verfügbarer Saldo",
+      "breakdown": "{{budgets}} in Budgets − {{expenses}} in Ausgaben"
+    }
+  },
+  "charts": {
+    "trend": {
+      "title": "Entwicklung (6 Monate)",
+      "subtitle": "Einnahmen vs Ausgaben",
+      "income": "Einnahmen",
+      "expenses": "Ausgaben",
+      "emptyTitle": "Nicht genug Verlauf",
+      "emptyDescription": "Erfassen Sie Buchungen in früheren Monaten, um den Trend zu sehen."
+    },
+    "categories": {
+      "title": "Ausgaben nach Kategorie",
+      "thisMonth": "Dieser Monat",
+      "emptyTitle": "Keine Ausgaben nach Kategorie",
+      "emptyDescription": "Wenn Sie Ausgaben mit Kategorie erfassen, sehen Sie hier die Aufschlüsselung und Monatsprozente."
+    }
+  },
+  "onboarding": {
+    "ariaLabel": "Erste Schritte",
+    "welcome": "Willkommen",
+    "title": "Beginnen Sie mit Ihrer ersten Ausgabe",
+    "description": "Ihr Dashboard füllt sich mit echten Daten, sobald Sie Buchungen erfassen.",
+    "steps": {
+      "trackExpenses": {
+        "title": "Ausgaben erfassen",
+        "description": "Fügen Sie jede Ausgabe mit Kategorie und Datum hinzu."
+      },
+      "viewSummary": {
+        "title": "Übersicht ansehen",
+        "description": "Ihre Finanzübersicht erscheint hier."
+      },
+      "controlMoney": {
+        "title": "Geld kontrollieren",
+        "description": "Prüfen Sie Saldo, Kategorien und Buchungen."
+      }
+    },
+    "skip": "Überspringen",
+    "cta": "Erste Ausgabe hinzufügen"
+  },
+  "transactions": {
+    "title": "Letzte Buchungen",
+    "totalCount": "{{count}} insgesamt",
+    "emptyTitle": "Sie haben noch keine Buchungen hinzugefügt",
+    "emptyDescription": "Fügen Sie ein Budget im Tab Budget hinzu oder eine Ausgabe über das Formular links."
+  }
+}

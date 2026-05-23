@@ -1,0 +1,13 @@
+{
+  "messages": {
+    "critical-balance": "Saldo crítico: suas despesas do mês superam sua renda alocada.",
+    "spending-pace-critical": "95% ou mais da sua renda já está comprometida com despesas neste mês.",
+    "category-excess": "Excesso em \"{{categoryName}}\": {{percent}}% das suas despesas do mês.",
+    "upcoming-debt-payments": "Próximas parcelas: {{count}} dívida(s) com pagamentos mínimos de ~{{totalMin}} neste mês.",
+    "low-savings": "Poupança insuficiente: restam menos de 5% da sua renda disponível neste mês.",
+    "credit-limit-critical": "Cartão {{cardName}} em {{usagePercent}}%: risco de esgotar o limite.",
+    "credit-usage-high": "Uso agregado de crédito em {{usagePercent}}%. Considere reduzir lançamentos.",
+    "category-spike": "Comportamento arriscado: \"{{categoryName}}\" cresceu {{growthPercent}}% vs o mês anterior.",
+    "micro-spend-alert": "Gastos pequenos acumulados: {{count}} movimentos menores ({{sharePercent}}% das despesas)."
+  }
+}

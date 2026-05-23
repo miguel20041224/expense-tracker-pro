@@ -1,0 +1,122 @@
+{
+  "app": {
+    "name": "Vault",
+    "tagline": "Persönliche Finanzen",
+    "subtitle": "Ihr persönlicher Finanz-Copilot · Automatische Einblicke, null Aufwand"
+  },
+  "nav": {
+    "inicio": "Start",
+    "alertas": "Benachrichtigungen",
+    "movimientos": "Transaktionen",
+    "presupuesto": "Budget",
+    "tarjetas": "Karten",
+    "metas": "Ziele",
+    "deudas": "Schulden",
+    "proyecciones": "Prognosen",
+    "reportes": "Berichte",
+    "main": "Hauptnavigation"
+  },
+  "actions": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "confirm": "Bestätigen",
+    "close": "Schließen",
+    "logout": "Abmelden",
+    "dismiss": "Verwerfen",
+    "dismissAll": "Alle verwerfen",
+    "restore": "Wiederherstellen",
+    "viewAll": "Alle anzeigen",
+    "print": "Drucken",
+    "downloadPdf": "PDF herunterladen",
+    "add": "Hinzufügen",
+    "search": "Suchen",
+    "retry": "Erneut versuchen",
+    "reload": "Neu laden",
+    "getStarted": "Loslegen"
+  },
+  "auth": {
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "name": "Name",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "loginError": "Authentifizierungsfehler",
+    "loading": "Anmeldung läuft…"
+  },
+  "loading": {
+    "app": "Vault wird geladen…",
+    "appHint": "Ihr Finanz-Copilot wird vorbereitet",
+    "alerts": "Benachrichtigungen werden geladen…",
+    "movements": "Transaktionen werden geladen…",
+    "budget": "Budget wird geladen…",
+    "cards": "Karten werden geladen…",
+    "goals": "Ziele werden geladen…",
+    "debts": "Schulden werden geladen…",
+    "projections": "Prognosen werden geladen…",
+    "reports": "Berichte werden geladen…",
+    "generic": "Wird geladen…"
+  },
+  "errors": {
+    "appTitle": "App konnte nicht geladen werden",
+    "appMessage": "Unerwarteter Fehler in der Benutzeroberfläche.",
+    "reportTitle": "Fehler beim Laden der Berichte",
+    "reportMessage": "Beim Anzeigen dieses Berichts ist ein Fehler aufgetreten.",
+    "pdfLocate": "Bericht konnte nicht gefunden werden.",
+    "pdfGenerate": "PDF konnte nicht erstellt werden. Bitte versuchen Sie es erneut."
+  },
+  "currency": {
+    "select": "Währung auswählen",
+    "active": "Aktiv"
+  },
+  "language": {
+    "select": "Sprache auswählen",
+    "active": "Aktiv",
+    "label": "Sprache"
+  },
+  "filters": {
+    "periodAll": "Alle",
+    "periodToday": "Heute",
+    "periodWeek": "Diese Woche",
+    "periodMonth": "Dieser Monat",
+    "flowAll": "Alle Cashflows",
+    "flowIncome": "Einnahmen",
+    "flowExpense": "Ausgaben",
+    "typeAll": "Alle Typen",
+    "typeBudget": "Budget",
+    "typeExpense": "Erfasste Ausgabe",
+    "sortNewest": "Neueste",
+    "sortOldest": "Älteste",
+    "sortExpenseHigh": "Höchste Ausgabe",
+    "sortExpenseLow": "Niedrigste Ausgabe",
+    "sortIncomeHigh": "Höchstes Einkommen",
+    "favoritesAll": "Alle",
+    "favoritesOnly": "Favoriten"
+  },
+  "severity": {
+    "critical": "Kritisch",
+    "warning": "Warnung",
+    "info": "Info",
+    "success": "Erfolg"
+  },
+  "categories": {
+    "balance": "Saldo",
+    "debt": "Schulden",
+    "credit": "Kredit",
+    "habits": "Gewohnheiten",
+    "daily": "Heute",
+    "weekly": "Woche",
+    "monthly": "Monat",
+    "predictive": "Prognose"
+  },
+  "alerts": {
+    "activeCount_one": "{{count}} aktive Benachrichtigung",
+    "activeCount_other": "{{count}} aktive Benachrichtigungen"
+  },
+  "copilot": "Copilot",
+  "empty": {
+    "noData": "Keine Daten",
+    "noResults": "Keine Ergebnisse"
+  }
+}

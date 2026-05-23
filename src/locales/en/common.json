@@ -1,0 +1,128 @@
+{
+  "app": {
+    "name": "Vault",
+    "tagline": "Personal finance",
+    "subtitle": "Your personal financial copilot · Automatic insights, zero hassle"
+  },
+  "nav": {
+    "inicio": "Home",
+    "alertas": "Alerts",
+    "movimientos": "Transactions",
+    "presupuesto": "Budget",
+    "tarjetas": "Cards",
+    "metas": "Goals",
+    "deudas": "Debts",
+    "proyecciones": "Projections",
+    "reportes": "Reports",
+    "main": "Main navigation"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "close": "Close",
+    "logout": "Sign out",
+    "dismiss": "Dismiss",
+    "dismissAll": "Dismiss all",
+    "restore": "Restore",
+    "viewAll": "View all",
+    "print": "Print",
+    "downloadPdf": "Download PDF",
+    "add": "Add",
+    "search": "Search",
+    "retry": "Retry",
+    "reload": "Reload",
+    "getStarted": "Get started"
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Sign up",
+    "name": "Name",
+    "email": "Email",
+    "password": "Password",
+    "loginError": "Authentication error",
+    "loading": "Signing in…",
+    "processing": "Processing…",
+    "enter": "Sign in",
+    "createAccount": "Create account",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "email@example.com",
+    "passwordPlaceholder": "At least 6 characters"
+  },
+  "loading": {
+    "app": "Loading Vault…",
+    "appHint": "Preparing your financial copilot",
+    "alerts": "Loading alerts…",
+    "movements": "Loading transactions…",
+    "budget": "Loading budget…",
+    "cards": "Loading cards…",
+    "goals": "Loading goals…",
+    "debts": "Loading debts…",
+    "projections": "Loading projections…",
+    "reports": "Loading reports…",
+    "generic": "Loading…"
+  },
+  "errors": {
+    "appTitle": "Could not load the app",
+    "appMessage": "Unexpected interface error.",
+    "reportTitle": "Error loading reports",
+    "reportMessage": "Something went wrong rendering this report.",
+    "pdfLocate": "Could not locate the report.",
+    "pdfGenerate": "Could not generate the PDF. Please try again."
+  },
+  "currency": {
+    "select": "Select currency",
+    "active": "Active"
+  },
+  "language": {
+    "select": "Select language",
+    "active": "Active",
+    "label": "Language"
+  },
+  "filters": {
+    "periodAll": "All",
+    "periodToday": "Today",
+    "periodWeek": "This week",
+    "periodMonth": "This month",
+    "flowAll": "All flows",
+    "flowIncome": "Income",
+    "flowExpense": "Expense",
+    "typeAll": "All types",
+    "typeBudget": "Budget",
+    "typeExpense": "Recorded expense",
+    "sortNewest": "Newest",
+    "sortOldest": "Oldest",
+    "sortExpenseHigh": "Highest expense",
+    "sortExpenseLow": "Lowest expense",
+    "sortIncomeHigh": "Highest income",
+    "favoritesAll": "All",
+    "favoritesOnly": "Favorites"
+  },
+  "severity": {
+    "critical": "Critical",
+    "warning": "Warning",
+    "info": "Info",
+    "success": "Success"
+  },
+  "categories": {
+    "balance": "Balance",
+    "debt": "Debts",
+    "credit": "Credit",
+    "habits": "Habits",
+    "daily": "Today",
+    "weekly": "Week",
+    "monthly": "Month",
+    "predictive": "Projection"
+  },
+  "alerts": {
+    "activeCount_one": "{{count}} active alert",
+    "activeCount_other": "{{count}} active alerts"
+  },
+  "copilot": "Copilot",
+  "empty": {
+    "noData": "No data",
+    "noResults": "No results"
+  }
+}

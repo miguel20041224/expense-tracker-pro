@@ -1,0 +1,121 @@
+{
+  "health": {
+    "title": "Financial health",
+    "scoreOutOf": "/ 100",
+    "levels": {
+      "saludable": "Healthy",
+      "estable": "Stable",
+      "en-riesgo": "At risk",
+      "critico": "Critical"
+    },
+    "recommendations": {
+      "overBudget": "Cut spending or adjust your budget to finish the month in the positive.",
+      "debtToIncome": "Prioritize debt payments; your debt load exceeds 40% of your income.",
+      "creditUsage": "Bring credit card usage below 70%.",
+      "leisureHigh": "Review leisure and entertainment spending; it makes up a large share of the month.",
+      "snowballPriority": "Direct extra payments to \"{{name}}\" (snowball method).",
+      "maintainSavings": "Keep up your savings pace and review your goals every week.",
+      "registerMore": "Log transactions regularly for a more accurate analysis."
+    }
+  },
+  "insights": {
+    "title": "Automatic insights",
+    "daily-spend-spike": "You spent more today than yesterday (+{{pct}}%). You have {{amount}} in expenses today.",
+    "daily-spend-start": "You logged {{amount}} in expenses today. No expenses were recorded yesterday.",
+    "daily-spend-calm": "Today's spending is lower than yesterday's. Good daily control.",
+    "weekly-spend-increase": "Your spending over the last 7 days rose {{pct}}% compared to the previous week.",
+    "weekly-spend-decrease": "You lowered your spending by {{pct}}% this week compared to last week.",
+    "weekly-cash-flow-pressure": "Your weekly spending pace exceeds what you could spend based on your monthly income.",
+    "leisure-high": "You are spending more than {{pct}}% on leisure and entertainment this month.",
+    "leisure-moderate": "{{pct}}% of your spending this month is in leisure categories.",
+    "risk-level": "High risk of over-indebtedness. Review spending, credit, and debts as a priority.",
+    "risk-moderate": "Moderate financial risk: strengthen savings and debt control.",
+    "over-budget": "You exceeded your monthly budget. Your expenses exceed assigned income.",
+    "debt-to-income-high": "Your total debt represents {{pct}}% of your monthly income.",
+    "debt-to-income": "Your debt already exceeds 40% of your income ({{pct}}%).",
+    "credit-usage": "Very high credit usage ({{pct}}%). Risk of missed credit card payments.",
+    "category-concentration": "Concentration in \"{{name}}\": {{pct}}% of monthly spending.",
+    "card-priority": "Prioritize paying off the {{cardName}} card ({{pct}}% usage).",
+    "snowball-priority": "Prioritize the \"{{name}}\" debt using the snowball method.",
+    "savings-positive": "Estimated monthly savings: {{pct}}% of your income.",
+    "savings-none": "You have no savings margin this month. Review small recurring expenses and categories.",
+    "debt-min-payments": "Your minimum debt payments consume {{pct}}% of your monthly income.",
+    "category-growth": "Your spending on \"{{name}}\" increased {{pct}}% compared to last month.",
+    "micro-spends": "You could save more by cutting small expenses: {{count}} small purchases add up to {{pct}}% of the month."
+  },
+  "metrics": {
+    "sectionAriaLabel": "Financial summary",
+    "income": {
+      "label": "Income",
+      "emptyHint": "Add a budget in the Budget tab",
+      "subtitleBudgets": "Monthly budgets",
+      "subtitleIncome": "Monthly income"
+    },
+    "expenses": {
+      "label": "Expenses",
+      "emptyHint": "Your expenses will appear here when you log them",
+      "shareOfIncome": "{{pct}}% of your income",
+      "subtitleTotal": "Current month total"
+    },
+    "savings": {
+      "label": "Savings",
+      "emptyHint": "Available = budgets − expenses",
+      "overBudget": "Budget exceeded this month",
+      "availableRate": "{{pct}}% available",
+      "subtitleBalance": "Available balance for the month"
+    },
+    "balance": {
+      "label": "Total balance",
+      "emptyHint": "Calculated from your transactions this month",
+      "subtitle": "Budgets − expenses",
+      "heroEmptyTitle": "Your financial summary will appear here",
+      "heroEmptyDescription": "Add a budget or log an expense to calculate your balance in real time.",
+      "availableLabel": "Available balance",
+      "breakdown": "{{budgets}} in budgets − {{expenses}} in expenses"
+    }
+  },
+  "charts": {
+    "trend": {
+      "title": "Trend (6 months)",
+      "subtitle": "Income vs expenses",
+      "income": "Income",
+      "expenses": "Expenses",
+      "emptyTitle": "Not enough history",
+      "emptyDescription": "Log transactions in previous months to see the trend."
+    },
+    "categories": {
+      "title": "Spending by category",
+      "thisMonth": "This month",
+      "emptyTitle": "No spending by category",
+      "emptyDescription": "When you log expenses with a category, you will see the breakdown and monthly percentages here."
+    }
+  },
+  "onboarding": {
+    "ariaLabel": "Getting started",
+    "welcome": "Welcome",
+    "title": "Start by adding your first expense",
+    "description": "Your dashboard will fill with real data as you log transactions.",
+    "steps": {
+      "trackExpenses": {
+        "title": "Track expenses",
+        "description": "Add each expense with a category and date."
+      },
+      "viewSummary": {
+        "title": "View your summary",
+        "description": "Your financial summary will appear here."
+      },
+      "controlMoney": {
+        "title": "Control your money",
+        "description": "Review balance, categories, and transactions."
+      }
+    },
+    "skip": "Skip",
+    "cta": "Add first expense"
+  },
+  "transactions": {
+    "title": "Recent transactions",
+    "totalCount": "{{count}} total",
+    "emptyTitle": "You have not added any transactions yet",
+    "emptyDescription": "Add a budget in the Budget tab or an expense using the form on the left."
+  }
+}

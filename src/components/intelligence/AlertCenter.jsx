@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { Button } from '../ui/Button'
 import { EmptyState } from '../ui/EmptyState'
 import { IconBell } from '../icons'
 import { cn } from '../../utils/cn'
 import { getDismissedHistory } from '../../intelligence/alerts'
+import { useIntelligenceMessage } from '../../i18n/useIntelligenceMessage'
 
 const severityStyles = {
   danger: 'border-rose-500/35 bg-rose-500/10',
@@ -19,17 +21,14 @@ const severityText = {
   success: 'text-emerald-200',
 }
 
-const categoryLabels = {
-  balance: 'Saldo',
-  debt: 'Deudas',
-  credit: 'Crédito',
-  habits: 'Hábitos',
-  daily: 'Hoy',
-  weekly: 'Semana',
-  monthly: 'Mes',
-}
+function AlertRow({ alert, onDismiss, dismissLabel, localize, t }) {
+  const severityLabel =
+    alert.type === 'danger'
+      ? t('common:severity.critical')
+      : alert.type === 'warning'
+        ? t('common:severity.warning')
+        : t('common:severity.info')
 
-function AlertRow({ alert, onDismiss, dismissLabel = 'Descartar' }) {
   return (
     <li
       className={cn(
@@ -45,16 +44,16 @@ function AlertRow({ alert, onDismiss, dismissLabel = 'Descartar' }) {
               severityText[alert.type] ?? severityText.info,
             )}
           >
-            {alert.type === 'danger' ? 'Crítica' : alert.type === 'warning' ? 'Aviso' : 'Info'}
+            {severityLabel}
           </span>
           {alert.category ? (
             <span className="rounded-md bg-white/10 px-1.5 py-0.5 text-[10px] text-slate-400">
-              {categoryLabels[alert.category] ?? alert.category}
+              {t(`common:categories.${alert.category}`, { defaultValue: alert.category })}
             </span>
           ) : null}
         </div>
         <p className={cn('text-sm leading-relaxed', severityText[alert.type] ?? 'text-slate-200')}>
-          {alert.text}
+          {localize(alert)}
         </p>
       </div>
       {onDismiss ? (
@@ -80,6 +79,8 @@ export function AlertCenter({
   onRestore,
   onDismissAll,
 }) {
+  const { t } = useTranslation(['alerts', 'common'])
+  const localize = useIntelligenceMessage()
   const history = getDismissedHistory(allAlerts, dismissedAlerts, 5)
   const dangerCount = activeAlerts.filter((a) => a.type === 'danger').length
   const warningCount = activeAlerts.filter((a) => a.type === 'warning').length
@@ -88,21 +89,18 @@ export function AlertCenter({
     <section className="space-y-6">
       <header className="rounded-2xl border border-border-subtle bg-surface-card/60 p-5">
         <p className="text-xs font-medium tracking-widest text-accent/90 uppercase">
-          Centro de alertas
+          {t('center.eyebrow')}
         </p>
-        <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Alertas generadas automáticamente según tus movimientos, deudas y hábitos. Puedes
-          descartarlas; se renovarán en el próximo período si el riesgo continúa.
-        </p>
+        <p className="mt-2 text-sm leading-relaxed text-slate-400">{t('center.description')}</p>
         <div className="mt-4 flex flex-wrap gap-3 text-sm">
           <span className="rounded-lg bg-rose-500/15 px-3 py-1 text-rose-300">
-            {dangerCount} críticas
+            {t('center.criticalCount', { count: dangerCount })}
           </span>
           <span className="rounded-lg bg-amber-500/15 px-3 py-1 text-amber-300">
-            {warningCount} avisos
+            {t('center.warningCount', { count: warningCount })}
           </span>
           <span className="rounded-lg bg-white/5 px-3 py-1 text-slate-400">
-            {activeAlerts.length} activas
+            {t('center.activeCount', { count: activeAlerts.length })}
           </span>
         </div>
         {activeAlerts.length > 1 ? (
@@ -113,27 +111,34 @@ export function AlertCenter({
             className="mt-4"
             onClick={() => onDismissAll(activeAlerts.map((a) => a.key))}
           >
-            Descartar todas las activas
+            {t('center.dismissAll')}
           </Button>
         ) : null}
       </header>
 
       <Card>
         <CardHeader>
-          <CardTitle>Alertas activas</CardTitle>
+          <CardTitle>{t('center.activeTitle')}</CardTitle>
         </CardHeader>
 
         {activeAlerts.length > 0 ? (
           <ul className="space-y-3">
             {activeAlerts.map((alert) => (
-              <AlertRow key={alert.key} alert={alert} onDismiss={onDismiss} />
+              <AlertRow
+                key={alert.key}
+                alert={alert}
+                onDismiss={onDismiss}
+                dismissLabel={t('common:actions.dismiss')}
+                localize={localize}
+                t={t}
+              />
             ))}
           </ul>
         ) : (
           <EmptyState
             icon={<IconBell className="size-6" />}
-            title="Sin alertas activas"
-            description="Cuando detectemos riesgos financieros, aparecerán aquí."
+            title={t('center.emptyTitle')}
+            description={t('center.emptyDescription')}
           />
         )}
       </Card>
@@ -141,7 +146,7 @@ export function AlertCenter({
       {history.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle>Descartadas recientemente</CardTitle>
+            <CardTitle>{t('center.dismissedTitle')}</CardTitle>
           </CardHeader>
           <ul className="space-y-3 opacity-80">
             {history.map((alert) => (
@@ -149,7 +154,9 @@ export function AlertCenter({
                 key={alert.key}
                 alert={alert}
                 onDismiss={onRestore ? () => onRestore(alert.key) : null}
-                dismissLabel="Restaurar"
+                dismissLabel={t('center.restore')}
+                localize={localize}
+                t={t}
               />
             ))}
           </ul>

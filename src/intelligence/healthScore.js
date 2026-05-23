@@ -18,27 +18,29 @@ export function computeFinancialHealthScore(metrics) {
   const { summary, debtToIncome, creditUsagePercent, leisurePercent, snowball } = metrics
 
   if (summary.isOverBudget) {
-    recommendations.push('Reduce gastos o ajusta tu presupuesto para cerrar el mes en positivo.')
+    recommendations.push({ id: 'overBudget', text: 'Reduce gastos o ajusta tu presupuesto para cerrar el mes en positivo.' })
   }
   if (debtToIncome > 40) {
-    recommendations.push('Prioriza pagos de deuda; tu carga supera el 40% de tus ingresos.')
+    recommendations.push({ id: 'debtToIncome', text: 'Prioriza pagos de deuda; tu carga supera el 40% de tus ingresos.' })
   }
   if (creditUsagePercent > 70) {
-    recommendations.push('Baja el uso de tarjetas de crédito por debajo del 70%.')
+    recommendations.push({ id: 'creditUsage', text: 'Baja el uso de tarjetas de crédito por debajo del 70%.' })
   }
   if (leisurePercent > 40 && summary.expenses > 0) {
-    recommendations.push('Revisa gastos de ocio y entretenimiento; representan gran parte del mes.')
+    recommendations.push({ id: 'leisureHigh', text: 'Revisa gastos de ocio y entretenimiento; representan gran parte del mes.' })
   }
   if (snowball.priority && metrics.totalDebt > 0) {
-    recommendations.push(
-      `Destina pagos extra a "${snowball.priority.name}" (método bola de nieve).`,
-    )
+    recommendations.push({
+      id: 'snowballPriority',
+      text: `Destina pagos extra a "${snowball.priority.name}" (método bola de nieve).`,
+      params: { name: snowball.priority.name },
+    })
   }
   if (summary.income > 0 && summary.savings > 0 && score >= 60) {
-    recommendations.push('Mantén el ritmo de ahorro y revisa tus metas cada semana.')
+    recommendations.push({ id: 'maintainSavings', text: 'Mantén el ritmo de ahorro y revisa tus metas cada semana.' })
   }
   if (recommendations.length === 0) {
-    recommendations.push('Registra movimientos con frecuencia para un análisis más preciso.')
+    recommendations.push({ id: 'registerMore', text: 'Registra movimientos con frecuencia para un análisis más preciso.' })
   }
 
   return {

@@ -1,0 +1,29 @@
+{
+  "center": {
+    "eyebrow": "Alert center",
+    "description": "Alerts generated automatically from your transactions, debts, and habits. You can dismiss them; they will return next period if the risk persists.",
+    "criticalCount": "{{count}} critical",
+    "warningCount": "{{count}} warnings",
+    "activeCount": "{{count}} active",
+    "dismissAll": "Dismiss all active",
+    "activeTitle": "Active alerts",
+    "emptyTitle": "No active alerts",
+    "emptyDescription": "When we detect financial risks, they will appear here.",
+    "dismissedTitle": "Recently dismissed",
+    "restore": "Restore"
+  },
+  "strip": {
+    "viewAll": "View all"
+  },
+  "messages": {
+    "critical-balance": "Critical balance: this month's spending exceeds your allocated income.",
+    "spending-pace-critical": "95% or more of your income is already committed to expenses this month.",
+    "category-excess": "Overspend in \"{{categoryName}}\": {{percent}}% of this month's expenses.",
+    "upcoming-debt-payments": "Upcoming payments: {{count}} debt(s) with minimum payments of ~{{totalMin}} this month.",
+    "low-savings": "Low savings: less than 5% of your income remains available this month.",
+    "credit-limit-critical": "Card {{cardName}} at {{usagePercent}}%: risk of hitting the credit limit.",
+    "credit-usage-high": "Aggregate credit utilization at {{usagePercent}}%. Consider reducing charges.",
+    "category-spike": "Risky pattern: \"{{categoryName}}\" grew {{growthPercent}}% vs last month.",
+    "micro-spend-alert": "Small purchases adding up: {{count}} micro-transactions ({{sharePercent}}% of spending)."
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "app": {
+    "name": "Vault",
+    "tagline": "Finances personnelles",
+    "subtitle": "Votre copilote financier personnel · Analyses automatiques, sans effort"
+  },
+  "nav": {
+    "inicio": "Accueil",
+    "alertas": "Alertes",
+    "movimientos": "Transactions",
+    "presupuesto": "Budget",
+    "tarjetas": "Cartes",
+    "metas": "Objectifs",
+    "deudas": "Dettes",
+    "proyecciones": "Projections",
+    "reportes": "Rapports",
+    "main": "Navigation principale"
+  },
+  "actions": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "confirm": "Confirmer",
+    "close": "Fermer",
+    "logout": "Se déconnecter",
+    "dismiss": "Ignorer",
+    "dismissAll": "Tout ignorer",
+    "restore": "Restaurer",
+    "viewAll": "Tout afficher",
+    "print": "Imprimer",
+    "downloadPdf": "Télécharger le PDF",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "retry": "Réessayer",
+    "reload": "Recharger",
+    "getStarted": "Commencer"
+  },
+  "auth": {
+    "login": "Se connecter",
+    "register": "S'inscrire",
+    "name": "Nom",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "loginError": "Erreur d'authentification",
+    "loading": "Connexion en cours…"
+  },
+  "loading": {
+    "app": "Chargement de Vault…",
+    "appHint": "Préparation de votre copilote financier",
+    "alerts": "Chargement des alertes…",
+    "movements": "Chargement des transactions…",
+    "budget": "Chargement du budget…",
+    "cards": "Chargement des cartes…",
+    "goals": "Chargement des objectifs…",
+    "debts": "Chargement des dettes…",
+    "projections": "Chargement des projections…",
+    "reports": "Chargement des rapports…",
+    "generic": "Chargement…"
+  },
+  "errors": {
+    "appTitle": "Impossible de charger l'application",
+    "appMessage": "Erreur inattendue de l'interface.",
+    "reportTitle": "Erreur lors du chargement des rapports",
+    "reportMessage": "Un problème est survenu lors de l'affichage de ce rapport.",
+    "pdfLocate": "Impossible de localiser le rapport.",
+    "pdfGenerate": "Impossible de générer le PDF. Veuillez réessayer."
+  },
+  "currency": {
+    "select": "Sélectionner la devise",
+    "active": "Active"
+  },
+  "language": {
+    "select": "Sélectionner la langue",
+    "active": "Active",
+    "label": "Langue"
+  },
+  "filters": {
+    "periodAll": "Tout",
+    "periodToday": "Aujourd'hui",
+    "periodWeek": "Cette semaine",
+    "periodMonth": "Ce mois",
+    "flowAll": "Tous les flux",
+    "flowIncome": "Revenus",
+    "flowExpense": "Dépenses",
+    "typeAll": "Tous les types",
+    "typeBudget": "Budget",
+    "typeExpense": "Dépense enregistrée",
+    "sortNewest": "Plus récentes",
+    "sortOldest": "Plus anciennes",
+    "sortExpenseHigh": "Dépense la plus élevée",
+    "sortExpenseLow": "Dépense la plus faible",
+    "sortIncomeHigh": "Revenu le plus élevé",
+    "favoritesAll": "Tout",
+    "favoritesOnly": "Favoris"
+  },
+  "severity": {
+    "critical": "Critique",
+    "warning": "Avertissement",
+    "info": "Info",
+    "success": "Succès"
+  },
+  "categories": {
+    "balance": "Solde",
+    "debt": "Dettes",
+    "credit": "Crédit",
+    "habits": "Habitudes",
+    "daily": "Aujourd'hui",
+    "weekly": "Semaine",
+    "monthly": "Mois",
+    "predictive": "Projection"
+  },
+  "alerts": {
+    "activeCount_one": "{{count}} alerte active",
+    "activeCount_other": "{{count}} alertes actives"
+  },
+  "copilot": "Copilote",
+  "empty": {
+    "noData": "Aucune donnée",
+    "noResults": "Aucun résultat"
+  }
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Card } from '../ui/Card'
 import { cn } from '../../utils/cn'
 
@@ -16,9 +17,12 @@ const labelColors = {
 }
 
 export function FinancialHealthScore({ health }) {
+  const { t } = useTranslation('dashboard')
+
   if (!health) return null
 
-  const { score, levelLabel, levelColor, recommendations } = health
+  const { score, level, levelColor, recommendations } = health
+  const levelLabel = t(`health.levels.${level}`, { defaultValue: health.levelLabel })
   const circumference = 2 * Math.PI * 42
   const offset = circumference - (score / 100) * circumference
   const ring = ringColors[levelColor] ?? ringColors.sky
@@ -52,7 +56,7 @@ export function FinancialHealthScore({ health }) {
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-3xl font-semibold tabular-nums text-white">{score}</span>
             <span className="text-[10px] font-medium tracking-wider text-slate-500 uppercase">
-              / 100
+              {t('health.scoreOutOf')}
             </span>
           </div>
         </div>
@@ -60,20 +64,29 @@ export function FinancialHealthScore({ health }) {
         <div className="min-w-0 flex-1 space-y-3">
           <div>
             <p className="text-xs font-medium tracking-widest text-slate-500 uppercase">
-              Salud financiera
+              {t('health.title')}
             </p>
             <p className={cn('mt-1 text-xl font-semibold', label)}>{levelLabel}</p>
           </div>
           {recommendations?.length ? (
             <ul className="space-y-1.5 text-sm text-slate-400">
-              {recommendations.map((text) => (
-                <li key={text} className="flex gap-2">
-                  <span className="text-accent" aria-hidden>
-                    ·
-                  </span>
-                  <span>{text}</span>
-                </li>
-              ))}
+              {recommendations.map((rec) => {
+                const id = typeof rec === 'string' ? rec : rec.id
+                const fallback = typeof rec === 'string' ? rec : rec.text
+                return (
+                  <li key={id} className="flex gap-2">
+                    <span className="text-accent" aria-hidden>
+                      ·
+                    </span>
+                    <span>
+                      {t(`health.recommendations.${id}`, {
+                        defaultValue: fallback,
+                        ...(typeof rec === 'object' ? rec.params : {}),
+                      })}
+                    </span>
+                  </li>
+                )
+              })}
             </ul>
           ) : null}
         </div>

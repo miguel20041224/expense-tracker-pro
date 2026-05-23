@@ -1,0 +1,29 @@
+{
+  "center": {
+    "eyebrow": "Centro de alertas",
+    "description": "Alertas generadas automáticamente según tus movimientos, deudas y hábitos. Puedes descartarlas; se renovarán en el próximo período si el riesgo continúa.",
+    "criticalCount": "{{count}} críticas",
+    "warningCount": "{{count}} avisos",
+    "activeCount": "{{count}} activas",
+    "dismissAll": "Descartar todas las activas",
+    "activeTitle": "Alertas activas",
+    "emptyTitle": "Sin alertas activas",
+    "emptyDescription": "Cuando detectemos riesgos financieros, aparecerán aquí.",
+    "dismissedTitle": "Descartadas recientemente",
+    "restore": "Restaurar"
+  },
+  "strip": {
+    "viewAll": "Ver todas"
+  },
+  "messages": {
+    "critical-balance": "Saldo crítico: tus gastos del mes superan tus ingresos asignados.",
+    "spending-pace-critical": "Llevas el 95% o más de tus ingresos ya comprometidos en gastos este mes.",
+    "category-excess": "Exceso en \"{{categoryName}}\": el {{percent}}% de tus gastos del mes.",
+    "upcoming-debt-payments": "Próximas cuotas: {{count}} deuda(s) con pagos mínimos de ~{{totalMin}} este mes.",
+    "low-savings": "Falta de ahorro: te queda menos del 5% de tus ingresos disponibles este mes.",
+    "credit-limit-critical": "Tarjeta {{cardName}} al {{usagePercent}}%: riesgo de límite agotado.",
+    "credit-usage-high": "Uso agregado de crédito al {{usagePercent}}%. Considera reducir cargos.",
+    "category-spike": "Comportamiento riesgoso: \"{{categoryName}}\" creció {{growthPercent}}% vs el mes anterior.",
+    "micro-spend-alert": "Gastos hormiga acumulados: {{count}} movimientos pequeños ({{sharePercent}}% del gasto)."
+  }
+}

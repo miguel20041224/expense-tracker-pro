@@ -1,13 +1,16 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useAuth } from '../context/AuthContext'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
 import { IconWallet } from '../components/icons'
 import { IconBadge } from '../components/ui/IconBadge'
+import { LanguageSelector } from '../components/language/LanguageSelector'
 import { cn } from '../utils/cn'
 import { FirebaseAuthNotice } from '../components/auth/FirebaseAuthNotice'
 
 export default function AuthPage() {
+  const { t } = useTranslation('common')
   const { login, register, firebaseConfigError, firebaseReady, firebaseConsoleAuthUrl } = useAuth()
   const [mode, setMode] = useState('login')
   const [name, setName] = useState('')
@@ -27,7 +30,7 @@ export default function AuthPage() {
         await register({ name, email, password })
       }
     } catch (err) {
-      setError(err.message ?? 'Error de autenticación')
+      setError(err.message ?? t('auth.loginError'))
     } finally {
       setLoading(false)
     }
@@ -41,21 +44,23 @@ export default function AuthPage() {
       </div>
 
       <div className="relative mx-auto flex min-h-screen max-w-md flex-col justify-center px-4 py-12">
+        <div className="mb-6 flex justify-end">
+          <LanguageSelector />
+        </div>
+
         <div className="mb-8 flex flex-col items-center gap-3 text-center">
           <IconBadge variant="accent" className="size-12">
             <IconWallet className="size-6" />
           </IconBadge>
-          <h1 className="text-2xl font-semibold text-white">FINTRACK</h1>
-          <p className="text-sm text-slate-400">
-            Tu copiloto financiero personal · Análisis automático sin complicaciones
-          </p>
+          <h1 className="text-2xl font-semibold text-white">{t('app.name')}</h1>
+          <p className="text-sm text-slate-400">{t('app.subtitle')}</p>
         </div>
 
         <Card className="animate-fade-in-up">
           <div className="mb-6 flex rounded-xl bg-white/5 p-1">
             {[
-              { id: 'login', label: 'Iniciar sesión' },
-              { id: 'register', label: 'Registrarse' },
+              { id: 'login', label: t('auth.login') },
+              { id: 'register', label: t('auth.register') },
             ].map((tab) => (
               <button
                 key={tab.id}
@@ -77,19 +82,19 @@ export default function AuthPage() {
           <form onSubmit={handleSubmit} className="space-y-4">
             {mode === 'register' ? (
               <label className="block space-y-1.5">
-                <span className="text-xs font-medium text-slate-400">Nombre</span>
+                <span className="text-xs font-medium text-slate-400">{t('auth.name')}</span>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full rounded-xl border border-border-subtle bg-surface px-3 py-2.5 text-sm text-white outline-none focus:border-accent/50"
-                  placeholder="Tu nombre"
+                  placeholder={t('auth.namePlaceholder')}
                 />
               </label>
             ) : null}
 
             <label className="block space-y-1.5">
-              <span className="text-xs font-medium text-slate-400">Correo</span>
+              <span className="text-xs font-medium text-slate-400">{t('auth.email')}</span>
               <input
                 type="email"
                 required
@@ -97,12 +102,12 @@ export default function AuthPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-xl border border-border-subtle bg-surface px-3 py-2.5 text-sm text-white outline-none focus:border-accent/50"
-                placeholder="correo@ejemplo.com"
+                placeholder={t('auth.emailPlaceholder')}
               />
             </label>
 
             <label className="block space-y-1.5">
-              <span className="text-xs font-medium text-slate-400">Contraseña</span>
+              <span className="text-xs font-medium text-slate-400">{t('auth.password')}</span>
               <input
                 type="password"
                 required
@@ -111,7 +116,7 @@ export default function AuthPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full rounded-xl border border-border-subtle bg-surface px-3 py-2.5 text-sm text-white outline-none focus:border-accent/50"
-                placeholder="Mínimo 6 caracteres"
+                placeholder={t('auth.passwordPlaceholder')}
               />
             </label>
 
@@ -127,7 +132,11 @@ export default function AuthPage() {
             ) : null}
 
             <Button type="submit" className="w-full" disabled={loading || !firebaseReady}>
-              {loading ? 'Procesando…' : mode === 'login' ? 'Entrar' : 'Crear cuenta'}
+              {loading
+                ? t('auth.processing')
+                : mode === 'login'
+                  ? t('auth.enter')
+                  : t('auth.createAccount')}
             </Button>
           </form>
         </Card>

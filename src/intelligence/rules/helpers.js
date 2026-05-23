@@ -103,3 +103,5 @@ export function computeCategoryGrowth(current, previous) {
 
   return growth.sort((a, b) => b.growthPercent - a.growthPercent)
 }
+
+export { formatLocaleAmount as formatMoney } from '../../i18n/localizeMessage'

@@ -1,0 +1,169 @@
+{
+  "panel": {
+    "eyebrow": "Professionelle Berichte",
+    "description": "Automatische Analyse mit Kategorien, Gewohnheiten, Prognosen und Tipps. Drucken oder laden Sie den Bericht als PDF mit einem Klick herunter.",
+    "print": "Drucken",
+    "downloadPdf": "PDF herunterladen",
+    "generatingPdf": "PDF wird erstellt…",
+    "printHint": "Sie können auch Drucken verwenden und im Browserdialog „Als PDF speichern“ wählen.",
+    "pdfDownloaded": "PDF heruntergeladen: {{filename}}",
+    "pdfLocateError": "Bericht konnte nicht gefunden werden.",
+    "pdfGenerateError": "PDF konnte nicht erstellt werden. Bitte erneut versuchen."
+  },
+  "types": {
+    "daily": {
+      "label": "Täglich",
+      "description": "Heute vs gestern"
+    },
+    "weekly": {
+      "label": "Wöchentlich",
+      "description": "Letzte 7 Tage"
+    },
+    "monthly": {
+      "label": "Monatlich",
+      "description": "Ganzer Monat"
+    }
+  },
+  "document": {
+    "brand": "FINTRACK",
+    "generated": "Erstellt {{date}}",
+    "health": "Gesundheit",
+    "dailySpend": "Tägliche Ausgaben",
+    "copilotTips": "Copilot-Tipps"
+  },
+  "daily": {
+    "title": "Tagesbericht",
+    "subtitle": "Zusammenfassung Ihres Finanztages",
+    "highlights": {
+      "spentMore": "Sie haben {{percent}} % mehr ausgegeben als gestern.",
+      "spentLess": "Sie haben {{percent}} % weniger ausgegeben als gestern.",
+      "noExpenses": "Heute keine Ausgaben erfasst."
+    },
+    "sections": {
+      "summary": {
+        "title": "Tagesübersicht",
+        "metrics": {
+          "todayExpenses": "Ausgaben heute",
+          "yesterdayExpenses": "Ausgaben gestern",
+          "variation": "Veränderung",
+          "health": "Finanzielle Gesundheit"
+        }
+      },
+      "categories": {
+        "title": "Kategorien heute",
+        "empty": "Heute keine kategorisierten Ausgaben."
+      },
+      "movements": {
+        "title": "Größte Ausgaben des Tages",
+        "empty": "Heute keine Transaktionen."
+      },
+      "context": {
+        "title": "Monatlicher Kontext",
+        "overBudget": "Sie sind diesen Monat über dem Budget. Discretionary Ausgaben sollten reduziert werden.",
+        "incomeUsed": "Sie haben {{percent}} % Ihres Einkommens diesen Monat für Ausgaben verwendet."
+      }
+    }
+  },
+  "weekly": {
+    "title": "Wochenbericht",
+    "subtitle": "Letzte 7 Tage · Gewohnheiten und Ausgabentempo",
+    "highlights": {
+      "spentInPeriod": "Sie haben {{amount}} in den letzten 7 Tagen ausgegeben.",
+      "increased": "Plus {{percent}} % vs Vorwoche.",
+      "decreased": "Minus {{percent}} % vs Vorwoche.",
+      "stable": "Ausgaben stabil gegenüber der Vorwoche.",
+      "healthLevel": "Finanzielle Gesundheit auf Niveau {{level}}."
+    },
+    "sections": {
+      "summary": {
+        "title": "Wochenübersicht",
+        "metrics": {
+          "weekExpenses": "7-Tage-Ausgaben",
+          "weekIncome": "7-Tage-Einnahmen",
+          "vsPreviousWeek": "vs Vorwoche",
+          "movements": "Transaktionen"
+        }
+      },
+      "categories": {
+        "title": "Wochenkategorien",
+        "empty": "Diese Woche keine Ausgaben."
+      },
+      "habits": {
+        "title": "Erkannte Gewohnheiten",
+        "categoryGrowth": "„{{name}}“ wuchs um {{percent}} % gegenüber dem Vormonat.",
+        "microSpends": "{{count}} Kleinstausgaben ({{sharePercent}} % des Monats).",
+        "spendingUp": "Aufwärtstrend bei wöchentlichen Ausgaben.",
+        "spendingDown": "Bessere Ausgabenkontrolle vs letzte Woche.",
+        "noChanges": "Keine signifikanten Gewohnheitsänderungen diese Woche."
+      },
+      "debts": {
+        "title": "Schulden",
+        "totalBalance": "Gesamtsaldo: {{amount}}. Schuldenfrei in ~{{months}} Monaten (nur Mindestzahlungen).",
+        "snowballPriority": "Schneeball-Priorität: {{name}}.",
+        "noDebts": "Keine Schulden erfasst."
+      },
+      "projection": {
+        "title": "Prognose",
+        "positivePace": "Positives Wochentempo: geschätzte Ersparnisse von {{amount}} im Zeitraum.",
+        "negativePace": "Das Wochentempo verbraucht mehr als Sie im Zeitraum verdienen. Passen Sie Ausgaben an oder prüfen Sie das Budget."
+      }
+    }
+  },
+  "monthly": {
+    "title": "Monatsbericht",
+    "subtitle": "Professionelle Analyse · Entwicklung und Prognosen",
+    "highlights": {
+      "incomeExpenses": "Monatseinkommen: {{income}} · Ausgaben: {{expenses}}.",
+      "deficitWarning": "Sie schließen mit Defizit ab, wenn Sie das aktuelle Tempo beibehalten.",
+      "savingsRate": "Verfügbare Ersparnisse: {{rate}} % Ihres Einkommens.",
+      "healthScore": "Gesundheitswert: {{score}}/100 ({{level}})."
+    },
+    "sections": {
+      "summary": {
+        "title": "Finanzübersicht",
+        "metrics": {
+          "income": "Einnahmen",
+          "expenses": "Ausgaben",
+          "savings": "Ersparnisse",
+          "health": "Gesundheit"
+        }
+      },
+      "evolution": {
+        "title": "Entwicklung",
+        "expensesUp": "Ausgaben stiegen um {{percent}} % gegenüber dem Vormonat (historische Reihe).",
+        "expensesDown": "Ausgaben sanken um {{percent}} % gegenüber dem Vormonat (historische Reihe).",
+        "noComparison": "Nicht genügend Daten vom Vormonat für einen Trendvergleich.",
+        "currentMonth": "Laufender Monat: Einnahmen {{income}}, Ausgaben {{expenses}}."
+      },
+      "categories": {
+        "title": "Kategorieverteilung",
+        "empty": "Diesen Monat keine kategorisierten Ausgaben."
+      },
+      "habits": {
+        "title": "Gewohnheiten und Risiken",
+        "leisure": "Freizeit/Unterhaltung: {{percent}} % der Monatsausgaben.",
+        "creditUsage": "Gesamte Kreditnutzung: {{percent}} %.",
+        "categoryGrowth": "„{{name}}“ +{{percent}} % vs Vormonat.",
+        "balanced": "Ausgeglichene Ausgabenmuster diesen Monat."
+      },
+      "goals": {
+        "title": "Finanzielle Ziele",
+        "empty": "Sie haben keine aktiven Ziele."
+      },
+      "debts": {
+        "title": "Schulden und Prognose",
+        "debtToIncome": "Gesamtschuld entspricht {{percent}} % Ihres Monatseinkommens.",
+        "noDebt": "Keine Schuld erfasst.",
+        "snowballPlan": "Schneeballplan: schuldenfrei in {{months}} Monaten bei Mindestzahlungen.",
+        "monthEndProjection": "Prognose Monatsende: ~{{projected}} Überschuss bei gleichbleibendem Tempo ({{daysRemaining}} Tage verbleibend)."
+      },
+      "recommendations": {
+        "title": "Automatische Empfehlungen"
+      }
+    }
+  },
+  "common": {
+    "expense": "Ausgabe",
+    "other": "Sonstige"
+  }
+}

@@ -1,0 +1,169 @@
+{
+  "panel": {
+    "eyebrow": "Professional reports",
+    "description": "Automatic analysis with categories, habits, projections, and tips. Print or download the report as PDF with one click.",
+    "print": "Print",
+    "downloadPdf": "Download PDF",
+    "generatingPdf": "Generating PDF…",
+    "printHint": "You can also use Print and choose \"Save as PDF\" in your browser dialog.",
+    "pdfDownloaded": "PDF downloaded: {{filename}}",
+    "pdfLocateError": "Could not locate the report.",
+    "pdfGenerateError": "Could not generate the PDF. Please try again."
+  },
+  "types": {
+    "daily": {
+      "label": "Daily",
+      "description": "Today vs yesterday"
+    },
+    "weekly": {
+      "label": "Weekly",
+      "description": "Last 7 days"
+    },
+    "monthly": {
+      "label": "Monthly",
+      "description": "Full month"
+    }
+  },
+  "document": {
+    "brand": "FINTRACK",
+    "generated": "Generated {{date}}",
+    "health": "Health",
+    "dailySpend": "Daily spending",
+    "copilotTips": "Copilot tips"
+  },
+  "daily": {
+    "title": "Daily report",
+    "subtitle": "Summary of your financial day",
+    "highlights": {
+      "spentMore": "You spent {{percent}}% more than yesterday.",
+      "spentLess": "You spent {{percent}}% less than yesterday.",
+      "noExpenses": "No expenses recorded today."
+    },
+    "sections": {
+      "summary": {
+        "title": "Day summary",
+        "metrics": {
+          "todayExpenses": "Expenses today",
+          "yesterdayExpenses": "Expenses yesterday",
+          "variation": "Change",
+          "health": "Financial health"
+        }
+      },
+      "categories": {
+        "title": "Today's categories",
+        "empty": "No categorized expenses today."
+      },
+      "movements": {
+        "title": "Top expenses today",
+        "empty": "No transactions today."
+      },
+      "context": {
+        "title": "Monthly context",
+        "overBudget": "You are over budget this month. Consider slowing discretionary spending.",
+        "incomeUsed": "You have used {{percent}}% of your income on expenses this month."
+      }
+    }
+  },
+  "weekly": {
+    "title": "Weekly report",
+    "subtitle": "Last 7 days · habits and spending pace",
+    "highlights": {
+      "spentInPeriod": "You spent {{amount}} in the last 7 days.",
+      "increased": "Up {{percent}}% vs the previous week.",
+      "decreased": "Down {{percent}}% vs the previous week.",
+      "stable": "Spending stable compared to the previous week.",
+      "healthLevel": "Financial health at {{level}} level."
+    },
+    "sections": {
+      "summary": {
+        "title": "Weekly summary",
+        "metrics": {
+          "weekExpenses": "7-day expenses",
+          "weekIncome": "7-day income",
+          "vsPreviousWeek": "vs previous week",
+          "movements": "Transactions"
+        }
+      },
+      "categories": {
+        "title": "Weekly categories",
+        "empty": "No expenses this week."
+      },
+      "habits": {
+        "title": "Detected habits",
+        "categoryGrowth": "\"{{name}}\" grew {{percent}}% vs last month.",
+        "microSpends": "{{count}} micro-purchases ({{sharePercent}}% of the month).",
+        "spendingUp": "Upward trend in weekly spending.",
+        "spendingDown": "Better spending control vs last week.",
+        "noChanges": "No significant habit changes this week."
+      },
+      "debts": {
+        "title": "Debts",
+        "totalBalance": "Total balance: {{amount}}. Debt-free in ~{{months}} months (minimum payments only).",
+        "snowballPriority": "Snowball priority: {{name}}.",
+        "noDebts": "No debts recorded."
+      },
+      "projection": {
+        "title": "Projection",
+        "positivePace": "Positive weekly pace: estimated savings of {{amount}} in the period.",
+        "negativePace": "Weekly pace consumes more than you earn in the period. Adjust spending or review your budget."
+      }
+    }
+  },
+  "monthly": {
+    "title": "Monthly report",
+    "subtitle": "Professional analysis · trends and projections",
+    "highlights": {
+      "incomeExpenses": "Monthly income: {{income}} · Expenses: {{expenses}}.",
+      "deficitWarning": "You will close in deficit if you keep the current pace.",
+      "savingsRate": "Available savings: {{rate}}% of your income.",
+      "healthScore": "Health score: {{score}}/100 ({{level}})."
+    },
+    "sections": {
+      "summary": {
+        "title": "Financial summary",
+        "metrics": {
+          "income": "Income",
+          "expenses": "Expenses",
+          "savings": "Savings",
+          "health": "Health"
+        }
+      },
+      "evolution": {
+        "title": "Trend",
+        "expensesUp": "Expenses rose {{percent}}% vs the previous month (historical series).",
+        "expensesDown": "Expenses fell {{percent}}% vs the previous month (historical series).",
+        "noComparison": "Not enough data from the previous month to compare trends.",
+        "currentMonth": "Current month in progress: income {{income}}, expenses {{expenses}}."
+      },
+      "categories": {
+        "title": "Category breakdown",
+        "empty": "No categorized expenses this month."
+      },
+      "habits": {
+        "title": "Habits and risks",
+        "leisure": "Leisure/entertainment: {{percent}}% of monthly spending.",
+        "creditUsage": "Aggregate credit utilization: {{percent}}%.",
+        "categoryGrowth": "\"{{name}}\" +{{percent}}% vs previous month.",
+        "balanced": "Balanced spending patterns this month."
+      },
+      "goals": {
+        "title": "Financial goals",
+        "empty": "You have no active goals."
+      },
+      "debts": {
+        "title": "Debts and projection",
+        "debtToIncome": "Total debt represents {{percent}}% of your monthly income.",
+        "noDebt": "No debt recorded.",
+        "snowballPlan": "Snowball plan: debt-free in {{months}} months paying minimums.",
+        "monthEndProjection": "Month-end projection: ~{{projected}} surplus if you keep the pace ({{daysRemaining}} days remaining)."
+      },
+      "recommendations": {
+        "title": "Automatic recommendations"
+      }
+    }
+  },
+  "common": {
+    "expense": "Expense",
+    "other": "Other"
+  }
+}
