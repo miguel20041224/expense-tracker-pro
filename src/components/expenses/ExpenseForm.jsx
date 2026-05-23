@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -15,6 +16,7 @@ import {
 } from '../../utils/validateExpense'
 
 export function ExpenseForm({ onSubmit, creditCards = [] }) {
+  const { t } = useTranslation('forms')
   const { currency, currencyCode, amountPlaceholder, formatCurrency, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyExpenseForm)
   const [errors, setErrors] = useState({})
@@ -38,7 +40,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-    const validationErrors = validateExpenseForm(values, currency.locale)
+    const validationErrors = validateExpenseForm(values, currency.locale, t)
     setErrors(validationErrors)
 
     if (hasValidationErrors(validationErrors)) {
@@ -71,19 +73,19 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Agregar gasto</CardTitle>
+        <CardTitle>{t('expenses.form.title')}</CardTitle>
         {submitted ? (
-          <span className="text-xs font-medium text-expense">Gasto registrado</span>
+          <span className="text-xs font-medium text-expense">{t('expenses.form.submitted')}</span>
         ) : null}
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <FormField label="Nombre del gasto" htmlFor="expense-name" error={errors.name}>
+        <FormField label={t('expenses.form.nameLabel')} htmlFor="expense-name" error={errors.name}>
           <Input
             id="expense-name"
             name="name"
             type="text"
-            placeholder="Ej. Netflix"
+            placeholder={t('expenses.form.namePlaceholder')}
             value={values.name}
             onChange={updateField('name')}
             error={errors.name}
@@ -94,10 +96,10 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
 
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField
-            label={`Cantidad (${currencyCode})`}
+            label={t('fields.amountWithCurrency', { currency: currencyCode })}
             htmlFor="expense-amount"
             error={errors.amount}
-            hint={`Ej. ${amountExample}`}
+            hint={t('fields.exampleHint', { example: amountExample })}
           >
             <Input
               id="expense-amount"
@@ -115,7 +117,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
             />
           </FormField>
 
-          <FormField label="Fecha" htmlFor="expense-date" error={errors.date}>
+          <FormField label={t('fields.date')} htmlFor="expense-date" error={errors.date}>
             <Input
               id="expense-date"
               name="date"
@@ -129,7 +131,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
           </FormField>
         </div>
 
-        <FormField label="Categoría" htmlFor="expense-category" error={errors.category}>
+        <FormField label={t('fields.category')} htmlFor="expense-category" error={errors.category}>
           <Select
             id="expense-category"
             name="category"
@@ -138,7 +140,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
             error={errors.category}
             aria-describedby={errors.category ? 'expense-category-error' : undefined}
           >
-            <option value="">Selecciona una categoría</option>
+            <option value="">{t('expenses.form.selectCategory')}</option>
             {expenseCategories.map((category) => (
               <option key={category} value={category}>
                 {category}
@@ -147,7 +149,7 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
           </Select>
         </FormField>
 
-        <FormField label="Método de pago" htmlFor="expense-payment-method">
+        <FormField label={t('fields.paymentMethod')} htmlFor="expense-payment-method">
           <Select
             id="expense-payment-method"
             name="paymentMethod"
@@ -157,14 +159,14 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
           >
             {PAYMENT_METHODS.map((method) => (
               <option key={method.id} value={method.id}>
-                {method.label}
+                {t(`expenses.paymentMethods.${method.id}`, { defaultValue: method.label })}
               </option>
             ))}
           </Select>
         </FormField>
 
         {creditCards.length > 0 ? (
-          <FormField label="Tarjeta de crédito (opcional)" htmlFor="expense-card">
+          <FormField label={t('fields.creditCardOptional')} htmlFor="expense-card">
             <CreditCardSelect
               id="expense-card"
               cards={creditCards}
@@ -183,10 +185,10 @@ export function ExpenseForm({ onSubmit, creditCards = [] }) {
 
         <section className="flex flex-col-reverse gap-3 pt-1 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={handleReset}>
-            Limpiar
+            {t('actions.clear')}
           </Button>
           <Button type="submit" size="lg">
-            Guardar gasto
+            {t('expenses.form.submit')}
           </Button>
         </section>
       </form>

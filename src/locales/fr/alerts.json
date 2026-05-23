@@ -1,4 +1,20 @@
 {
+  "center": {
+    "eyebrow": "Centre d'alertes",
+    "description": "Alertes générées automatiquement à partir de vos transactions, dettes et habitudes. Vous pouvez les ignorer ; elles reviendront la période suivante si le risque persiste.",
+    "criticalCount": "{{count}} critiques",
+    "warningCount": "{{count}} avertissements",
+    "activeCount": "{{count}} actives",
+    "dismissAll": "Ignorer toutes les actives",
+    "activeTitle": "Alertes actives",
+    "emptyTitle": "Aucune alerte active",
+    "emptyDescription": "Lorsque nous détecterons des risques financiers, ils apparaîtront ici.",
+    "dismissedTitle": "Récemment ignorées",
+    "restore": "Restaurer"
+  },
+  "strip": {
+    "viewAll": "Tout afficher"
+  },
   "messages": {
     "critical-balance": "Solde critique : vos dépenses du mois dépassent vos revenus alloués.",
     "spending-pace-critical": "95 % ou plus de vos revenus sont déjà engagés en dépenses ce mois-ci.",

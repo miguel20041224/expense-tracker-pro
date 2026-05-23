@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Money } from '../currency/Money'
 import { useCurrency } from '../../hooks/useCurrency'
 import { formatMovementDateTime } from '../../utils/movements'
@@ -18,13 +19,6 @@ const amountStyles = {
   budget: 'text-income',
 }
 
-const MOVEMENT_TYPE_LABELS = {
-  budget: 'Presupuesto',
-  expense: 'Gasto',
-  income: 'Ingreso',
-  savings: 'Ahorro',
-}
-
 export function MovementItem({
   transaction,
   className,
@@ -35,11 +29,14 @@ export function MovementItem({
   onToggleFavorite,
   creditCardName,
 }) {
+  const { t } = useTranslation('forms')
   const { currency } = useCurrency()
   const isBudget = isBudgetTransaction(transaction)
   const isExpense = isExpenseTransaction(transaction)
   const amountClass = amountStyles[transaction.type] ?? 'text-slate-300'
-  const typeLabel = MOVEMENT_TYPE_LABELS[transaction.type] ?? 'Movimiento'
+  const typeLabel = t(`movements.types.${transaction.type}`, {
+    defaultValue: t('movements.types.movement'),
+  })
   const timestamp = transaction.createdAt ?? transaction.date
   const isFavorite = isMovementFavorite(transaction)
   const showActions = canMutateTransaction(transaction) && (onEdit || onDelete)
@@ -95,7 +92,9 @@ export function MovementItem({
           {isBudget ? (
             <>
               <p className="mt-0.5 text-xs capitalize text-slate-500">
-                {getBudgetTypeLabel(transaction.budgetType)}
+                {t(`budget.types.${transaction.budgetType}`, {
+                  defaultValue: getBudgetTypeLabel(transaction.budgetType),
+                })}
               </p>
               {transaction.description ? (
                 <p className="mt-0.5 truncate text-xs text-slate-400">{transaction.description}</p>

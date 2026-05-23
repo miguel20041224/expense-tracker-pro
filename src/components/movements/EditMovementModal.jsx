@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Modal } from '../ui/Modal'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -17,6 +18,7 @@ import { validateExpenseEditForm, hasValidationErrors } from '../../utils/valida
 import { validateBudgetForm, hasValidationErrors as hasBudgetErrors } from '../../utils/validateBudget'
 
 export function EditMovementModal({ transaction, open, onClose, onSave, creditCards = [] }) {
+  const { t } = useTranslation('forms')
   const { currency, currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(null)
   const [errors, setErrors] = useState({})
@@ -57,7 +59,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
     event.preventDefault()
 
     if (isExpense) {
-      const validationErrors = validateExpenseEditForm(values, currency.locale)
+      const validationErrors = validateExpenseEditForm(values, currency.locale, t)
       setErrors(validationErrors)
       if (hasValidationErrors(validationErrors)) return
 
@@ -72,7 +74,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
     }
 
     if (isBudget) {
-      const validationErrors = validateBudgetForm(values, currency.locale)
+      const validationErrors = validateBudgetForm(values, currency.locale, t)
       setErrors(validationErrors)
       if (hasBudgetErrors(validationErrors)) return
 
@@ -84,19 +86,19 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
     }
   }
 
-  const title = isExpense ? 'Editar gasto' : 'Editar presupuesto'
+  const title = isExpense ? t('dialogs.editMovement.editExpense') : t('dialogs.editMovement.editBudget')
 
   return (
     <Modal
       open={open}
       onClose={onClose}
       title={title}
-      description="La fecha y hora originales del movimiento no se modifican."
+      description={t('dialogs.editMovement.description')}
       size="md"
     >
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
         <div className="rounded-xl border border-border-subtle bg-surface/60 px-3.5 py-2.5">
-          <p className="text-xs font-medium text-slate-500">Registrado el</p>
+          <p className="text-xs font-medium text-slate-500">{t('movements.audit.registeredAt')}</p>
           <p className="mt-0.5 text-sm text-slate-200">
             {formatMovementDateTime(timestamp, currency.locale)}
           </p>
@@ -109,7 +111,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
 
         {isExpense ? (
           <>
-            <FormField label="Nombre" htmlFor="edit-name" error={errors.name}>
+            <FormField label={t('fields.name')} htmlFor="edit-name" error={errors.name}>
               <Input
                 id="edit-name"
                 name="name"
@@ -123,7 +125,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
 
             <div className="grid gap-4 sm:grid-cols-2">
               <FormField
-                label={`Monto (${currencyCode})`}
+                label={t('fields.montoWithCurrency', { currency: currencyCode })}
                 htmlFor="edit-amount"
                 error={errors.amount}
               >
@@ -139,7 +141,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                 />
               </FormField>
 
-              <FormField label="Categoría" htmlFor="edit-category" error={errors.category}>
+              <FormField label={t('fields.category')} htmlFor="edit-category" error={errors.category}>
                 <Select
                   id="edit-category"
                   name="category"
@@ -147,7 +149,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                   onChange={updateField('category')}
                   error={errors.category}
                 >
-                  <option value="">Selecciona una categoría</option>
+                  <option value="">{t('expenses.form.selectCategory')}</option>
                   {expenseCategories.map((category) => (
                     <option key={category} value={category}>
                       {category}
@@ -158,7 +160,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
             </div>
 
             <FormField
-              label="Descripción (opcional)"
+              label={t('fields.descriptionOptional')}
               htmlFor="edit-description"
               error={errors.description}
             >
@@ -166,7 +168,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                 id="edit-description"
                 name="description"
                 type="text"
-                placeholder="Notas adicionales"
+                placeholder={t('dialogs.editMovement.notesPlaceholder')}
                 value={values.description}
                 onChange={updateField('description')}
                 error={errors.description}
@@ -175,7 +177,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
             </FormField>
 
             {creditCards.length > 0 ? (
-              <FormField label="Tarjeta de crédito (opcional)" htmlFor="edit-card">
+              <FormField label={t('fields.creditCardOptional')} htmlFor="edit-card">
                 <CreditCardSelect
                   id="edit-card"
                   cards={creditCards}
@@ -191,7 +193,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
           <>
             <div className="grid gap-4 sm:grid-cols-2">
               <FormField
-                label={`Monto (${currencyCode})`}
+                label={t('fields.montoWithCurrency', { currency: currencyCode })}
                 htmlFor="edit-budget-amount"
                 error={errors.amount}
               >
@@ -207,7 +209,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                 />
               </FormField>
 
-              <FormField label="Tipo" htmlFor="edit-budget-type" error={errors.budgetType}>
+              <FormField label={t('fields.type')} htmlFor="edit-budget-type" error={errors.budgetType}>
                 <Select
                   id="edit-budget-type"
                   name="budgetType"
@@ -215,10 +217,10 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                   onChange={updateField('budgetType')}
                   error={errors.budgetType}
                 >
-                  <option value="">Selecciona un tipo</option>
+                  <option value="">{t('budget.form.selectType')}</option>
                   {budgetTypes.map((type) => (
                     <option key={type.id} value={type.id}>
-                      {type.label.charAt(0).toUpperCase() + type.label.slice(1)}
+                      {t(`budget.types.${type.id}`, { defaultValue: type.label })}
                     </option>
                   ))}
                 </Select>
@@ -226,7 +228,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
             </div>
 
             <FormField
-              label="Descripción (opcional)"
+              label={t('fields.descriptionOptional')}
               htmlFor="edit-budget-description"
               error={errors.description}
             >
@@ -234,7 +236,7 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
                 id="edit-budget-description"
                 name="description"
                 type="text"
-                placeholder="Ej. Gastos del hogar"
+                placeholder={t('budget.form.descriptionPlaceholder')}
                 value={values.description}
                 onChange={updateField('description')}
                 error={errors.description}
@@ -246,10 +248,10 @@ export function EditMovementModal({ transaction, open, onClose, onSave, creditCa
 
         <div className="flex flex-col-reverse gap-3 border-t border-border-subtle pt-4 sm:flex-row sm:justify-end">
           <Button type="button" variant="secondary" onClick={onClose}>
-            Cancelar
+            {t('actions.cancel')}
           </Button>
           <Button type="submit" size="lg">
-            Guardar cambios
+            {t('actions.saveChanges')}
           </Button>
         </div>
       </form>

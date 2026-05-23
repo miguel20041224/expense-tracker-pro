@@ -1,14 +1,21 @@
 import { buildSnowballAnalysis } from '../../utils/debts'
 import { buildMonthlyExpenseTrend } from '../trends'
-import { percentChange, pickTips, projectMonthEndSavings } from './shared'
+import { formatReportMoney, percentChange, projectMonthEndSavings } from './shared'
+import {
+  localizeHealthRecommendation,
+  pickLocalizedTips,
+  resolveReportLocale,
+  translateHealthLevel,
+} from '../../i18n/reportLocale'
 
-export function buildMonthlyReport(context, analysis) {
+export function buildMonthlyReport(context, analysis, options = {}) {
+  const { locale, t } = resolveReportLocale(options)
   const { metrics, goals, debts, transactions } = context
   const { summary, categories, debtToIncome } = metrics
   const now = new Date()
   const dayOfMonth = now.getDate()
   const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
-  const monthLabel = now.toLocaleDateString('es', { month: 'long', year: 'numeric' })
+  const monthLabel = now.toLocaleDateString(locale, { month: 'long', year: 'numeric' })
 
   const trend = analysis.trend ?? buildMonthlyExpenseTrend(transactions, 6)
   const lastTrend = trend[trend.length - 1]
@@ -24,12 +31,24 @@ export function buildMonthlyReport(context, analysis) {
   const savingsRate =
     summary.income > 0 ? Math.round((Math.max(summary.savings, 0) / summary.income) * 100) : 0
 
+  const healthLevelLabel = translateHealthLevel(
+    analysis.health.level,
+    analysis.health.levelLabel,
+    options.tDashboard,
+  )
+
   const highlights = [
-    `Ingresos del mes: ${formatMoney(summary.income)} · Gastos: ${formatMoney(summary.expenses)}.`,
+    t('monthly.highlights.incomeExpenses', {
+      income: formatReportMoney(summary.income, locale),
+      expenses: formatReportMoney(summary.expenses, locale),
+    }),
     summary.isOverBudget
-      ? 'Cerrarás en déficit si mantienes el ritmo actual.'
-      : `Ahorro disponible: ${savingsRate}% de tus ingresos.`,
-    `Puntuación de salud: ${analysis.health.score}/100 (${analysis.health.levelLabel}).`,
+      ? t('monthly.highlights.deficitWarning')
+      : t('monthly.highlights.savingsRate', { rate: savingsRate }),
+    t('monthly.highlights.healthScore', {
+      score: analysis.health.score,
+      level: healthLevelLabel,
+    }),
   ]
 
   const goalsSection = goals.map((g) => ({
@@ -39,104 +58,146 @@ export function buildMonthlyReport(context, analysis) {
     target: g.targetAmount,
   }))
 
+  const localizeHealth = (rec) =>
+    localizeHealthRecommendation(rec, options.tDashboard)
+
   return {
     id: 'monthly',
-    title: 'Reporte mensual',
-    subtitle: 'Análisis profesional · evolución y proyecciones',
+    title: t('monthly.title'),
+    subtitle: t('monthly.subtitle'),
     periodLabel: monthLabel,
     generatedAt: new Date().toISOString(),
     healthScore: analysis.health.score,
-    healthLabel: analysis.health.levelLabel,
+    healthLevel: analysis.health.level,
+    healthLabel: healthLevelLabel,
     highlights,
     tips: [
-      ...pickTips(analysis.insights, 4),
-      ...analysis.health.recommendations.slice(0, 2).map((r) => (typeof r === 'string' ? r : r.text)),
+      ...pickLocalizedTips(analysis.insights, 4, options.localizeMessage),
+      ...analysis.health.recommendations.slice(0, 2).map(localizeHealth),
     ],
     trend,
     sections: [
       {
         id: 'summary',
-        title: 'Resumen financiero',
+        title: t('monthly.sections.summary.title'),
         metrics: [
-          { label: 'Ingresos', value: summary.income, variant: 'income' },
-          { label: 'Gastos', value: summary.expenses, variant: 'expense' },
-          { label: 'Ahorro', value: summary.savings, variant: summary.savings >= 0 ? 'income' : 'expense' },
-          { label: 'Salud', value: analysis.health.score, variant: 'accent', format: 'score' },
+          {
+            label: t('monthly.sections.summary.metrics.income'),
+            value: summary.income,
+            variant: 'income',
+          },
+          {
+            label: t('monthly.sections.summary.metrics.expenses'),
+            value: summary.expenses,
+            variant: 'expense',
+          },
+          {
+            label: t('monthly.sections.summary.metrics.savings'),
+            value: summary.savings,
+            variant: summary.savings >= 0 ? 'income' : 'expense',
+          },
+          {
+            label: t('monthly.sections.summary.metrics.health'),
+            value: analysis.health.score,
+            variant: 'accent',
+            format: 'score',
+          },
         ],
       },
       {
         id: 'evolution',
-        title: 'Evolución',
+        title: t('monthly.sections.evolution.title'),
         paragraphs: [
           expenseMom !== 0
-            ? `Gastos ${expenseMom > 0 ? 'subieron' : 'bajaron'} ${Math.round(Math.abs(expenseMom))}% respecto al mes anterior (serie histórica).`
-            : 'Sin datos suficientes del mes anterior para comparar evolución.',
+            ? expenseMom > 0
+              ? t('monthly.sections.evolution.expensesUp', {
+                  percent: Math.round(Math.abs(expenseMom)),
+                })
+              : t('monthly.sections.evolution.expensesDown', {
+                  percent: Math.round(Math.abs(expenseMom)),
+                })
+            : t('monthly.sections.evolution.noComparison'),
           lastTrend
-            ? `Mes actual en curso: ingresos ${formatMoney(lastTrend.income)}, gastos ${formatMoney(lastTrend.expenses)}.`
+            ? t('monthly.sections.evolution.currentMonth', {
+                income: formatReportMoney(lastTrend.income, locale),
+                expenses: formatReportMoney(lastTrend.expenses, locale),
+              })
             : '',
         ].filter(Boolean),
         trend,
       },
       {
         id: 'categories',
-        title: 'Distribución por categoría',
+        title: t('monthly.sections.categories.title'),
         categories: categories.slice(0, 8),
-        emptyMessage: 'Sin gastos categorizados este mes.',
+        emptyMessage: t('monthly.sections.categories.empty'),
       },
       {
         id: 'habits',
-        title: 'Hábitos y riesgos',
-        bullets: buildMonthlyHabits(context, metrics),
+        title: t('monthly.sections.habits.title'),
+        bullets: buildMonthlyHabits(context, metrics, t),
       },
       {
         id: 'goals',
-        title: 'Metas financieras',
+        title: t('monthly.sections.goals.title'),
         goals: goalsSection,
-        emptyMessage: 'No tienes metas activas.',
+        emptyMessage: t('monthly.sections.goals.empty'),
       },
       {
         id: 'debts',
-        title: 'Deudas y proyección',
+        title: t('monthly.sections.debts.title'),
         paragraphs: [
           debtToIncome > 0
-            ? `Deuda total representa el ${Math.round(debtToIncome)}% de tus ingresos mensuales.`
-            : 'Sin deuda registrada.',
+            ? t('monthly.sections.debts.debtToIncome', {
+                percent: Math.round(debtToIncome),
+              })
+            : t('monthly.sections.debts.noDebt'),
           snowball
-            ? `Plan bola de nieve: libre en ${snowball.withExtra.months} meses pagando mínimos.`
+            ? t('monthly.sections.debts.snowballPlan', { months: snowball.withExtra.months })
             : '',
           projection
-            ? `Proyección fin de mes: ~${formatMoney(projection.projected)} de margen si mantienes el ritmo (${projection.daysRemaining} días restantes).`
+            ? t('monthly.sections.debts.monthEndProjection', {
+                projected: formatReportMoney(projection.projected, locale),
+                daysRemaining: projection.daysRemaining,
+              })
             : '',
         ].filter(Boolean),
       },
       {
         id: 'recommendations',
-        title: 'Consejos automáticos',
-        bullets: analysis.health.recommendations.map((r) =>
-          typeof r === 'string' ? r : r.text,
-        ),
+        title: t('monthly.sections.recommendations.title'),
+        bullets: analysis.health.recommendations.map(localizeHealth),
       },
     ],
   }
 }
 
-function buildMonthlyHabits(context, metrics) {
+function buildMonthlyHabits(context, metrics, t) {
   const bullets = []
   if (metrics.leisurePercent >= 40) {
-    bullets.push(`Ocio/entretenimiento: ${Math.round(metrics.leisurePercent)}% del gasto mensual.`)
+    bullets.push(
+      t('monthly.sections.habits.leisure', {
+        percent: Math.round(metrics.leisurePercent),
+      }),
+    )
   }
   if (metrics.creditUsagePercent >= 60) {
-    bullets.push(`Uso de crédito agregado: ${Math.round(metrics.creditUsagePercent)}%.`)
+    bullets.push(
+      t('monthly.sections.habits.creditUsage', {
+        percent: Math.round(metrics.creditUsagePercent),
+      }),
+    )
   }
   for (const g of context.categoryGrowth.slice(0, 2)) {
-    bullets.push(`"${g.name}" +${Math.round(g.growthPercent)}% vs mes anterior.`)
+    bullets.push(
+      t('monthly.sections.habits.categoryGrowth', {
+        name: g.name,
+        percent: Math.round(g.growthPercent),
+      }),
+    )
   }
   if (bullets.length === 0) {
-    bullets.push('Patrones de gasto equilibrados este mes.')
+    bullets.push(t('monthly.sections.habits.balanced'))
   }
   return bullets
-}
-
-function formatMoney(n) {
-  return new Intl.NumberFormat('es', { maximumFractionDigits: 0 }).format(n)
 }

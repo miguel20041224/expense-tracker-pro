@@ -43,7 +43,13 @@
     "email": "E-Mail",
     "password": "Passwort",
     "loginError": "Authentifizierungsfehler",
-    "loading": "Anmeldung läuft…"
+    "loading": "Anmeldung läuft…",
+    "processing": "Wird verarbeitet…",
+    "enter": "Anmelden",
+    "createAccount": "Konto erstellen",
+    "namePlaceholder": "Ihr Name",
+    "emailPlaceholder": "email@beispiel.de",
+    "passwordPlaceholder": "Mindestens 6 Zeichen"
   },
   "loading": {
     "app": "Vault wird geladen…",
@@ -74,6 +80,15 @@
     "select": "Sprache auswählen",
     "active": "Aktiv",
     "label": "Sprache"
+  },
+  "firebase": {
+    "title": "Firebase-Konfiguration",
+    "steps": {
+      "openConsole": "Firebase Console → Authentication öffnen",
+      "getStarted": "Auf „Loslegen“ klicken, wenn es das erste Mal ist",
+      "enableEmail": "Sign-in method → Email/Password → Aktivieren → Speichern"
+    },
+    "openConsoleLink": "Firebase Console öffnen (Authentication)"
   },
   "filters": {
     "periodAll": "Alle",

@@ -1,12 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { Money } from '../currency/Money'
 import { cn } from '../../utils/cn'
 
 export function ExtraPaymentSuggestions({ suggestions, selectedExtra, onSelect }) {
+  const { t } = useTranslation('forms')
+  const { t: tp } = useTranslation('projections')
+
   if (!suggestions?.length) return null
 
   return (
     <div className="flex flex-wrap gap-2">
-      <span className="w-full text-xs text-slate-500">Probar montos:</span>
+      <span className="w-full text-xs text-slate-500">{t('debts.extraPayment.tryAmounts')}</span>
       {suggestions.map((item) => {
         const active = selectedExtra === item.amount
         return (
@@ -23,7 +27,9 @@ export function ExtraPaymentSuggestions({ suggestions, selectedExtra, onSelect }
           >
             +<Money value={item.amount} />
             {item.monthsSaved > 0 ? (
-              <span className="ml-1 text-income">−{item.monthsSaved}m</span>
+              <span className="ml-1 text-income">
+                {tp('healthChart.monthOffset', { months: item.monthsSaved }).replace('+', '−')}
+              </span>
             ) : null}
           </button>
         )

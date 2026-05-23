@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { Money } from '../currency/Money'
@@ -12,14 +13,15 @@ const barColors = [
 ]
 
 export function CategoryBreakdown({ categories }) {
+  const { t } = useTranslation('dashboard')
   const hasCategories = categories.length > 0
 
   return (
     <Card className="flex flex-col">
       <CardHeader>
-        <CardTitle>Gastos por categoría</CardTitle>
+        <CardTitle>{t('charts.categories.title')}</CardTitle>
         {hasCategories ? (
-          <span className="text-xs text-slate-500">Este mes</span>
+          <span className="text-xs text-slate-500">{t('charts.categories.thisMonth')}</span>
         ) : null}
       </CardHeader>
 
@@ -46,8 +48,8 @@ export function CategoryBreakdown({ categories }) {
       ) : (
         <EmptyState
           icon={<IconChart className="size-5" />}
-          title="Sin gastos por categoría"
-          description="Cuando registres gastos con categoría, verás aquí el desglose y los porcentajes del mes."
+          title={t('charts.categories.emptyTitle')}
+          description={t('charts.categories.emptyDescription')}
         />
       )}
     </Card>

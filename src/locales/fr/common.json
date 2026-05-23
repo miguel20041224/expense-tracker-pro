@@ -43,7 +43,13 @@
     "email": "E-mail",
     "password": "Mot de passe",
     "loginError": "Erreur d'authentification",
-    "loading": "Connexion en cours…"
+    "loading": "Connexion en cours…",
+    "processing": "Traitement en cours…",
+    "enter": "Se connecter",
+    "createAccount": "Créer un compte",
+    "namePlaceholder": "Votre nom",
+    "emailPlaceholder": "email@exemple.com",
+    "passwordPlaceholder": "Au moins 6 caractères"
   },
   "loading": {
     "app": "Chargement de Vault…",
@@ -74,6 +80,15 @@
     "select": "Sélectionner la langue",
     "active": "Active",
     "label": "Langue"
+  },
+  "firebase": {
+    "title": "Configuration Firebase",
+    "steps": {
+      "openConsole": "Ouvrez Firebase Console → Authentication",
+      "getStarted": "Cliquez sur « Commencer » si c'est la première fois",
+      "enableEmail": "Sign-in method → Email/Password → Activer → Enregistrer"
+    },
+    "openConsoleLink": "Ouvrir Firebase Console (Authentication)"
   },
   "filters": {
     "periodAll": "Tout",

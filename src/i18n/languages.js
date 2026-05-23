@@ -10,7 +10,7 @@ export const LANGUAGE_CODES = SUPPORTED_LANGUAGES.map((l) => l.code)
 
 export const LANGUAGE_STORAGE_KEY = 'vault-language'
 
-export const I18N_NAMESPACES = ['common', 'dashboard', 'reports', 'alerts', 'projections']
+export const I18N_NAMESPACES = ['common', 'dashboard', 'reports', 'alerts', 'projections', 'forms']
 
 export const DEFAULT_LANGUAGE = 'es'
 

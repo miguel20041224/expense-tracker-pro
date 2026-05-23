@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { CreditCardForm } from './CreditCardForm'
 import { CreditCardVisual } from './CreditCardVisual'
 import { CreditCardExpenseForm } from './CreditCardExpenseForm'
@@ -8,7 +9,7 @@ import { MovementItem } from '../dashboard/MovementItem'
 import { IconCreditCard } from '../icons'
 import { computeCreditCardStats, getCardExpenses } from '../../utils/creditCards'
 import { sortTransactionsByDate } from '../../utils/transactions'
-import { Money } from '../currency/Money'
+import { useCurrency } from '../../hooks/useCurrency'
 
 export function CreditCardsPanel({
   cards,
@@ -17,6 +18,8 @@ export function CreditCardsPanel({
   onDeleteCard,
   onAddCardExpense,
 }) {
+  const { t } = useTranslation('forms')
+  const { formatCurrency } = useCurrency()
   const [selectedId, setSelectedId] = useState(cards[0]?.id ?? null)
 
   const selectedCard = cards.find((c) => c.id === selectedId) ?? cards[0] ?? null
@@ -52,15 +55,14 @@ export function CreditCardsPanel({
     <section className="space-y-6">
       <header className="rounded-2xl border border-border-subtle bg-surface-card/60 p-5">
         <p className="text-xs font-medium tracking-widest text-slate-500 uppercase">
-          Tarjetas de crédito
+          {t('cards.panel.eyebrow')}
         </p>
         <p className="mt-1 text-sm text-slate-400">
-          Controla el cupo, el saldo usado y el historial de cada tarjeta. Los cargos también
-          aparecen en Movimientos.
+          {t('cards.panel.description')}
         </p>
         {cards.length > 0 ? (
           <p className="mt-3 text-lg font-semibold text-white">
-            Total usado: <Money value={totalSpentAll} className="text-expense" />
+            {t('cards.panel.totalUsed', { amount: formatCurrency(totalSpentAll) })}
           </p>
         ) : null}
       </header>
@@ -75,8 +77,8 @@ export function CreditCardsPanel({
             <Card>
               <EmptyState
                 icon={<IconCreditCard className="size-6" />}
-                title="Sin tarjetas registradas"
-                description="Agrega tu primera tarjeta para ver cupo, uso y gastos asociados."
+                title={t('cards.empty.title')}
+                description={t('cards.empty.description')}
               />
             </Card>
           ) : (
@@ -108,16 +110,18 @@ export function CreditCardsPanel({
 
           <Card className="lg:col-span-3">
             <CardHeader>
-              <CardTitle>Historial · {selectedCard.name}</CardTitle>
+              <CardTitle>{t('cards.history.title', { name: selectedCard.name })}</CardTitle>
               <span className="text-sm text-slate-500">
-                <Money value={cardStats.get(selectedCard.id)?.spentFromMovements ?? 0} /> en cargos
+                {t('cards.history.chargesTotal', {
+                  amount: formatCurrency(cardStats.get(selectedCard.id)?.spentFromMovements ?? 0),
+                })}
               </span>
             </CardHeader>
 
             {selectedExpenses.length === 0 ? (
               <EmptyState
-                title="Sin gastos en esta tarjeta"
-                description="Registra un cargo o asigna movimientos existentes a esta tarjeta."
+                title={t('cards.history.emptyTitle')}
+                description={t('cards.history.emptyDescription')}
               />
             ) : (
               <ul className="divide-y divide-border-subtle">

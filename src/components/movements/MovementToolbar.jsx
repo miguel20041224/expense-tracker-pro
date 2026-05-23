@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { MovementSearch } from './MovementSearch'
 import { MovementQuickFilters } from './MovementQuickFilters'
 import { MovementFavoriteFilters } from './MovementFavoriteFilters'
@@ -15,6 +16,7 @@ export function MovementToolbar({
   onFilterChange,
   onReset,
 }) {
+  const { t } = useTranslation('forms')
   const [showAdvanced, setShowAdvanced] = useState(hasActiveFilters)
 
   return (
@@ -48,12 +50,12 @@ export function MovementToolbar({
           aria-expanded={showAdvanced}
         >
           <IconFilter className="size-4" />
-          Filtros avanzados
+          {t('movements.toolbar.advancedFilters')}
         </button>
 
         {hasActiveFilters ? (
           <Button type="button" variant="secondary" size="sm" onClick={onReset}>
-            Limpiar filtros
+            {t('actions.clearFilters')}
           </Button>
         ) : null}
       </div>

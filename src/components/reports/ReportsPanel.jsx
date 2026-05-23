@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { buildAllReports } from '../../intelligence/reports'
+import { useIntelligenceMessage } from '../../i18n/useIntelligenceMessage'
 import { buildReportPdfFilename, exportReportToPdf } from '../../services/exportReportPdf'
 import { ReportDocument } from './ReportDocument'
 import { Button } from '../ui/Button'
@@ -11,14 +12,22 @@ const REPORT_TYPE_IDS = ['daily', 'weekly', 'monthly']
 
 export function ReportsPanel({ financialData, userName }) {
   const { t, i18n } = useTranslation('reports')
+  const { t: tDashboard } = useTranslation('dashboard')
+  const localizeMessage = useIntelligenceMessage()
   const [activeType, setActiveType] = useState('monthly')
   const [isExporting, setIsExporting] = useState(false)
   const [feedback, setFeedback] = useState(null)
   const printRef = useRef(null)
 
   const reports = useMemo(
-    () => buildAllReports(financialData),
-    [financialData, i18n.language],
+    () =>
+      buildAllReports(financialData, {
+        t,
+        locale: i18n.language,
+        localizeMessage,
+        tDashboard,
+      }),
+    [financialData, i18n.language, t, tDashboard, localizeMessage],
   )
   const activeReport = reports[activeType]
 

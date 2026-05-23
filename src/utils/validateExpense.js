@@ -14,38 +14,42 @@ export function getEmptyExpenseForm() {
 
 export const initialExpenseForm = getEmptyExpenseForm()
 
-export function validateExpenseForm(values, locale) {
+function validationMessage(t, key) {
+  return t(`validation.${key}`, { ns: 'forms' })
+}
+
+export function validateExpenseForm(values, locale, t) {
   const errors = {}
 
   const name = values.name.trim()
   if (!name) {
-    errors.name = 'El nombre es obligatorio'
+    errors.name = validationMessage(t, 'requiredName')
   } else if (name.length < 2) {
-    errors.name = 'Mínimo 2 caracteres'
+    errors.name = validationMessage(t, 'nameMinLength')
   }
 
   const amount = parseAmountInput(values.amount, locale)
   if (values.amount === '' || values.amount == null) {
-    errors.amount = 'La cantidad es obligatoria'
+    errors.amount = validationMessage(t, 'requiredAmount')
   } else if (Number.isNaN(amount) || amount <= 0) {
-    errors.amount = 'Introduce un importe mayor que 0'
+    errors.amount = validationMessage(t, 'invalidAmountPositive')
   }
 
   if (!values.category) {
-    errors.category = 'Selecciona una categoría'
+    errors.category = validationMessage(t, 'selectCategory')
   }
 
   if (!values.date) {
-    errors.date = 'La fecha es obligatoria'
+    errors.date = validationMessage(t, 'requiredDate')
   } else {
     const parsed = new Date(`${values.date}T12:00:00`)
     if (Number.isNaN(parsed.getTime())) {
-      errors.date = 'Fecha no válida'
+      errors.date = validationMessage(t, 'invalidDate')
     } else {
       const today = new Date()
       today.setHours(23, 59, 59, 999)
       if (parsed > today) {
-        errors.date = 'La fecha no puede ser futura'
+        errors.date = validationMessage(t, 'futureDate')
       }
     }
   }
@@ -58,30 +62,30 @@ export function hasValidationErrors(errors) {
 }
 
 /** Validación para editar gasto (sin modificar fecha de creación). */
-export function validateExpenseEditForm(values, locale) {
+export function validateExpenseEditForm(values, locale, t) {
   const errors = {}
 
   const name = values.name.trim()
   if (!name) {
-    errors.name = 'El nombre es obligatorio'
+    errors.name = validationMessage(t, 'requiredName')
   } else if (name.length < 2) {
-    errors.name = 'Mínimo 2 caracteres'
+    errors.name = validationMessage(t, 'nameMinLength')
   }
 
   const amount = parseAmountInput(values.amount, locale)
   if (values.amount === '' || values.amount == null) {
-    errors.amount = 'La cantidad es obligatoria'
+    errors.amount = validationMessage(t, 'requiredAmount')
   } else if (Number.isNaN(amount) || amount <= 0) {
-    errors.amount = 'Introduce un importe mayor que 0'
+    errors.amount = validationMessage(t, 'invalidAmountPositive')
   }
 
   if (!values.category) {
-    errors.category = 'Selecciona una categoría'
+    errors.category = validationMessage(t, 'selectCategory')
   }
 
   const description = values.description?.trim() ?? ''
   if (description.length > 200) {
-    errors.description = 'Máximo 200 caracteres'
+    errors.description = validationMessage(t, 'descriptionMaxLength')
   }
 
   return errors

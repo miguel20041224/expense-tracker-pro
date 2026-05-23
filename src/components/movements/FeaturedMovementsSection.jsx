@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { IconStar } from '../icons'
 import { MovementItem } from '../dashboard/MovementItem'
 import { cn } from '../../utils/cn'
@@ -12,6 +13,8 @@ export function FeaturedMovementsSection({
   className,
   creditCardNames,
 }) {
+  const { t } = useTranslation('forms')
+
   if (movements.length === 0) return null
 
   const hasMore = favoriteCount > movements.length
@@ -22,7 +25,7 @@ export function FeaturedMovementsSection({
         'mb-5 rounded-2xl border border-amber-500/15 bg-linear-to-br from-amber-500/8 via-transparent to-transparent p-4 motion-safe:animate-fade-in-up',
         className,
       )}
-      aria-label="Movimientos destacados"
+      aria-label={t('movements.featured.ariaLabel')}
     >
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
@@ -30,11 +33,9 @@ export function FeaturedMovementsSection({
             <IconStar filled className="size-4" />
           </span>
           <div>
-            <h3 className="text-sm font-semibold text-slate-100">Destacados</h3>
+            <h3 className="text-sm font-semibold text-slate-100">{t('movements.featured.title')}</h3>
             <p className="text-[11px] text-slate-500">
-              {favoriteCount === 1
-                ? '1 movimiento favorito'
-                : `${favoriteCount} movimientos favoritos`}
+              {t('movements.featured.favoriteCount', { count: favoriteCount })}
             </p>
           </div>
         </div>
@@ -45,7 +46,7 @@ export function FeaturedMovementsSection({
             onClick={onShowAllFavorites}
             className="text-xs font-medium text-amber-400/90 transition hover:text-amber-300"
           >
-            Ver todos
+            {t('actions.viewAll')}
           </button>
         ) : null}
       </div>

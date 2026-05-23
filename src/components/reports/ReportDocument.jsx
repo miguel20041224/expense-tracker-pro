@@ -9,6 +9,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { useTranslation } from 'react-i18next'
 import { Money } from '../currency/Money'
 import { cn } from '../../utils/cn'
 
@@ -31,6 +32,8 @@ function formatMetricValue(metric) {
 }
 
 export function ReportDocument({ report, userName }) {
+  const { t, i18n } = useTranslation(['reports', 'forms'])
+
   if (!report) return null
 
   return (
@@ -39,12 +42,14 @@ export function ReportDocument({ report, userName }) {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="text-xs font-semibold tracking-[0.2em] text-accent uppercase print:text-slate-600">
-              FINTRACK
+              {t('document.brand')}
             </p>
             <h1 className="mt-2 text-2xl font-semibold text-white print:text-slate-900">
-              {report.title}
+              {t(`reports:${report.id}.title`, { defaultValue: report.title })}
             </h1>
-            <p className="mt-1 text-sm text-slate-400 print:text-slate-600">{report.subtitle}</p>
+            <p className="mt-1 text-sm text-slate-400 print:text-slate-600">
+              {t(`reports:${report.id}.subtitle`, { defaultValue: report.subtitle })}
+            </p>
             <p className="mt-2 text-xs text-slate-500">{report.periodLabel}</p>
           </div>
           <div className="text-right">
@@ -52,14 +57,16 @@ export function ReportDocument({ report, userName }) {
               <p className="text-sm font-medium text-slate-200 print:text-slate-800">{userName}</p>
             ) : null}
             <p className="mt-1 text-xs text-slate-500">
-              Generado {new Date(report.generatedAt).toLocaleString('es')}
+              {t('document.generated', {
+                date: new Date(report.generatedAt).toLocaleString(i18n.language),
+              })}
             </p>
             <div className="mt-3 inline-flex items-center gap-2 rounded-xl border border-accent/30 bg-accent/10 px-3 py-2 print:border-slate-300 print:bg-slate-50">
               <span className="text-2xl font-bold tabular-nums text-white print:text-slate-900">
                 {report.healthScore}
               </span>
               <span className="text-left text-xs text-slate-400 print:text-slate-600">
-                Salud
+                {t('document.health')}
                 <br />
                 <span className="font-medium text-slate-200 print:text-slate-800">
                   {report.healthLabel}
@@ -207,7 +214,9 @@ export function ReportDocument({ report, userName }) {
 
       {report.dailySeries?.length ? (
         <section className="break-inside-avoid print:hidden">
-          <h2 className="mb-4 text-sm font-semibold text-white uppercase">Gasto por día</h2>
+          <h2 className="mb-4 text-sm font-semibold text-white uppercase">
+            {t('document.dailySpend')}
+          </h2>
           <div className="h-40">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={report.dailySeries}>
@@ -225,7 +234,7 @@ export function ReportDocument({ report, userName }) {
       {report.tips?.length ? (
         <footer className="rounded-xl border border-emerald-500/20 bg-emerald-500/5 p-4 print:border-slate-300 print:bg-slate-50">
           <h2 className="text-xs font-semibold tracking-wide text-emerald-400 uppercase print:text-slate-700">
-            Consejos del copiloto
+            {t('document.copilotTips')}
           </h2>
           <ul className="mt-2 space-y-1.5 text-sm text-slate-300 print:text-slate-700">
             {report.tips.map((tip) => (

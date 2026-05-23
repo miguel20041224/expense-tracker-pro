@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { DebtForm } from './DebtForm'
 import { DebtPayoffChart } from './DebtPayoffChart'
 import { ExtraPaymentSuggestions } from './ExtraPaymentSuggestions'
@@ -15,7 +16,8 @@ import { useCurrency } from '../../hooks/useCurrency'
 import { cn } from '../../utils/cn'
 
 export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
-  const { parseAmount } = useCurrency()
+  const { t } = useTranslation('forms')
+  const { parseAmount, formatCurrency } = useCurrency()
   const [extraPayment, setExtraPayment] = useState('')
 
   const extraAmount = useMemo(() => {
@@ -34,11 +36,10 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
     <section className="space-y-6">
       <header className="rounded-2xl border border-amber-500/15 bg-linear-to-br from-amber-500/8 via-surface-card/60 to-surface-card/60 p-5">
         <p className="text-xs font-medium tracking-widest text-amber-400/90 uppercase">
-          Estrategia de deudas (bola de nieve)
+          {t('debts.panel.eyebrow')}
         </p>
         <p className="mt-2 text-sm leading-relaxed text-slate-400">
-          Ordena de menor a mayor saldo, simula pagos extra y visualiza cuándo quedarás libre de
-          deudas. Compara el impacto frente a pagar solo los mínimos.
+          {t('debts.panel.description')}
         </p>
       </header>
 
@@ -48,13 +49,13 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Pago extra mensual</CardTitle>
+              <CardTitle>{t('debts.extraPayment.title')}</CardTitle>
             </CardHeader>
             <div className="space-y-3">
               <FormField
-                label="Monto adicional"
+                label={t('fields.additionalAmount')}
                 htmlFor="snowball-extra"
-                hint="Se suma a la deuda prioritaria cada mes"
+                hint={t('debts.extraPayment.hint')}
               >
                 <Input
                   id="snowball-extra"
@@ -78,37 +79,39 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
             <Card>
               <EmptyState
                 icon={<IconSnowball className="size-6" />}
-                title="Sin deudas registradas"
-                description="Agrega tus deudas para ver el orden recomendado, proyección y cronograma."
+                title={t('debts.empty.title')}
+                description={t('debts.empty.description')}
               />
             </Card>
           ) : (
             <>
               <Card>
                 <CardHeader>
-                  <CardTitle>Resumen</CardTitle>
+                  <CardTitle>{t('debts.summary.title')}</CardTitle>
                 </CardHeader>
                 <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   <div>
-                    <dt className="text-xs text-slate-500">Saldo total</dt>
+                    <dt className="text-xs text-slate-500">{t('debts.summary.totalBalance')}</dt>
                     <dd className="text-lg font-semibold text-white">
                       <Money value={totalBalance} />
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs text-slate-500">Mínimos mensuales</dt>
+                    <dt className="text-xs text-slate-500">{t('debts.summary.monthlyMinimums')}</dt>
                     <dd className="text-lg font-semibold text-white">
                       <Money value={totalMinimum} />
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs text-slate-500">Libre en</dt>
+                    <dt className="text-xs text-slate-500">{t('debts.summary.freeIn')}</dt>
                     <dd className="text-lg font-semibold text-income">
-                      {simulation.months > 0 ? `${simulation.months} meses` : '—'}
+                      {simulation.months > 0
+                        ? t('debts.summary.monthsCount', { count: simulation.months })
+                        : '—'}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-xs text-slate-500">Total pagado (est.)</dt>
+                    <dt className="text-xs text-slate-500">{t('debts.summary.estimatedTotalPaid')}</dt>
                     <dd className="text-lg font-semibold text-slate-200">
                       <Money value={simulation.totalPaid} />
                     </dd>
@@ -117,9 +120,10 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
 
                 {priority ? (
                   <p className="mt-4 rounded-xl border border-accent/20 bg-accent/10 px-4 py-3 text-sm text-slate-200">
-                    Prioridad: pagar primero{' '}
-                    <span className="font-semibold text-white">{priority.name}</span> (
-                    <Money value={priority.balance} />)
+                    {t('debts.summary.priority', {
+                      name: priority.name,
+                      balance: formatCurrency(priority.balance),
+                    })}
                   </p>
                 ) : null}
               </Card>
@@ -139,7 +143,7 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Orden de pago recomendado</CardTitle>
+                  <CardTitle>{t('debts.order.title')}</CardTitle>
                 </CardHeader>
                 <ol className="space-y-3">
                   {ordered.map((debt, index) => {
@@ -168,8 +172,11 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
                           <div>
                             <p className="font-medium text-white">{debt.name}</p>
                             <p className="text-xs text-slate-500">
-                              Mín. <Money value={debt.minPayment} />
-                              {debt.interestRate != null ? ` · ${debt.interestRate}% anual` : ''}
+                              {t('debts.order.min')}{' '}
+                              <Money value={debt.minPayment} />
+                              {debt.interestRate != null
+                                ? t('debts.order.annualRate', { rate: debt.interestRate })
+                                : ''}
                             </p>
                           </div>
                         </div>
@@ -178,7 +185,9 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
                             <Money value={debt.balance} />
                           </p>
                           {payoff ? (
-                            <p className="text-xs text-income">Libre en mes {payoff.paidOffMonth}</p>
+                            <p className="text-xs text-income">
+                              {t('debts.order.freeInMonth', { month: payoff.paidOffMonth })}
+                            </p>
                           ) : null}
                         </div>
                         {onDeleteDebt ? (
@@ -187,7 +196,7 @@ export function SnowballPanel({ debts, onAddDebt, onDeleteDebt }) {
                             onClick={() => onDeleteDebt(debt.id)}
                             className="text-xs text-slate-500 hover:text-expense"
                           >
-                            Quitar
+                            {t('debts.order.remove')}
                           </button>
                         ) : null}
                       </li>

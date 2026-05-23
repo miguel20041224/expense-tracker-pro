@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { Button } from '../ui/Button'
@@ -30,6 +31,7 @@ export function MovementsPanel({
     totalCount,
     resultCount,
   } = useMovementFilters(transactions)
+  const { t } = useTranslation('forms')
 
   const showNoData = isEmpty
   const showNoResults = !isEmpty && resultCount === 0
@@ -50,13 +52,15 @@ export function MovementsPanel({
     <Card className="flex flex-col motion-safe:animate-fade-in-up">
       <CardHeader className="flex-col items-stretch gap-3 sm:flex-row sm:items-center">
         <div className="min-w-0">
-          <CardTitle>Historial de movimientos</CardTitle>
+          <CardTitle>{t('movements.panel.title')}</CardTitle>
           {!showNoData ? (
             <p className="mt-1 text-xs text-slate-500" aria-live="polite">
               {hasActiveFilters || filters.query.trim()
-                ? `${resultCount} de ${totalCount} resultados`
-                : `${totalCount} en total`}
-              {favoriteCount > 0 ? ` · ${favoriteCount} favoritos` : ''}
+                ? t('movements.panel.resultsFiltered', { resultCount, totalCount })
+                : t('movements.panel.totalOnly', { totalCount })}
+              {favoriteCount > 0
+                ? ` · ${t('movements.panel.favoritesSuffix', { count: favoriteCount })}`
+                : ''}
             </p>
           ) : null}
         </div>
@@ -65,8 +69,8 @@ export function MovementsPanel({
       {showNoData ? (
         <EmptyState
           icon={<IconReceipt className="size-6" />}
-          title="Sin movimientos registrados"
-          description="Agrega un presupuesto en la pestaña Presupuesto o un gasto en Resumen para ver tu historial aquí."
+          title={t('movements.empty.noDataTitle')}
+          description={t('movements.empty.noDataDescription')}
         />
       ) : (
         <>
@@ -83,11 +87,11 @@ export function MovementsPanel({
             <EmptyState
               className="mt-2"
               icon={<IconSearch className="size-5" />}
-              title="No hay resultados"
-              description="Prueba con otros términos de búsqueda o ajusta los filtros para ver más movimientos."
+              title={t('movements.empty.noResultsTitle')}
+              description={t('movements.empty.noResultsDescription')}
             >
               <Button type="button" variant="secondary" size="sm" onClick={resetFilters}>
-                Restablecer filtros
+                {t('actions.resetFilters')}
               </Button>
             </EmptyState>
           ) : (
@@ -116,7 +120,7 @@ export function MovementsPanel({
                 />
               ) : showFeaturedSection ? (
                 <p className="mt-2 text-center text-xs text-slate-500">
-                  Todos tus movimientos visibles están en destacados.
+                  {t('movements.panel.allInFeatured')}
                 </p>
               ) : null}
             </>

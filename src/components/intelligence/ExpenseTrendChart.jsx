@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   CartesianGrid,
   Legend,
@@ -15,13 +16,14 @@ import { ChartTooltip } from '../charts/ChartTooltip'
 import { IconChart } from '../icons'
 
 function ExpenseTrendChartInner({ trend }) {
+  const { t } = useTranslation('dashboard')
   const hasData = trend?.some((p) => p.income > 0 || p.expenses > 0)
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Evolución (6 meses)</CardTitle>
-        <span className="text-xs text-slate-500">Ingresos vs gastos</span>
+        <CardTitle>{t('charts.trend.title')}</CardTitle>
+        <span className="text-xs text-slate-500">{t('charts.trend.subtitle')}</span>
       </CardHeader>
 
       {hasData ? (
@@ -47,7 +49,11 @@ function ExpenseTrendChartInner({ trend }) {
               <Legend
                 wrapperStyle={{ fontSize: 12, color: '#94a3b8' }}
                 formatter={(value) =>
-                  value === 'income' ? 'Ingresos' : value === 'expenses' ? 'Gastos' : value
+                  value === 'income'
+                    ? t('charts.trend.income')
+                    : value === 'expenses'
+                      ? t('charts.trend.expenses')
+                      : value
                 }
               />
               <Line
@@ -73,8 +79,8 @@ function ExpenseTrendChartInner({ trend }) {
       ) : (
         <EmptyState
           icon={<IconChart className="size-6" />}
-          title="Sin historial suficiente"
-          description="Registra movimientos en meses anteriores para ver la tendencia."
+          title={t('charts.trend.emptyTitle')}
+          description={t('charts.trend.emptyDescription')}
         />
       )}
     </Card>

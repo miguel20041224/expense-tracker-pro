@@ -81,6 +81,15 @@
     "active": "Active",
     "label": "Language"
   },
+  "firebase": {
+    "title": "Firebase configuration",
+    "steps": {
+      "openConsole": "Open Firebase Console → Authentication",
+      "getStarted": "Click \"Get started\" if this is your first time",
+      "enableEmail": "Sign-in method → Email/Password → Enable → Save"
+    },
+    "openConsoleLink": "Open Firebase Console (Authentication)"
+  },
   "filters": {
     "periodAll": "All",
     "periodToday": "Today",

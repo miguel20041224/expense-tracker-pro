@@ -1,25 +1,28 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
-import { Money } from '../currency/Money'
 import { ProgressBar } from '../ui/ProgressBar'
 import { IconPiggyBank } from '../icons'
 import { cn } from '../../utils/cn'
+import { useCurrency } from '../../hooks/useCurrency'
 
 export function GoalProjectionList({ goals }) {
+  const { t } = useTranslation('projections')
+  const { formatCurrency } = useCurrency()
   const active = goals?.filter((g) => !g.isComplete) ?? []
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Metas estimadas</CardTitle>
-        <span className="text-xs text-slate-500">ETA al ritmo actual</span>
+        <CardTitle>{t('goals.title')}</CardTitle>
+        <span className="text-xs text-slate-500">{t('goals.subtitle')}</span>
       </CardHeader>
 
       {active.length === 0 ? (
         <EmptyState
           icon={<IconPiggyBank className="size-6" />}
-          title="Sin metas activas"
-          description="Crea metas en la pestaña Metas para ver cuándo podrías completarlas."
+          title={t('goals.emptyTitle')}
+          description={t('goals.emptyDescription')}
         />
       ) : (
         <ul className="space-y-4">
@@ -29,7 +32,7 @@ export function GoalProjectionList({ goals }) {
                 <div>
                   <p className="font-medium text-slate-200">{goal.name}</p>
                   <p className="mt-0.5 text-xs text-slate-500">
-                    Faltan <Money value={goal.remaining} />
+                    {t('goals.remaining', { amount: formatCurrency(goal.remaining) })}
                   </p>
                 </div>
                 {goal.monthsToComplete != null ? (
@@ -41,11 +44,11 @@ export function GoalProjectionList({ goals }) {
                         : 'bg-emerald-500/15 text-emerald-300',
                     )}
                   >
-                    ~{goal.monthsToComplete} meses
+                    {t('goals.monthsEta', { count: goal.monthsToComplete })}
                     {goal.etaLabel ? ` · ${goal.etaLabel}` : ''}
                   </span>
                 ) : (
-                  <span className="text-xs text-slate-500">Sin ritmo de ahorro</span>
+                  <span className="text-xs text-slate-500">{t('goals.noSavingsPace')}</span>
                 )}
               </div>
               <ProgressBar value={goal.percent} className="mt-3" />

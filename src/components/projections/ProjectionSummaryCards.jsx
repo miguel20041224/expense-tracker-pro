@@ -1,34 +1,37 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { Money } from '../currency/Money'
 import { cn } from '../../utils/cn'
 
 export function ProjectionSummaryCards({ outlook }) {
+  const { t } = useTranslation('projections')
   const { savings, debt, health, monthEnd, budgetRunway } = outlook
 
   return (
     <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <SummaryCard
-        label="Ahorro 6 meses"
+        label={t('summary.savings6m')}
         value={savings?.sixMonths?.total}
         variant="savings"
-        subtitle="Acumulado proyectado"
+        subtitle={t('summary.projectedAccumulated')}
       />
       <SummaryCard
-        label="Ahorro 12 meses"
+        label={t('summary.savings12m')}
         value={savings?.twelveMonths?.total}
         variant="savings"
-        subtitle="Si mantienes el ritmo"
+        subtitle={t('summary.ifKeepPace')}
       />
       <SummaryCard
-        label="Libertad de deuda"
+        label={t('summary.debtFreedom')}
         value={debt?.hasDebt ? debt.monthsToFree : null}
         variant="debt"
         isMonths
-        subtitle={debt?.payoffLabel ?? 'Sin deudas activas'}
+        monthsLabel={t('units.months')}
+        subtitle={debt?.payoffLabel ?? t('summary.noActiveDebts')}
         empty={!debt?.hasDebt}
       />
       <SummaryCard
-        label="Salud futura"
+        label={t('summary.futureHealth')}
         value={health?.projectedScore}
         variant="health"
         isScore
@@ -37,20 +40,21 @@ export function ProjectionSummaryCards({ outlook }) {
       />
       {monthEnd?.projected != null ? (
         <SummaryCard
-          label="Fin de mes"
+          label={t('summary.monthEnd')}
           value={monthEnd.projected}
           variant="accent"
-          subtitle={`${monthEnd.daysRemaining} días restantes`}
+          subtitle={t('summary.daysRemaining', { count: monthEnd.daysRemaining })}
           className="sm:col-span-2"
         />
       ) : null}
       {budgetRunway && !budgetRunway.exhausted ? (
         <SummaryCard
-          label="Margen del mes"
+          label={t('summary.monthMargin')}
           value={budgetRunway.daysRemaining}
           variant="neutral"
           isDays
-          subtitle="Días estimados al ritmo actual"
+          daysLabel={t('units.days')}
+          subtitle={t('summary.estimatedDaysAtPace')}
           className="sm:col-span-2"
         />
       ) : null}
@@ -66,6 +70,8 @@ function SummaryCard({
   isMonths,
   isScore,
   isDays,
+  monthsLabel,
+  daysLabel,
   empty,
   direction,
   className,
@@ -91,7 +97,7 @@ function SummaryCard({
             {isMonths ? (
               <>
                 {value}
-                <span className="ml-1 text-base font-normal text-slate-400">meses</span>
+                <span className="ml-1 text-base font-normal text-slate-400">{monthsLabel}</span>
               </>
             ) : isScore ? (
               <>
@@ -101,7 +107,7 @@ function SummaryCard({
             ) : isDays ? (
               <>
                 {value}
-                <span className="ml-1 text-base font-normal text-slate-400">días</span>
+                <span className="ml-1 text-base font-normal text-slate-400">{daysLabel}</span>
               </>
             ) : (
               <Money value={value ?? 0} />

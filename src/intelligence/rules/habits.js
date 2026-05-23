@@ -9,12 +9,14 @@ export const habitRules = [
       const top = ctx.categoryGrowth[0]
       if (!top) return null
 
+      const pct = Math.round(top.growthPercent)
       return {
         id: 'category-growth',
         type: 'warning',
         priority: 18,
         category: 'habits',
-        text: `Tus gastos en "${top.name}" aumentaron ${Math.round(top.growthPercent)}% respecto al mes pasado.`,
+        text: `Tus gastos en "${top.name}" aumentaron ${pct}% respecto al mes pasado.`,
+        params: { name: top.name, pct },
       }
     },
   },
@@ -32,12 +34,14 @@ export const habitRules = [
         return null
       }
 
+      const pct = Math.round(microSpends.sharePercent)
       return {
         id: 'micro-spends',
         type: 'info',
         priority: 22,
         category: 'habits',
-        text: `Podrías ahorrar más reduciendo gastos hormiga: ${microSpends.count} gastos pequeños suman el ${Math.round(microSpends.sharePercent)}% del mes.`,
+        text: `Podrías ahorrar más reduciendo gastos hormiga: ${microSpends.count} gastos pequeños suman el ${pct}% del mes.`,
+        params: { count: microSpends.count, pct },
       }
     },
   },

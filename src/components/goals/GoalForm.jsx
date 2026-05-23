@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { FormField } from '../ui/FormField'
 import { Input } from '../ui/Input'
@@ -16,6 +17,7 @@ function getEmptyForm() {
 }
 
 export function GoalForm({ onSubmit }) {
+  const { t } = useTranslation('forms')
   const { currencyCode, amountPlaceholder, parseAmount } = useCurrency()
   const [values, setValues] = useState(getEmptyForm)
   const [errors, setErrors] = useState({})
@@ -36,11 +38,11 @@ export function GoalForm({ onSubmit }) {
   function handleSubmit(event) {
     event.preventDefault()
     const nextErrors = {}
-    if (!values.name.trim()) nextErrors.name = 'El nombre es obligatorio'
+    if (!values.name.trim()) nextErrors.name = t('validation.requiredName')
 
     const target = parseAmount(values.targetAmount)
     if (!values.targetAmount || Number.isNaN(target) || target <= 0) {
-      nextErrors.targetAmount = 'Objetivo inválido'
+      nextErrors.targetAmount = t('validation.invalidTarget')
     }
 
     const current = values.currentAmount ? parseAmount(values.currentAmount) : 0
@@ -48,7 +50,7 @@ export function GoalForm({ onSubmit }) {
       ? Number(values.autoContributionPercent)
       : 0
     if (percent < 0 || percent > 100) {
-      nextErrors.autoContributionPercent = 'Entre 0 y 100'
+      nextErrors.autoContributionPercent = t('validation.percentRange')
     }
 
     setErrors(nextErrors)
@@ -68,17 +70,17 @@ export function GoalForm({ onSubmit }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Nueva meta</CardTitle>
+        <CardTitle>{t('goals.form.title')}</CardTitle>
       </CardHeader>
 
       <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-        <FormField label="Nombre" htmlFor="goal-name" error={errors.name}>
+        <FormField label={t('fields.name')} htmlFor="goal-name" error={errors.name}>
           <Input id="goal-name" value={values.name} onChange={updateField('name')} error={errors.name} />
         </FormField>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <FormField
-            label={`Objetivo (${currencyCode})`}
+            label={t('fields.targetWithCurrency', { currency: currencyCode })}
             htmlFor="goal-target"
             error={errors.targetAmount}
           >
@@ -93,7 +95,7 @@ export function GoalForm({ onSubmit }) {
           </FormField>
 
           <FormField
-            label={`Progreso actual (${currencyCode})`}
+            label={t('fields.currentProgressWithCurrency', { currency: currencyCode })}
             htmlFor="goal-current"
           >
             <Input
@@ -106,7 +108,7 @@ export function GoalForm({ onSubmit }) {
           </FormField>
         </div>
 
-        <FormField label="Fecha objetivo" htmlFor="goal-date">
+        <FormField label={t('fields.targetDate')} htmlFor="goal-date">
           <Input
             id="goal-date"
             type="date"
@@ -116,9 +118,9 @@ export function GoalForm({ onSubmit }) {
         </FormField>
 
         <FormField
-          label="Aporte automático desde ingresos (%)"
+          label={t('goals.form.autoContributionLabel')}
           htmlFor="goal-auto"
-          hint="Al registrar presupuesto/ingreso, se aporta este % a la meta"
+          hint={t('goals.form.autoContributionHint')}
           error={errors.autoContributionPercent}
         >
           <Input
@@ -128,14 +130,14 @@ export function GoalForm({ onSubmit }) {
             max="100"
             value={values.autoContributionPercent}
             onChange={updateField('autoContributionPercent')}
-            placeholder="Ej. 10"
+            placeholder={t('goals.form.autoContributionPlaceholder')}
             error={errors.autoContributionPercent}
           />
         </FormField>
 
         <div className="flex justify-end">
           <Button type="submit" size="lg">
-            Crear meta
+            {t('goals.form.submit')}
           </Button>
         </div>
       </form>

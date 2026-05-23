@@ -1,0 +1,438 @@
+{
+  "fields": {
+    "name": "Name",
+    "amount": "Amount",
+    "amountWithCurrency": "Amount ({{currency}})",
+    "montoWithCurrency": "Amount ({{currency}})",
+    "date": "Date",
+    "category": "Category",
+    "description": "Description",
+    "descriptionOptional": "Description (optional)",
+    "notesOptional": "Notes (optional)",
+    "paymentMethod": "Payment method",
+    "creditCardOptional": "Credit card (optional)",
+    "period": "Period",
+    "type": "Type",
+    "budgetType": "Budget type",
+    "flow": "Flow",
+    "budgetOrExpense": "Budget / expense",
+    "sortBy": "Sort by",
+    "targetDate": "Target date",
+    "targetWithCurrency": "Target ({{currency}})",
+    "currentProgressWithCurrency": "Current progress ({{currency}})",
+    "pendingBalanceWithCurrency": "Outstanding balance ({{currency}})",
+    "annualRate": "Annual rate (%)",
+    "minPaymentWithCurrency": "Minimum monthly payment ({{currency}})",
+    "limitWithCurrency": "Credit limit ({{currency}})",
+    "startingBalanceWithCurrency": "Initial used balance ({{currency}})",
+    "benefits": "Benefits",
+    "additionalAmount": "Additional amount",
+    "optional": "Optional",
+    "exampleHint": "E.g. {{example}}"
+  },
+  "actions": {
+    "clear": "Clear",
+    "save": "Save",
+    "saveChanges": "Save changes",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "resetFilters": "Reset filters",
+    "clearFilters": "Clear filters",
+    "viewAll": "View all",
+    "retry": "Retry",
+    "reload": "Reload"
+  },
+  "movements": {
+    "panel": {
+      "title": "Transaction history",
+      "resultsFiltered": "{{resultCount}} of {{totalCount}} results",
+      "totalOnly": "{{totalCount}} total",
+      "favoritesSuffix": "{{count}} favorites",
+      "allInFeatured": "All your visible transactions are in featured."
+    },
+    "types": {
+      "budget": "Budget",
+      "expense": "Expense",
+      "income": "Income",
+      "savings": "Savings",
+      "movement": "Transaction"
+    },
+    "empty": {
+      "noDataTitle": "No transactions recorded",
+      "noDataDescription": "Add a budget in the Budget tab or an expense in Overview to see your history here.",
+      "noResultsTitle": "No results",
+      "noResultsDescription": "Try different search terms or adjust filters to see more transactions."
+    },
+    "recent": {
+      "title": "Recent transactions",
+      "totalCount": "{{count}} total",
+      "emptyTitle": "You haven't added any transactions yet",
+      "emptyDescription": "Add a budget in the Budget tab or an expense using the form on the left."
+    },
+    "search": {
+      "placeholder": "Search by name or category…",
+      "ariaLabel": "Search transactions",
+      "clearAriaLabel": "Clear search"
+    },
+    "toolbar": {
+      "advancedFilters": "Advanced filters"
+    },
+    "filters": {
+      "quickRangeAriaLabel": "Quick date filters",
+      "favoritesAriaLabel": "Favorites filter",
+      "allCategories": "All categories",
+      "periodAll": "All",
+      "periodToday": "Today",
+      "periodWeek": "This week",
+      "periodMonth": "This month",
+      "flowAll": "All flows",
+      "flowIncome": "Income",
+      "flowExpense": "Expense",
+      "kindAll": "All types",
+      "kindBudget": "Budget",
+      "kindExpense": "Recorded expense",
+      "sortNewest": "Newest",
+      "sortOldest": "Oldest",
+      "sortExpenseHigh": "Highest expense",
+      "sortExpenseLow": "Lowest expense",
+      "sortIncomeHigh": "Highest income",
+      "favoritesAll": "All",
+      "favoritesOnly": "Favorites"
+    },
+    "featured": {
+      "ariaLabel": "Featured transactions",
+      "title": "Featured",
+      "favoriteCount_one": "1 favorite transaction",
+      "favoriteCount_other": "{{count}} favorite transactions"
+    },
+    "actions": {
+      "editAriaLabel": "Edit transaction",
+      "deleteAriaLabel": "Delete transaction",
+      "addFavorite": "Mark as favorite",
+      "removeFavorite": "Remove from favorites"
+    },
+    "audit": {
+      "registeredAt": "Recorded on",
+      "editedAt": "Edited on {{datetime}}"
+    }
+  },
+  "expenses": {
+    "form": {
+      "title": "Add expense",
+      "submitted": "Expense recorded",
+      "nameLabel": "Expense name",
+      "namePlaceholder": "E.g. Netflix",
+      "selectCategory": "Select a category",
+      "submit": "Save expense"
+    },
+    "paymentMethods": {
+      "credit_card": "Credit card",
+      "debit": "Debit",
+      "cash": "Cash",
+      "bank_transfer": "Bank / transfer"
+    },
+    "cardSelect": {
+      "none": "No card (regular expense)"
+    }
+  },
+  "budget": {
+    "form": {
+      "title": "Add budget",
+      "submitted": "Budget recorded",
+      "selectType": "Select a type",
+      "descriptionPlaceholder": "E.g. Household expenses",
+      "submit": "Add budget"
+    },
+    "income": {
+      "title": "Income per period",
+      "saved": "Saved",
+      "monthlyPreview": "≈ {{amount}} / month",
+      "monthlyBudget": "Monthly budget",
+      "spentThisMonth": "Spent this month",
+      "available": "Available",
+      "usageLabel": "Budget usage: {{percent}}%",
+      "overBudget": " · Budget exceeded",
+      "emptyHint": "Set your income to calculate available budget, remaining spending, and usage percentage.",
+      "saving": "Saving…",
+      "submit": "Save income",
+      "saveError": "Could not save income.",
+      "invalidAmount": "Enter a valid amount greater than zero."
+    },
+    "periods": {
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "biweekly": "Biweekly",
+      "monthly": "Monthly"
+    },
+    "types": {
+      "monthly": "monthly",
+      "biweekly": "biweekly",
+      "weekly": "weekly",
+      "daily": "daily"
+    },
+    "summary": {
+      "title": "Budget summary",
+      "basedOnIncome": "Based on your configured income",
+      "availableThisMonth": "Available this month · Spent: {{spent}} of {{limit}}",
+      "usagePercent": "{{percent}}% of budget used",
+      "monthTitle": "Monthly budget",
+      "allocations_one": "{{count}} allocation",
+      "allocations_other": "{{count}} allocations",
+      "totalAssigned": "Total assigned this month. Available balance: {{balance}}.",
+      "emptyHint": "Configure your income above or add a manual budget to update your balance."
+    }
+  },
+  "goals": {
+    "panel": {
+      "eyebrow": "Financial goals",
+      "description": "Set targets, track progress, and enable automatic contributions when recording income."
+    },
+    "form": {
+      "title": "New goal",
+      "autoContributionLabel": "Automatic contribution from income (%)",
+      "autoContributionHint": "When recording budget/income, this % is contributed to the goal",
+      "autoContributionPlaceholder": "E.g. 10",
+      "submit": "Create goal"
+    },
+    "card": {
+      "progressOf": "{{current}} of {{target}}",
+      "completed": "Goal reached",
+      "remaining": "{{amount}} remaining · {{percent}}%",
+      "targetDate": " · Target {{date}}",
+      "autoContribution": " · Auto {{percent}}% of income",
+      "manualPlaceholder": "Manual contribution",
+      "contribute": "Contribute",
+      "delete": "Delete goal"
+    },
+    "status": {
+      "completed": "Completed",
+      "overdue": "Overdue",
+      "inProgress": "In progress"
+    },
+    "empty": {
+      "title": "No goals defined",
+      "description": "Create your first savings or investment goal."
+    }
+  },
+  "debts": {
+    "panel": {
+      "eyebrow": "Debt strategy (snowball)",
+      "description": "Order debts from smallest to largest balance, simulate extra payments, and see when you'll be debt-free. Compare the impact vs paying minimums only."
+    },
+    "form": {
+      "title": "Register debt",
+      "ratePlaceholder": "E.g. 24",
+      "submit": "Add debt"
+    },
+    "extraPayment": {
+      "title": "Monthly extra payment",
+      "hint": "Added to the priority debt each month",
+      "tryAmounts": "Try amounts:"
+    },
+    "summary": {
+      "title": "Summary",
+      "totalBalance": "Total balance",
+      "monthlyMinimums": "Monthly minimums",
+      "freeIn": "Debt-free in",
+      "monthsCount": "{{count}} months",
+      "estimatedTotalPaid": "Est. total paid",
+      "priority": "Priority: pay {{name}} first ({{balance}})"
+    },
+    "impact": {
+      "title": "Extra payment impact",
+      "perMonth": "+{{amount}}/month",
+      "noExtraSimulated": "No extra payment simulated",
+      "withoutExtra": "Without extra",
+      "minimumOnly": "minimum only",
+      "withYourExtra": "With your extra",
+      "freeAround": "debt-free ~{{date}}",
+      "monthsSaved": "Months saved",
+      "vsMinimumOnly": "vs minimum only",
+      "tryHigherAmount": "try a higher amount",
+      "estimatedInterest": "Estimated interest",
+      "lessInterestPaid": "less interest paid",
+      "strategyComparison": "With the same extra payment, the {{strategy}} method would pay off your debts in {{months}} months (the other in {{otherMonths}}).",
+      "avalanche": "avalanche",
+      "snowball": "snowball"
+    },
+    "chart": {
+      "title": "Balance projection",
+      "subtitle": "Debt snowball",
+      "balance": "Balance",
+      "withExtra": "With extra",
+      "minimumOnly": "Minimum only",
+      "withExtraPayment": "With extra payment",
+      "emptyTitle": "No projection",
+      "emptyDescription": "Add debts to see how your balance decreases month by month.",
+      "monthLabel": "Month {{index}}"
+    },
+    "timeline": {
+      "title": "Freedom timeline",
+      "subtitle": "When each debt is paid off",
+      "month": "Month {{month}}",
+      "debtFree": " · Debt-free!",
+      "waiting": "Waiting",
+      "balance": "Balance {{amount}}"
+    },
+    "order": {
+      "title": "Recommended payment order",
+      "min": "Min.",
+      "annualRate": " · {{rate}}% annual",
+      "freeInMonth": "Debt-free in month {{month}}",
+      "remove": "Remove"
+    },
+    "empty": {
+      "title": "No debts recorded",
+      "description": "Add your debts to see the recommended order, projection, and timeline."
+    }
+  },
+  "cards": {
+    "panel": {
+      "eyebrow": "Credit cards",
+      "description": "Track credit limits, used balance, and history for each card. Charges also appear in Transactions.",
+      "totalUsed": "Total used: {{amount}}"
+    },
+    "form": {
+      "title": "New card",
+      "submitted": "Card added",
+      "namePlaceholder": "E.g. Chase Visa",
+      "startingBalanceHint": "Optional: prior charges not recorded in the app",
+      "benefitsPlaceholder": "Cashback, points, miles...",
+      "submit": "Save card"
+    },
+    "expenseForm": {
+      "title": "Expense on {{cardName}}",
+      "namePlaceholder": "E.g. Grocery store",
+      "notesPlaceholder": "Charge details",
+      "submit": "Record on card"
+    },
+    "visual": {
+      "label": "Credit card",
+      "overLimit": "Over limit",
+      "used": "Used",
+      "available": "Available",
+      "limitUsage": "Credit usage",
+      "limitSummary": "Limit {{limit}} · {{count}} expense",
+      "limitSummary_other": "Limit {{limit}} · {{count}} expenses",
+      "delete": "Delete card"
+    },
+    "history": {
+      "title": "History · {{name}}",
+      "chargesTotal": "{{amount}} in charges",
+      "emptyTitle": "No expenses on this card",
+      "emptyDescription": "Record a charge or assign existing transactions to this card."
+    },
+    "empty": {
+      "title": "No cards registered",
+      "description": "Add your first card to see limit, usage, and associated expenses."
+    }
+  },
+  "projections": {
+    "impact": {
+      "monthsDelta": "{{sign}}{{count}} months vs current",
+      "amountDelta": "{{sign}}{{amount}} vs current"
+    },
+    "healthChart": {
+      "today": "Today",
+      "monthOffset": "+{{months}}m"
+    }
+  },
+  "reports": {
+    "errorTitle": "Report error",
+    "errorMessage": "Could not generate the report.",
+    "dailySpend": "Daily spending",
+    "copilotTips": "Copilot tips",
+    "health": "Health",
+    "generated": "Generated {{date}}"
+  },
+  "dialogs": {
+    "closeAriaLabel": "Close dialog",
+    "deleteMovement": {
+      "title": "Delete transaction",
+      "description": "This action cannot be undone. Balance, statistics, and categories will be updated.",
+      "confirmQuestion": "Are you sure you want to delete this transaction from your history?"
+    },
+    "editMovement": {
+      "editExpense": "Edit expense",
+      "editBudget": "Edit budget",
+      "description": "The original date and time of the transaction will not be changed.",
+      "notesPlaceholder": "Additional notes"
+    }
+  },
+  "savings": {
+    "progress": {
+      "title": "Budget usage",
+      "spentPercent": "{{percent}}% spent",
+      "availableOf": " available of {{amount}}",
+      "progressAriaLabel": "Percentage of budget spent",
+      "overBudget": "You have exceeded your budget by {{amount}}.",
+      "remainingPercent": "You have {{percent}}% of your assigned budget remaining this month."
+    },
+    "hero": {
+      "emptyTitle": "Your financial summary will appear here",
+      "emptyDescription": "Add a budget or record an expense to calculate your balance in real time.",
+      "availableLabel": "Available balance",
+      "breakdown": "{{budgets}} in budgets − {{expenses}} in expenses"
+    },
+    "onboarding": {
+      "ariaLabel": "Getting started",
+      "welcome": "Welcome",
+      "title": "Start by adding your first expense",
+      "description": "Your dashboard will fill with real data as you record transactions.",
+      "steps": {
+        "trackExpenses": {
+          "title": "Track expenses",
+          "description": "Add each expense with category and date."
+        },
+        "viewSummary": {
+          "title": "View your summary",
+          "description": "Your financial summary will appear here."
+        },
+        "controlMoney": {
+          "title": "Control your money",
+          "description": "Review balance, categories, and transactions."
+        }
+      },
+      "skip": "Skip",
+      "cta": "Add first expense"
+    },
+    "categoryBreakdown": {
+      "title": "Expenses by category",
+      "thisMonth": "This month",
+      "emptyTitle": "No expenses by category",
+      "emptyDescription": "When you record categorized expenses, you'll see the breakdown and monthly percentages here."
+    },
+    "trendChart": {
+      "title": "Trend (6 months)",
+      "subtitle": "Income vs expenses",
+      "income": "Income",
+      "expenses": "Expenses",
+      "emptyTitle": "Not enough history",
+      "emptyDescription": "Record transactions in previous months to see the trend."
+    }
+  },
+  "validation": {
+    "requiredName": "Name is required",
+    "requiredNameShort": "Name is required",
+    "nameMinLength": "Minimum 2 characters",
+    "requiredAmount": "Amount is required",
+    "invalidAmountPositive": "Enter an amount greater than 0",
+    "invalidAmountGreaterZero": "Enter a valid amount greater than zero",
+    "selectCategory": "Select a category",
+    "requiredDate": "Date is required",
+    "invalidDate": "Invalid date",
+    "futureDate": "Date cannot be in the future",
+    "descriptionMaxLength": "Maximum 200 characters",
+    "selectBudgetType": "Select a budget type",
+    "invalidTarget": "Invalid target",
+    "percentRange": "Between 0 and 100",
+    "invalidBalance": "Invalid balance",
+    "invalidMinPayment": "Invalid minimum payment",
+    "invalidLimit": "Enter a valid credit limit"
+  },
+  "errors": {
+    "appTitle": "Could not load the app",
+    "appMessage": "Unexpected interface error."
+  }
+}

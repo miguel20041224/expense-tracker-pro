@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { cn } from '../../utils/cn'
 
 const EXPENSE_PRESETS = [0, 5, 10, 15]
@@ -12,27 +13,29 @@ export function ScenarioControls({
   onSavingsChange,
   onDebtExtraChange,
 }) {
+  const { t } = useTranslation('projections')
+
   return (
     <div className="space-y-4">
       <PresetRow
-        label="Reducir gastos"
-        hint="Simula recorte en gastos del mes"
+        label={t('scenario.reduceExpenses')}
+        hint={t('scenario.reduceExpensesHint')}
         presets={EXPENSE_PRESETS}
         value={expenseReductionPercent}
         onChange={onExpenseChange}
         suffix="%"
       />
       <PresetRow
-        label="Impulso de ahorro"
-        hint="Simula mayor margen mensual"
+        label={t('scenario.savingsBoost')}
+        hint={t('scenario.savingsBoostHint')}
         presets={SAVINGS_PRESETS}
         value={savingsBoostPercent}
         onChange={onSavingsChange}
         suffix="%"
       />
       <PresetRow
-        label="Pago extra deuda"
-        hint="Monto adicional mensual (bola de nieve)"
+        label={t('scenario.extraDebtPayment')}
+        hint={t('scenario.extraDebtPaymentHint')}
         presets={DEBT_PRESETS}
         value={extraDebtPayment}
         onChange={onDebtExtraChange}

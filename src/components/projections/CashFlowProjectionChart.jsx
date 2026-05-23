@@ -8,24 +8,34 @@ import {
   XAxis,
   YAxis,
 } from 'recharts'
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { IconChart } from '../icons'
 
 function ChartTooltip({ active, payload, label }) {
+  const { t, i18n } = useTranslation('projections')
+
   if (!active || !payload?.length) return null
   const isForecast = payload[0]?.payload?.isForecast
+  const seriesLabels = {
+    income: t('cashFlow.income'),
+    expenses: t('cashFlow.expenses'),
+    savings: t('cashFlow.margin'),
+  }
+
   return (
     <div className="rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-xs shadow-lg">
       <p className="mb-1 font-medium text-slate-300">
         {label}
         {isForecast ? (
-          <span className="ml-1 text-violet-400">(proyección)</span>
+          <span className="ml-1 text-violet-400">{t('cashFlow.forecast')}</span>
         ) : null}
       </p>
       {payload.map((entry) => (
         <p key={entry.dataKey} style={{ color: entry.color }} className="tabular-nums">
-          {entry.name}: {Number(entry.value).toLocaleString('es')}
+          {seriesLabels[entry.name] ?? entry.name}:{' '}
+          {Number(entry.value).toLocaleString(i18n.language)}
         </p>
       ))}
     </div>
@@ -33,13 +43,14 @@ function ChartTooltip({ active, payload, label }) {
 }
 
 export function CashFlowProjectionChart({ chartTrend }) {
+  const { t } = useTranslation('projections')
   const hasData = chartTrend?.some((p) => p.income > 0 || p.expenses > 0)
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Flujo de caja</CardTitle>
-        <span className="text-xs text-slate-500">Historial + proyección 6 meses</span>
+        <CardTitle>{t('cashFlow.title')}</CardTitle>
+        <span className="text-xs text-slate-500">{t('cashFlow.subtitle')}</span>
       </CardHeader>
 
       {hasData ? (
@@ -67,11 +78,11 @@ export function CashFlowProjectionChart({ chartTrend }) {
                 wrapperStyle={{ fontSize: 12, color: '#94a3b8' }}
                 formatter={(value) =>
                   value === 'income'
-                    ? 'Ingresos'
+                    ? t('cashFlow.income')
                     : value === 'expenses'
-                      ? 'Gastos'
+                      ? t('cashFlow.expenses')
                       : value === 'savings'
-                        ? 'Margen'
+                        ? t('cashFlow.margin')
                         : value
                 }
               />
@@ -106,23 +117,23 @@ export function CashFlowProjectionChart({ chartTrend }) {
       ) : (
         <EmptyState
           icon={<IconChart className="size-6" />}
-          title="Sin datos para proyectar"
-          description="Registra movimientos en varios meses para ver tendencias y proyecciones."
+          title={t('cashFlow.emptyTitle')}
+          description={t('cashFlow.emptyDescription')}
         />
       )}
 
       <div className="mt-3 flex flex-wrap gap-4 text-xs text-slate-500">
         <span className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-income" />
-          Ingresos
+          {t('cashFlow.income')}
         </span>
         <span className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-expense" />
-          Gastos
+          {t('cashFlow.expenses')}
         </span>
         <span className="flex items-center gap-1.5">
           <span className="size-2 rounded-full bg-violet-400" />
-          Margen / proyección
+          {t('cashFlow.marginProjection')}
         </span>
       </div>
     </Card>

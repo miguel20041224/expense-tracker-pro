@@ -1,11 +1,11 @@
-import { Money } from '../currency/Money'
+import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Badge } from '../ui/Badge'
 import { ProgressBar } from '../ui/ProgressBar'
 import { Card } from '../ui/Card'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
 import { computeGoalProgress, getGoalStatus } from '../../utils/goals'
-import { useState } from 'react'
 import { useCurrency } from '../../hooks/useCurrency'
 import { cn } from '../../utils/cn'
 
@@ -15,8 +15,15 @@ const badgeVariants = {
   neutral: 'neutral',
 }
 
+const statusTranslationKeys = {
+  completed: 'goals.status.completed',
+  overdue: 'goals.status.overdue',
+  in_progress: 'goals.status.inProgress',
+}
+
 export function GoalCard({ goal, onContribute, onDelete }) {
-  const { parseAmount } = useCurrency()
+  const { t } = useTranslation('forms')
+  const { parseAmount, formatCurrency } = useCurrency()
   const [amount, setAmount] = useState('')
   const progress = computeGoalProgress(goal)
   const status = getGoalStatus(goal)
@@ -35,10 +42,15 @@ export function GoalCard({ goal, onContribute, onDelete }) {
         <div>
           <h3 className="font-semibold text-white">{goal.name}</h3>
           <p className="mt-1 text-sm text-slate-400">
-            <Money value={goal.currentAmount} /> de <Money value={goal.targetAmount} />
+            {t('goals.card.progressOf', {
+              current: formatCurrency(goal.currentAmount),
+              target: formatCurrency(goal.targetAmount),
+            })}
           </p>
         </div>
-        <Badge variant={badgeVariants[status.variant]}>{status.label}</Badge>
+        <Badge variant={badgeVariants[status.variant]}>
+          {t(statusTranslationKeys[status.id] ?? statusTranslationKeys.in_progress)}
+        </Badge>
       </div>
 
       <ProgressBar
@@ -50,15 +62,14 @@ export function GoalCard({ goal, onContribute, onDelete }) {
 
       <p className="mt-2 text-xs text-slate-500">
         {progress.isComplete
-          ? 'Meta alcanzada'
-          : (
-              <>
-                Faltan <Money value={progress.remaining} /> · {progress.percent.toFixed(0)}%
-              </>
-            )}
-        {goal.targetDate ? ` · Objetivo ${goal.targetDate}` : ''}
+          ? t('goals.card.completed')
+          : t('goals.card.remaining', {
+              amount: formatCurrency(progress.remaining),
+              percent: progress.percent.toFixed(0),
+            })}
+        {goal.targetDate ? t('goals.card.targetDate', { date: goal.targetDate }) : ''}
         {goal.autoContributionPercent > 0
-          ? ` · Auto ${goal.autoContributionPercent}% de ingresos`
+          ? t('goals.card.autoContribution', { percent: goal.autoContributionPercent })
           : ''}
       </p>
 
@@ -67,12 +78,12 @@ export function GoalCard({ goal, onContribute, onDelete }) {
           <Input
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
-            placeholder="Aporte manual"
+            placeholder={t('goals.card.manualPlaceholder')}
             inputMode="decimal"
             className="flex-1"
           />
           <Button type="submit" variant="secondary">
-            Aportar
+            {t('goals.card.contribute')}
           </Button>
         </form>
       ) : null}
@@ -83,7 +94,7 @@ export function GoalCard({ goal, onContribute, onDelete }) {
           onClick={() => onDelete(goal.id)}
           className={cn('mt-3 text-xs text-slate-500 hover:text-expense')}
         >
-          Eliminar meta
+          {t('goals.card.delete')}
         </button>
       ) : null}
     </Card>

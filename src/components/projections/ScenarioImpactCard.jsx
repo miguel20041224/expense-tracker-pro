@@ -1,7 +1,11 @@
+import { useTranslation } from 'react-i18next'
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { Money } from '../currency/Money'
+import { useCurrency } from '../../hooks/useCurrency'
 
 export function ScenarioImpactCard({ scenarios }) {
+  const { t } = useTranslation(['projections', 'forms'])
+
   if (!scenarios) return null
 
   const { current, scenario, delta } = scenarios
@@ -12,11 +16,9 @@ export function ScenarioImpactCard({ scenarios }) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Simulación</CardTitle>
+          <CardTitle>{t('simulation.title')}</CardTitle>
         </CardHeader>
-        <p className="text-sm text-slate-500">
-          Ajusta los controles para comparar tu ritmo actual con un escenario simulado.
-        </p>
+        <p className="text-sm text-slate-500">{t('simulation.emptyHint')}</p>
       </Card>
     )
   }
@@ -24,24 +26,21 @@ export function ScenarioImpactCard({ scenarios }) {
   return (
     <Card className="border-violet-500/15">
       <CardHeader>
-        <CardTitle>Impacto de la simulación</CardTitle>
+        <CardTitle>{t('simulation.impactTitle')}</CardTitle>
       </CardHeader>
       <dl className="grid gap-3 sm:grid-cols-3">
         <ImpactItem
-          label="Margen mensual"
-          before={current.monthlySavings}
+          label={t('simulation.monthlyMargin')}
           after={scenario.monthlySavings}
           delta={delta.monthlySavings}
         />
         <ImpactItem
-          label="Ahorro 6 meses"
-          before={current.sixMonthTotal}
+          label={t('simulation.sixMonthSavings')}
           after={scenario.sixMonthTotal}
           delta={delta.sixMonthTotal}
         />
         <ImpactItem
-          label="Meses hasta libre de deuda"
-          before={current.debtMonths}
+          label={t('simulation.monthsToDebtFree')}
           after={scenario.debtMonths}
           delta={delta.debtMonths}
           isMonths
@@ -52,7 +51,9 @@ export function ScenarioImpactCard({ scenarios }) {
   )
 }
 
-function ImpactItem({ label, before, after, delta, isMonths, invertDelta }) {
+function ImpactItem({ label, after, delta, isMonths, invertDelta }) {
+  const { t } = useTranslation(['projections', 'forms'])
+  const { formatCurrency } = useCurrency()
   const positive = invertDelta ? delta > 0 : delta > 0
   const negative = invertDelta ? delta < 0 : delta < 0
 
@@ -63,7 +64,7 @@ function ImpactItem({ label, before, after, delta, isMonths, invertDelta }) {
         {isMonths ? (
           <>
             {after}
-            <span className="text-sm font-normal text-slate-500"> meses</span>
+            <span className="text-sm font-normal text-slate-500"> {t('units.months')}</span>
           </>
         ) : (
           <Money value={after} />
@@ -75,17 +76,17 @@ function ImpactItem({ label, before, after, delta, isMonths, invertDelta }) {
             positive ? 'text-emerald-400' : negative ? 'text-rose-400' : 'text-slate-500'
           }`}
         >
-          {isMonths ? (
-            <>
-              {positive ? '+' : ''}
-              {delta} meses vs actual
-            </>
-          ) : (
-            <>
-              {positive ? '+' : '−'}
-              <Money value={Math.abs(delta)} /> vs actual
-            </>
-          )}
+          {isMonths
+            ? t('projections.impact.monthsDelta', {
+                ns: 'forms',
+                sign: delta > 0 ? '+' : '',
+                count: delta,
+              })
+            : t('projections.impact.amountDelta', {
+                ns: 'forms',
+                sign: delta > 0 ? '+' : '−',
+                amount: formatCurrency(Math.abs(delta)),
+              })}
         </p>
       ) : null}
     </div>
