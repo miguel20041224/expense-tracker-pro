@@ -11,12 +11,13 @@ import {
 import { Card, CardHeader, CardTitle } from '../ui/Card'
 import { EmptyState } from '../ui/EmptyState'
 import { IconChart } from '../icons'
+import { chartColors } from '../../theme/chartColors'
 
 function ChartTooltip({ active, payload, label }) {
   if (!active || !payload?.length) return null
   return (
-    <div className="rounded-lg border border-border-subtle bg-surface-card px-3 py-2 text-xs shadow-lg">
-      <p className="mb-1 font-medium text-slate-300">{label}</p>
+    <div className="rounded-xl border border-border-subtle bg-surface-card/95 px-3 py-2.5 text-xs shadow-lg backdrop-blur-sm">
+      <p className="mb-1.5 font-medium text-slate-200">{label}</p>
       {payload.map((entry) => (
         <p key={entry.dataKey} style={{ color: entry.color }} className="tabular-nums">
           {entry.name}: {Number(entry.value).toLocaleString('es')}
@@ -37,18 +38,18 @@ export function ExpenseTrendChart({ trend }) {
       </CardHeader>
 
       {hasData ? (
-        <div className="h-56 w-full">
+        <div className="h-60 w-full">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={trend} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
+              <CartesianGrid stroke={chartColors.grid} vertical={false} />
               <XAxis
                 dataKey="month"
-                tick={{ fill: '#94a3b8', fontSize: 11 }}
+                tick={{ fill: chartColors.tick, fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fill: '#94a3b8', fontSize: 11 }}
+                tick={{ fill: chartColors.tick, fontSize: 11 }}
                 axisLine={false}
                 tickLine={false}
                 width={48}
@@ -58,7 +59,7 @@ export function ExpenseTrendChart({ trend }) {
               />
               <Tooltip content={<ChartTooltip />} />
               <Legend
-                wrapperStyle={{ fontSize: 12, color: '#94a3b8' }}
+                wrapperStyle={{ fontSize: 12, color: chartColors.tick }}
                 formatter={(value) =>
                   value === 'income' ? 'Ingresos' : value === 'expenses' ? 'Gastos' : value
                 }
@@ -67,19 +68,19 @@ export function ExpenseTrendChart({ trend }) {
                 type="monotone"
                 dataKey="income"
                 name="income"
-                stroke="#34d399"
-                strokeWidth={2}
+                stroke={chartColors.income}
+                strokeWidth={2.5}
                 dot={false}
-                activeDot={{ r: 4 }}
+                activeDot={{ r: 5, strokeWidth: 0 }}
               />
               <Line
                 type="monotone"
                 dataKey="expenses"
                 name="expenses"
-                stroke="#fb7185"
-                strokeWidth={2}
+                stroke={chartColors.expense}
+                strokeWidth={2.5}
                 dot={false}
-                activeDot={{ r: 4 }}
+                activeDot={{ r: 5, strokeWidth: 0 }}
               />
             </LineChart>
           </ResponsiveContainer>

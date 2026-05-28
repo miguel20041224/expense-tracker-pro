@@ -2,17 +2,17 @@ import { Card } from '../ui/Card'
 import { cn } from '../../utils/cn'
 
 const ringColors = {
-  emerald: 'stroke-emerald-400',
-  sky: 'stroke-sky-400',
-  amber: 'stroke-amber-400',
-  rose: 'stroke-rose-400',
+  emerald: 'stroke-income',
+  sky: 'stroke-savings',
+  amber: 'stroke-amber-300',
+  rose: 'stroke-expense',
 }
 
 const labelColors = {
-  emerald: 'text-emerald-400',
-  sky: 'text-sky-400',
-  amber: 'text-amber-400',
-  rose: 'text-rose-400',
+  emerald: 'text-income',
+  sky: 'text-savings',
+  amber: 'text-amber-300',
+  rose: 'text-expense',
 }
 
 export function FinancialHealthScore({ health }) {

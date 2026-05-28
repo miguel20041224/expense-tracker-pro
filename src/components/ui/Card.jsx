@@ -4,7 +4,7 @@ export function Card({ className, children, ...props }) {
   return (
     <section
       className={cn(
-        'rounded-2xl border border-border-subtle bg-surface-card/80 p-5 backdrop-blur-sm',
+        'rounded-2xl border border-border-subtle bg-surface-card/90 p-5 shadow-[0_1px_0_rgb(255_255_255/0.04)_inset] backdrop-blur-sm',
         className,
       )}
       {...props}
@@ -24,7 +24,7 @@ export function CardHeader({ className, children }) {
 
 export function CardTitle({ className, children }) {
   return (
-    <h2 className={cn('text-sm font-medium tracking-wide text-slate-400', className)}>
+    <h2 className={cn('text-sm font-semibold tracking-wide text-slate-300', className)}>
       {children}
     </h2>
   )

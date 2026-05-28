@@ -152,18 +152,6 @@ export default function Dashboard() {
               />
             ) : null}
 
-            <FinancialHealthScore health={analysis.health} />
-            <AlertStrip
-              alerts={activeAlerts}
-              onViewAll={() => setActiveTab('alertas')}
-            />
-            <InsightFeed insights={analysis.insights} />
-
-            <section className="grid gap-4 lg:grid-cols-2">
-              <ExpenseTrendChart trend={analysis.trend} />
-              <CategoryBreakdown categories={categories} />
-            </section>
-
             <BalanceHero summary={summary} />
 
             <section
@@ -228,6 +216,21 @@ export default function Dashboard() {
                 isOverBudget={summary.isOverBudget}
               />
             ) : null}
+
+            <FinancialHealthScore health={analysis.health} />
+            <AlertStrip
+              alerts={activeAlerts}
+              onViewAll={() => setActiveTab('alertas')}
+            />
+            <InsightFeed insights={analysis.insights} />
+
+            <section
+              className="grid gap-4 lg:grid-cols-2"
+              aria-label="Gráficos del mes"
+            >
+              <ExpenseTrendChart trend={analysis.trend} />
+              <CategoryBreakdown categories={categories} />
+            </section>
 
             <section className="grid gap-4 lg:grid-cols-5">
               <div ref={expenseFormRef} id="add-expense" className="scroll-mt-6 lg:col-span-2">

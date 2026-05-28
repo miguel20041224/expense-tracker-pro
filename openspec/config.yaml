@@ -1,0 +1,14 @@
+schema: spec-driven
+
+context: |
+  React 19 + Vite + Tailwind CSS v4 expense tracker.
+  Dark theme via @theme tokens in src/index.css.
+  No automated test runner configured.
+
+strict_tdd: false
+
+rules:
+  specs:
+    - Use Given/When/Then for scenarios
+  design:
+    - Prefer CSS theme tokens over hardcoded hex in components

@@ -10,13 +10,22 @@ export function SavingsProgress({ income, expenses, remaining, isOverBudget }) {
   const remainingPercent = income > 0 ? Math.max(100 - spentPercent, 0) : 0
 
   return (
-    <Card>
+    <Card className="border-savings/10 bg-savings/[0.04]">
       <CardHeader>
         <CardTitle>Uso del presupuesto</CardTitle>
-        <span className="text-sm font-medium text-slate-400">{spentPercent.toFixed(0)}% gastado</span>
+        <span
+          className={cn(
+            'rounded-full px-2.5 py-0.5 text-xs font-medium tabular-nums',
+            isOverBudget
+              ? 'bg-expense/15 text-expense'
+              : 'bg-income/15 text-income',
+          )}
+        >
+          {spentPercent.toFixed(0)}% gastado
+        </span>
       </CardHeader>
 
-      <p className="text-2xl font-semibold tracking-tight text-white">
+      <p className="text-2xl font-semibold tracking-tight text-slate-50">
         <Money value={remaining} className={cn(isOverBudget && 'text-expense')} />
         <span className="text-base font-normal text-slate-500">
           {' '}
@@ -24,11 +33,11 @@ export function SavingsProgress({ income, expenses, remaining, isOverBudget }) {
         </span>
       </p>
 
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-white/5">
+      <div className="mt-4 h-2.5 overflow-hidden rounded-full bg-white/[0.06]">
         <div
           className={cn(
             'h-full rounded-full transition-all duration-500',
-            isOverBudget ? 'bg-expense' : 'bg-linear-to-r from-income to-savings',
+            isOverBudget ? 'bg-expense' : 'bg-linear-to-r from-income via-savings to-accent/80',
           )}
           style={{ width: `${spentPercent}%` }}
           role="progressbar"
@@ -46,8 +55,8 @@ export function SavingsProgress({ income, expenses, remaining, isOverBudget }) {
           </>
         ) : (
           <>
-            Te queda un <span className="text-income">{remainingPercent.toFixed(0)}%</span> de tu
-            presupuesto asignado este mes.
+            Te queda un <span className="font-medium text-income">{remainingPercent.toFixed(0)}%</span>{' '}
+            de tu presupuesto asignado este mes.
           </>
         )}
       </p>
